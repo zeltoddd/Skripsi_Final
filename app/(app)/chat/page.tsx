@@ -33,22 +33,27 @@ export default function ChatPage() {
     setIsInitialized(true);
   }, [sessionMajor]);
 
-  // Sync messages from database ONLY when currentSessionId changes or session data updates
-  // but prevent overwriting local state during active chat or with stale data
-  // Sync messages from database when currentSessionId changes
+  // Use a ref to track which session's messages we've already loaded to local state
+  const lastLoadedSessionId = useRef<string | null>(null);
+
+  // Sync messages from database ONLY when currentSessionId changes (switching sessions)
   useEffect(() => {
-    // If we're loading, don't overwrite local state
+    // If we're loading AI response, don't touch the messages state
     if (isLoading) return; 
 
-    if (currentSessionId) {
-      const activeSession = sessions.find(s => s.id === currentSessionId);
-      if (activeSession) {
-        // Update local messages state with the session's messages
-        setMessages(activeSession.messages);
+    // Only sync if the sessionId has actually changed to prevent overwriting during active chat
+    if (currentSessionId !== lastLoadedSessionId.current) {
+      if (currentSessionId) {
+        const activeSession = sessions.find(s => s.id === currentSessionId);
+        if (activeSession) {
+          setMessages(activeSession.messages);
+          lastLoadedSessionId.current = currentSessionId;
+        }
+      } else {
+        // New Chat: clear messages
+        setMessages([]);
+        lastLoadedSessionId.current = null;
       }
-    } else {
-      // New Chat: clear messages
-      setMessages([]);
     }
   }, [currentSessionId, sessions, isLoading]);
 
@@ -80,7 +85,7 @@ export default function ChatPage() {
     if (!textToUse.trim() && attachedFiles.length === 0) return;
     
     const newUserMsg = {
-      id: Date.now().toString(),
+      id: crypto.randomUUID(),
       sender: 'user',
       text: textToUse,
       timestamp: new Date(),
@@ -129,7 +134,7 @@ export default function ChatPage() {
         parts: [{ text: m.text }]
       }));
 
-      const aiMsgId = Date.now().toString() + "-ai";
+      const aiMsgId = crypto.randomUUID();
       const initialAiMsg = {
         id: aiMsgId,
         sender: 'ai',
@@ -203,7 +208,7 @@ export default function ChatPage() {
     } catch (error) {
       console.error("API Error:", error);
       const errorMsg = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         sender: 'ai',
         text: "Waduh, koneksi ke otak AI saya lagi terputus nih. Coba cek API Key di settings atau coba lagi nanti ya!",
         timestamp: new Date(),

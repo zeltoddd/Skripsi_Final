@@ -47,17 +47,17 @@ export default function ChatInterface(props: ChatInterfaceProps) {
   
   // Auto-scroll to bottom on new messages
   useEffect(() => {
-    props.messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    props.messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [props.messages]);
 
   return (
     <div className="flex flex-col h-full bg-background overflow-hidden relative">
       
       {/* ─── Messages Area ─── */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 pb-44 scrollbar-hide">
-        <div className="max-w-2xl mx-auto w-full space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-hide">
+        <div className="max-w-2xl mx-auto w-full space-y-6 pb-44">
           {props.messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full min-h-[60vh] gap-8">
+            <div className="flex flex-col items-center justify-center flex-1 gap-8">
               <div className="animate-in fade-in zoom-in-95 duration-700 flex justify-center">
                 <img src="/vokara-stacked.svg" alt="VOKARA" className="h-24 dark:invert opacity-100 pl-12" />
               </div>

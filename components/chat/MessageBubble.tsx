@@ -257,13 +257,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message, onSummar
 
             {/* Right: Stacked Metadata */}
             <div className="flex flex-col items-end gap-1 shrink-0 pb-1 opacity-30">
-              <button 
-                className="hover:text-foreground transition-colors p-1 rounded-lg hover:bg-muted" 
-                onClick={() => handleSpeak(message.text)}
-                title="Dengarkan Jawaban"
-              >
-                <Volume2 className="h-3 w-3" />
-              </button>
+
               <button 
                 className="hover:text-foreground transition-colors p-1 rounded-lg hover:bg-muted" 
                 onClick={handleCopy}

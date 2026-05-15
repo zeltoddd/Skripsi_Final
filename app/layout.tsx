@@ -28,6 +28,13 @@ export const metadata: Metadata = {
   description: 'Platform bimbingan karir berbasis AI khusus untuk siswa dan lulusan SMK di Indonesia.',
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: {

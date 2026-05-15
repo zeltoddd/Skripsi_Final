@@ -65,7 +65,11 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       const res = await fetch('/api/chat/sessions');
       if (res.ok) {
         const data = await res.json();
-        setSessions(data);
+        // Sort sessions by lastMessageAt DESC (Newest on top)
+        const sortedData = data.sort((a: any, b: any) => 
+          new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
+        );
+        setSessions(sortedData);
       }
     } catch (error) {
       console.error("Failed to fetch sessions:", error);

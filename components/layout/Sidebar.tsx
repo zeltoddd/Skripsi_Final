@@ -184,7 +184,19 @@ export function AppSidebar({
                           className="h-10 rounded-lg group/btn pl-3 pr-12 gap-3"
                         >
                           <MessageSquare className="h-4 w-4 shrink-0 opacity-70" />
-                          <span className="truncate font-medium">{session.title}</span>
+                          <span className="truncate font-medium">
+                            {(() => {
+                              try {
+                                if (session.title.startsWith('{')) {
+                                  const parsed = JSON.parse(session.title);
+                                  return parsed.message || parsed.text || session.title;
+                                }
+                                return session.title;
+                              } catch (e) {
+                                return session.title;
+                              }
+                            })()}
+                          </span>
                         </SidebarMenuButton>
                         <SidebarMenuAction
                           showOnHover
