@@ -13,7 +13,10 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const SHERPA_URL = `http://127.0.0.1:5001/synthesize`;
+    // Gunakan URL dari Env (misal: link tunnel Cloudflare) atau fallback ke localhost
+    const SHERPA_URL = process.env.SHERPA_TTS_URL 
+      ? `${process.env.SHERPA_TTS_URL}/synthesize`
+      : `http://127.0.0.1:5001/synthesize`;
 
     const engine = searchParams.get('engine') || 'azure'; // Default ke azure buat ngetes
     const sid = searchParams.get('sid') || '2';
