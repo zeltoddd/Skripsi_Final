@@ -374,3 +374,33 @@ ${data.forbidden_words.join(', ')}
 `.trim();
 }
 
+
+export const JOBS = [
+  {
+    id: 'job-1',
+    title: 'Junior Web Developer',
+    company: 'Mitra Industri Teknologi Surakarta',
+    location: 'Surakarta',
+    type: 'Full-time / Magang',
+    salary: 'Rp 3jt - 5jt',
+    major: 'rpl'
+  },
+  {
+    id: 'job-2',
+    title: 'Graphic Designer Trainee',
+    company: 'Mitra Industri Kreatif Surakarta',
+    location: 'Surakarta',
+    type: 'Internship',
+    salary: 'Rp 2jt - 3.5jt',
+    major: 'dkv'
+  },
+  {
+    id: 'job-3',
+    title: 'Staff Admin Keuangan',
+    company: 'Mitra Industri Keuangan Surakarta',
+    location: 'Surakarta',
+    type: 'Full-time',
+    salary: 'Rp 2.5jt - 4jt',
+    major: 'akl'
+  }
+];
