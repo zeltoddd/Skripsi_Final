@@ -210,6 +210,11 @@
   font-size: 0.85em;
   font-weight: 500;
 }
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+}
 
 /* Fix Sonner Transparency - Force Opaque */
 .toaster.group {
