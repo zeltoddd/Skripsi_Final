@@ -47,6 +47,8 @@ export const sendMessageToNvidia = async (
   trendData?: TrendData
   imageCaption?: string
   reasoning?: string
+  imageUrl?: string
+  groundingMetadata?: any
 }> => {
 
   const decision = route(message, !!fileData)

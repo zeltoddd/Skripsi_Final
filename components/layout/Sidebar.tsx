@@ -59,6 +59,7 @@ export function AppSidebar({
   onToggleTheme
 }: SidebarProps) {
   const pathname = usePathname();
+  const isChatActive = pathname.startsWith('/chat');
   
   // Group sessions by date
   const groupedSessions = sessions.reduce((acc: Record<string, ChatSession[]>, session) => {
@@ -80,10 +81,10 @@ export function AppSidebar({
   const groups = ['Hari Ini', 'Kemarin', '7 Hari Terakhir', 'Dulu'].filter(g => groupedSessions[g]?.length > 0);
 
   return (
-    <Sidebar variant="default" collapsible="icon" className="border-r border-border bg-card">
-      <SidebarHeader className="h-16 flex items-center justify-center p-0 border-b border-border group-data-[collapsible=icon]:p-0">
+     <Sidebar collapsible="icon" className="border-r border-border bg-card">
+        <SidebarHeader className="h-16 flex items-center justify-center p-0 border-b border-border group-data-[collapsible=icon]:p-0">
         <Link 
-          to="/chat" 
+          href="/chat"
           onClick={onNewChat}
           className="flex items-center justify-center w-full h-full"
         >
@@ -104,53 +105,54 @@ export function AppSidebar({
             <SidebarMenu className="p-2 gap-1 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:gap-0">
               <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
                 <SidebarMenuButton asChild tooltip="Dashboard" isActive={pathname === '/dashboard'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-                  <Link to="/dashboard" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
+                   <Link href="/dashboard" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
                     <LayoutDashboard className="h-5 w-5 shrink-0" />
                     <span className="group-data-[collapsible=icon]:hidden">Dashboard</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
-                <SidebarMenuButton asChild tooltip="Chat" isActive={location.pathname === '/chat'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-                  <Link to="/chat" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
-                    <MessageSquare className="h-5 w-5 shrink-0" />
-                    <span className="group-data-[collapsible=icon]:hidden">Chat Asisten</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
-                <SidebarMenuButton asChild tooltip="Career Path" isActive={location.pathname === '/career-path'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-                  <Link to="/career-path" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
-                    <MapIcon className="h-5 w-5 shrink-0" />
-                    <span className="group-data-[collapsible=icon]:hidden">Peta Karir</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
-                <SidebarMenuButton asChild tooltip="Lowongan" isActive={location.pathname === '/jobs'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-                  <Link to="/jobs" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
-                    <Briefcase className="h-5 w-5 shrink-0" />
-                    <span className="group-data-[collapsible=icon]:hidden">Loker SMK</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
-                <SidebarMenuButton asChild tooltip="Beasiswa" isActive={location.pathname === '/scholarships'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]-w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-                  <Link to="/scholarships" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
-                    <GraduationCap className="h-5 w-5 shrink-0" />
-                    <span className="group-data-[collapsible=icon]:hidden">Beasiswa</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              {/* Admin Menu (Hidden for Students) */}
-              <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center hidden">
-                <SidebarMenuButton asChild tooltip="Admin" isActive={location.pathname === '/admin'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-                  <Link to="/admin" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
-                    <Settings className="h-5 w-5 shrink-0" />
-                    <span className="group-data-[collapsible=icon]:hidden">Admin Panel</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+               <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+                 <SidebarMenuButton asChild tooltip="Chat" isActive={isChatActive} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+                   <Link href="/chat" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
+                     <MessageSquare className="h-5 w-5 shrink-0" />
+                     <span className="group-data-[collapsible=icon]:hidden">Chat Asisten</span>
+                   </Link>
+                 </SidebarMenuButton>
+               </SidebarMenuItem>
+               <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+                 <SidebarMenuButton asChild tooltip="Career Path" isActive={pathname === '/career-path'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+                   <Link href="/career-path" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
+                     <MapIcon className="h-5 w-5 shrink-0" />
+                     <span className="group-data-[collapsible=icon]:hidden">Peta Karir</span>
+                   </Link>
+                 </SidebarMenuButton>
+               </SidebarMenuItem>
+               <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+                 <SidebarMenuButton asChild tooltip="Lowongan" isActive={pathname === '/jobs'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+                   <Link href="/jobs" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
+                     <Briefcase className="h-5 w-5 shrink-0" />
+                     <span className="group-data-[collapsible=icon]:hidden">Loker SMK</span>
+                   </Link>
+                 </SidebarMenuButton>
+               </SidebarMenuItem>
+               <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+                 <SidebarMenuButton asChild tooltip="Beasiswa" isActive={pathname === '/scholarships'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+                   <Link href="/scholarships" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
+                     <GraduationCap className="h-5 w-5 shrink-0" />
+                     <span className="group-data-[collapsible=icon]:hidden">Beasiswa</span>
+                   </Link>
+                 </SidebarMenuButton>
+               </SidebarMenuItem>
+               {/* Settings */}
+               <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+                  <SidebarMenuButton asChild tooltip="Pengaturan" isActive={pathname === '/settings'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+                    <Link href="/settings" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
+                     <Settings className="h-5 w-5 shrink-0" />
+                     <span className="group-data-[collapsible=icon]:hidden">Pengaturan</span>
+                   </Link>
+                 </SidebarMenuButton>
+               </SidebarMenuItem>
+
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -172,41 +174,35 @@ export function AppSidebar({
                 </SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu>
-                    {groupedSessions[group].map(session => (
-                      <SidebarMenuItem key={session.id} className="relative">
-                        <SidebarMenuButton
-                          isActive={activeSessionId === session.id && location.pathname === '/chat'}
-                          onClick={() => {
-                            onSelectSession(session.id);
-                            if (location.pathname !== '/chat') window.location.href = '/chat';
-                          }}
-                          tooltip={session.title}
-                          className="h-10 rounded-lg group/btn pl-3 pr-12 gap-3"
-                        >
-                          <MessageSquare className="h-4 w-4 shrink-0 opacity-70" />
-                          <span className="truncate font-medium">
-                            {(() => {
-                              try {
-                                if (session.title.startsWith('{')) {
-                                  const parsed = JSON.parse(session.title);
-                                  return parsed.message || parsed.text || session.title;
-                                }
-                                return session.title;
-                              } catch (e) {
-                                return session.title;
-                              }
-                            })()}
-                          </span>
-                        </SidebarMenuButton>
-                        <SidebarMenuAction
-                          showOnHover
-                          onClick={() => onDeleteSession(session.id)}
-                          className="hover:text-destructive transition-colors right-2 top-2.5"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </SidebarMenuAction>
-                      </SidebarMenuItem>
-                    ))}
+                     {groupedSessions[group].map(session => (
+                       <SidebarMenuItem key={session.id} className="relative">
+                          <SidebarMenuButton asChild tooltip={session.title} isActive={activeSessionId === session.id} className="h-10 rounded-lg group/btn pl-3 pr-12 gap-3">
+                            <Link href={`/chat/${session.id}`} className="flex items-center gap-3 truncate">
+                             <MessageSquare className="h-4 w-4 shrink-0 opacity-70" />
+                             <span className="truncate font-medium">
+                               {(() => {
+                                 try {
+                                   if (session.title.startsWith('{')) {
+                                     const parsed = JSON.parse(session.title);
+                                     return parsed.message || parsed.text || session.title;
+                                   }
+                                   return session.title;
+                                 } catch (e) {
+                                   return session.title;
+                                 }
+                               })()}
+                             </span>
+                           </Link>
+                         </SidebarMenuButton>
+                         <SidebarMenuAction
+                           showOnHover
+                           onClick={() => onDeleteSession(session.id)}
+                           className="hover:text-destructive transition-colors right-2 top-2.5"
+                         >
+                           <Trash2 className="h-4 w-4" />
+                         </SidebarMenuAction>
+                       </SidebarMenuItem>
+                     ))}
                   </SidebarMenu>
                 </SidebarGroupContent>
               </SidebarGroup>

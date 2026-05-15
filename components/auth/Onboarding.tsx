@@ -12,6 +12,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import { SMK_MAJORS } from '@/constants/majors';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const getIcon = (iconName: string, className?: string) => {
   const props = { className: className || "h-4 w-4" };
@@ -29,6 +36,7 @@ const getIcon = (iconName: string, className?: string) => {
 
 export default function Onboarding() {
   const [selected, setSelected] = useState<string | null>(null);
+  const [grade, setGrade] = useState<string>('X');
   const [isSaving, setIsSaving] = useState(false);
   const router = useRouter();
   const { update } = useSession();
@@ -44,7 +52,8 @@ export default function Onboarding() {
       const res = await fetch('/api/user/onboard', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ major: majorLabel }),
+        body: JSON.stringify({ major: majorLabel, grade }),
+        credentials: 'include',
       });
 
       if (res.ok) {
@@ -69,6 +78,22 @@ export default function Onboarding() {
           <p className="text-sm text-muted-foreground">
             Kami akan menyesuaikan bimbingan karir dan rekomendasi berdasarkan bidang keahlianmu.
           </p>
+        </div>
+
+        {/* Grade Select */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Kelas ( Tingkat )</label>
+          <Select value={grade} onValueChange={setGrade}>
+            <SelectTrigger className="rounded-xl h-11 bg-muted/30 border-none focus:ring-primary/30">
+              <SelectValue placeholder="Pilih kelas" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="X">X (Kelas 10)</SelectItem>
+              <SelectItem value="XI">XI (Kelas 11)</SelectItem>
+              <SelectItem value="XII">XII (Kelas 12)</SelectItem>
+              <SelectItem value="Alumni">Alumni</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Major Selection */}

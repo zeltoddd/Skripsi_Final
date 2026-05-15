@@ -2,11 +2,18 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { cache } from "@/lib/cache";
 
 export async function GET() {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const cacheKey = `sessions:${session.user.id}`;
+  const cached = cache.get(cacheKey);
+  if (cached) {
+    return NextResponse.json(cached);
   }
 
   try {
@@ -34,6 +41,9 @@ export async function GET() {
       lastMessageAt: s.updatedAt,
       major: (session.user as any).major
     }));
+
+    // Cache for 5 minutes
+    cache.set(cacheKey, formattedSessions);
 
     return NextResponse.json(formattedSessions);
   } catch (error) {
@@ -74,6 +84,9 @@ export async function POST(req: Request) {
         messages: true
       }
     });
+
+    // Invalidate cache for this user
+    cache.delete(`sessions:${session.user.id}`);
 
     return NextResponse.json(newSession);
   } catch (error) {

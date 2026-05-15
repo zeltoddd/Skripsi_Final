@@ -2,6 +2,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { cache } from "@/lib/cache";
 
 export async function PATCH(
   req: Request,
@@ -51,6 +52,9 @@ export async function PATCH(
       }
     });
 
+    // Invalidate cache
+    cache.delete(`sessions:${session.user.id}`);
+
     return NextResponse.json(updatedSession);
   } catch (error: any) {
     console.error("UPDATE_SESSION_ERROR:", error);
@@ -80,6 +84,9 @@ export async function DELETE(
         userId: session.user.id // Security check
       }
     });
+
+    // Invalidate cache
+    cache.delete(`sessions:${session.user.id}`);
 
     return NextResponse.json({ success: true });
   } catch (error) {

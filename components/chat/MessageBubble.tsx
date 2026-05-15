@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
-import { ChatMessage, Sender, QuickAction } from '../../types';
+import { ChatMessage, QuickAction } from '../../types';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { 
@@ -38,10 +38,21 @@ interface ChatMessageBubbleProps {
   onQuickAction?: (action: QuickAction) => void;
   isSummarizing?: boolean;
   isLatest?: boolean;
+  failed?: boolean;
+  onRetry?: (userId: string) => void;
 }
 
-const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message, onSummarize, onQuickAction, isSummarizing, isLatest }) => {
-  const isAi = message.sender === 'ai' || message.sender === Sender.AI;
+const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
+  message,
+  onSummarize,
+  onQuickAction,
+  isSummarizing,
+  isLatest,
+  failed,
+  onRetry,
+}) => {
+  const sender = message.sender as string;
+  const isAi = sender === 'ai' || sender === 'model';
   const isError = message.isError;
   const groundingChunks = message.groundingMetadata?.groundingChunks;
   const [copied, setCopied] = useState(false);
@@ -137,6 +148,17 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message, onSummar
           )}
           <div className="text-white/90">{message.text.trim()}</div>
         </div>
+        {failed && onRetry && (
+          <div className="mt-2 flex justify-end">
+            <button
+              onClick={() => onRetry(message.id)}
+              className="flex items-center gap-1 px-2 py-1 rounded-md text-xs text-destructive hover:text-destructive/80 transition-colors"
+            >
+              <RefreshCw className="h-3 w-3" />
+              Coba lagi
+            </button>
+          </div>
+        )}
       </div>
     );
   }
@@ -235,7 +257,6 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message, onSummar
           </div>
         )}
 
-        {/* Quick Actions + Metadata Row */}
         {/* Quick Actions + Metadata Row */}
         {!isError && !message.isStreaming && (
           <div className="flex items-end justify-between gap-4 mt-4">

@@ -20,9 +20,9 @@ export default auth((req) => {
 
   const isLoggedIn = !!req.auth
 
-  // Public routes
-  const publicRoutes = ['/login', '/register']
-  const isPublicRoute = publicRoutes.some(r => pathname.startsWith(r))
+   // Public routes
+   const publicRoutes = ['/login', '/register', '/chat']
+   const isPublicRoute = publicRoutes.some(r => pathname.startsWith(r))
 
   // Redirect logic
   if (!isLoggedIn && !isPublicRoute && pathname !== '/') {

@@ -14,10 +14,10 @@ import {
   PanelLeft,
   ChevronDown
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import ChatMessageBubble from './MessageBubble';
-import { Sender } from '@/types';
-import { useChat } from '@/context/ChatContext';
+ import { cn } from '@/lib/utils';
+ import ChatMessageBubble from './MessageBubble';
+ import { Sender } from '@/types';
+ import { useChat } from '@/context/ChatContext';
 
 interface ChatInterfaceProps {
   messages: any[];
@@ -36,6 +36,8 @@ interface ChatInterfaceProps {
   onSummarize: (id: string) => void;
   onQuickAction: (action: any) => void;
   summarizingId: string | null;
+  failedMessages: Set<string>;
+  onRetry: (userId: string) => void;
 }
 
 export default function ChatInterface(props: ChatInterfaceProps) {
@@ -67,16 +69,18 @@ export default function ChatInterface(props: ChatInterfaceProps) {
             </div>
           ) : (
             <>
-              {props.messages.map((msg, index) => (
-                <ChatMessageBubble 
-                  key={msg.id} 
-                  message={msg} 
-                  onSummarize={props.onSummarize}
-                  onQuickAction={props.onQuickAction} 
-                  isSummarizing={props.summarizingId === msg.id} 
-                  isLatest={(msg.sender === 'ai' || msg.sender === Sender.AI) && index === props.messages.length - 1}
-                />
-              ))}
+               {props.messages.map((msg, index) => (
+                 <ChatMessageBubble 
+                   key={msg.id} 
+                   message={msg} 
+                   onSummarize={props.onSummarize}
+                   onQuickAction={props.onQuickAction} 
+                   isSummarizing={props.summarizingId === msg.id} 
+                   isLatest={(msg.sender === 'ai' || msg.sender === Sender.AI) && index === props.messages.length - 1}
+                   failed={props.failedMessages.has(msg.id)}
+                   onRetry={props.onRetry}
+                 />
+               ))}
               
               {props.isLoading && props.loadingStep && (
                 <div className="flex gap-3 py-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
