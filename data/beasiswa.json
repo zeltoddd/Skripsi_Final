@@ -1,0 +1,74 @@
+[
+  {
+    "id": "BSW001",
+    "nama": "Beasiswa Indonesia Maju",
+    "penyelenggara": "Kemendikbud RI",
+    "kategori": "prestasi",
+    "jenjang": "SMA/SMK",
+    "benefit": "Biaya pendidikan + uang saku",
+    "deadline": "2026-07-20",
+    "lokasi": "Nasional",
+    "link": "https://beasiswa.kemdikbud.go.id",
+    "deskripsi": "Program beasiswa untuk siswa berprestasi akademik maupun non akademik.",
+    "syarat": [
+      "Siswa aktif SMA/SMK",
+      "Memiliki prestasi",
+      "Melampirkan rapor"
+    ],
+    "tags": ["prestasi", "nasional", "akademik"]
+  },
+  {
+    "id": "BSW003",
+    "nama": "KIP Kuliah",
+    "penyelenggara": "Kemendikbud RI",
+    "kategori": "ekonomi",
+    "jenjang": "D3/S1",
+    "benefit": "Biaya kuliah penuh + biaya hidup",
+    "deadline": "2026-08-10",
+    "lokasi": "Nasional",
+    "link": "https://kip-kuliah.kemdikbud.go.id",
+    "deskripsi": "Bantuan pendidikan untuk siswa berprestasi dari keluarga kurang mampu.",
+    "syarat": [
+      "Memiliki KIP/KKS",
+      "Lulus seleksi perguruan tinggi",
+      "Melampirkan dokumen ekonomi"
+    ],
+    "tags": ["bantuan", "kuliah", "nasional"]
+  },
+  {
+    "id": "BSW004",
+    "nama": "Beasiswa Astra",
+    "penyelenggara": "Astra International",
+    "kategori": "vokasi",
+    "jenjang": "SMK",
+    "benefit": "Pelatihan industri + bantuan pendidikan",
+    "deadline": "2026-06-15",
+    "lokasi": "Jakarta",
+    "link": "https://astra.co.id",
+    "deskripsi": "Program dukungan siswa vokasi untuk kesiapan kerja industri.",
+    "syarat": [
+      "Siswa SMK aktif",
+      "Jurusan teknik",
+      "Memiliki minat industri"
+    ],
+    "tags": ["vokasi", "otomotif", "industri"]
+  },
+  {
+    "id": "BSW007",
+    "nama": "Beasiswa Telkom",
+    "penyelenggara": "Telkom Indonesia",
+    "kategori": "teknologi",
+    "jenjang": "SMK/S1",
+    "benefit": "Pelatihan digital + bantuan pendidikan",
+    "deadline": "2026-11-12",
+    "lokasi": "Nasional",
+    "link": "https://www.telkom.co.id",
+    "deskripsi": "Program pengembangan talenta digital muda Indonesia.",
+    "syarat": [
+      "Bidang IT/Digital",
+      "Portofolio proyek",
+      "CV"
+    ],
+    "tags": ["digital", "teknologi", "it"]
+  }
+]

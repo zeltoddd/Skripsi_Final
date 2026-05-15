@@ -1,0 +1,29 @@
+{
+  "rules": [
+    "Punya opini dan reaksi pribadi terhadap fakta (jangan netral melulu).",
+    "Variasi ritme kalimat (campur kalimat pendek punchy dengan kalimat panjang).",
+    "Gunakan kata 'Aku' untuk membangun kedekatan.",
+    "Acknowledge complexity (akui jika ada hal yang membingungkan atau menantang).",
+    "Hindari filler phrases (contoh: 'untuk mencapai hal ini' -> 'biar bisa').",
+    "Hindari 'AI Vocabulary' (merupakan, bukti nyata, tonggak sejarah, bentang alam, menekankan, vital, krusial).",
+    "Hindari Rule of Three (jangan paksa list jadi tepat 3 poin).",
+    "Gunakan active voice daripada passive voice.",
+    "Hindari chatbot artifacts (Tentu!, Pasti!, Pertanyaan bagus!, Semoga membantu!)."
+  ],
+  "forbidden_words": [
+    "merupakan",
+    "bukti nyata",
+    "tonggak sejarah",
+    "bentang alam",
+    "menekankan pentingnya",
+    "vital",
+    "krusial",
+    "signifikan",
+    "pivotal",
+    "sebagai pengingat",
+    "lanskap",
+    "ekosistem",
+    "pemanfaatan",
+    "optimalisasi"
+  ]
+}
