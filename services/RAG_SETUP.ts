@@ -252,6 +252,7 @@ export const normalizeMajor = (major: string): string => {
   if (m.includes('perkantoran') || m.includes('mplb') || m.includes('manajemen perkantoran')) return 'mplb'
   if (m.includes('pemasaran') || m.includes('marketing')) return 'pemasaran'
   if (m.includes('broadcasting') || m.includes('penyiaran')) return 'broadcasting'
+  if (m.includes('pariwisata') || m.includes('ulp') || m.includes('usaha layanan pariwisata')) return 'ulp'
   return 'umum'
 }
 

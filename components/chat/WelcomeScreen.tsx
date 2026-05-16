@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { SMK_MAJORS } from '../../constants';
 import { Button } from '../ui/button';
 import { 
-  Code, Palette, Film, Briefcase, Calculator, Map, ArrowRight, GraduationCap, Sparkles, ChevronLeft
+  Code, Palette, Film, Briefcase, Calculator, Map, ArrowRight, GraduationCap, Sparkles, ChevronLeft, RefreshCw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useChat } from '@/context/ChatContext';
+import { getSuggestedPromptsForSession, refreshSuggestedPrompts } from '@/lib/rag/suggestedPrompts';
 
 interface WelcomeProps {
   onSuggestionClick: (prompt: string, major?: string) => void;
@@ -31,6 +33,15 @@ const QUICK_PROMPTS = [
 
 const Welcome: React.FC<WelcomeProps> = ({ onSuggestionClick }) => {
   const [selectedMajorId, setSelectedMajorId] = useState<string | null>(null);
+  const { currentSessionId } = useChat();
+  const [refreshToken, setRefreshToken] = useState(0);
+  
+  // Generate prompts based on selected major and current session (for consistency)
+  const displayedPrompts = useMemo(() => {
+    if (!selectedMajorId) return [];
+    const sessionKey = currentSessionId || `new-${Date.now()}-${refreshToken}`;
+    return getSuggestedPromptsForSession(sessionKey, selectedMajorId);
+  }, [selectedMajorId, currentSessionId, refreshToken]);
 
   const getMajorLabel = (id: string) => SMK_MAJORS.find(m => m.id === id)?.label || id;
 
@@ -84,13 +95,16 @@ const Welcome: React.FC<WelcomeProps> = ({ onSuggestionClick }) => {
             <span className="text-xs font-medium text-muted-foreground">{getMajorLabel(selectedMajorId)}</span>
           </div>
           <h2 className="text-xl font-semibold tracking-tight">Apa yang ingin kamu tanyakan?</h2>
+          <p className="text-xs text-muted-foreground">
+            Berikut adalah beberapa topik yang bisa kamu mulai
+          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {QUICK_PROMPTS.map((prompt, i) => (
+          {displayedPrompts.map((prompt, i) => (
             <button
-              key={i}
-              onClick={() => onSuggestionClick(prompt, getMajorLabel(selectedMajorId))}
+              key={`${selectedMajorId}-${i}`}
+              onClick={() => onSuggestionClick(prompt, selectedMajorId)}
               className="text-left p-3 rounded-lg border border-border bg-card hover:bg-accent hover:border-foreground/20 transition-colors group"
             >
               <p className="text-sm font-medium leading-snug">{prompt}</p>
@@ -101,9 +115,23 @@ const Welcome: React.FC<WelcomeProps> = ({ onSuggestionClick }) => {
           ))}
         </div>
 
-        <p className="text-xs text-muted-foreground">
-          Atau ketik pertanyaanmu langsung di kolom chat di bawah.
-        </p>
+        <div className="flex items-center justify-between pt-2">
+          <p className="text-xs text-muted-foreground">
+            Atau ketik pertanyaanmu langsung di kolom chat di bawah.
+          </p>
+          <button
+            onClick={() => {
+              const sessionKey = currentSessionId || `new-${Date.now()}`;
+              refreshSuggestedPrompts(sessionKey, selectedMajorId!);
+              setRefreshToken(t => t + 1);
+            }}
+            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+            title="Refresh saran"
+          >
+            <RefreshCw className="h-3 w-3" />
+            Refresh
+          </button>
+        </div>
       </div>
     </div>
   );

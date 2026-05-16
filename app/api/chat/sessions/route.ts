@@ -28,19 +28,26 @@ export async function GET() {
     });
 
     // Map ke format yang diharapkan UI
-    const formattedSessions = chatSessions.map(s => ({
-      id: s.id,
-      title: s.title,
-      messages: s.messages.map(m => ({
+    const formattedSessions = chatSessions.map(s => {
+      const msgs = s.messages.map(m => ({
         id: m.id,
         sender: m.role === 'user' ? 'user' : 'ai',
         text: m.content,
-        timestamp: m.createdAt,
+        timestamp: (m.metadata as any)?.clientTimestamp || m.createdAt,
         ...(m.metadata as any)
-      })),
-      lastMessageAt: s.updatedAt,
-      major: (session.user as any).major
-    }));
+      }));
+
+      // Sort in memory using the exact client timestamp
+      msgs.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
+      return {
+        id: s.id,
+        title: s.title,
+        messages: msgs,
+        lastMessageAt: s.updatedAt,
+        major: (session.user as any).major
+      };
+    });
 
     // Cache for 5 minutes
     cache.set(cacheKey, formattedSessions);
@@ -66,18 +73,24 @@ export async function POST(req: Request) {
         userId: session.user.id,
         title: title || "Sesi Baru",
         messages: {
-          create: messages.map((m: any) => ({
-            role: m.sender === 'user' ? 'user' : 'assistant',
-            content: m.text || "", // Fallback
-            metadata: {
-              reasoning: m.reasoning || null,
-              quickActions: m.quickActions || null,
-              groundingMetadata: m.groundingMetadata || null,
-              imageUrl: m.imageUrl || null,
-              imageCaption: m.imageCaption || null,
-              fileData: m.fileData || null
-            }
-          }))
+          create: messages.map((m: any) => {
+            const clientTime = m.timestamp || new Date().toISOString();
+            return {
+              id: m.id || undefined,
+              role: m.sender === 'user' ? 'user' : 'assistant',
+              content: m.text || "", // Fallback
+              createdAt: new Date(clientTime),
+              metadata: {
+                clientTimestamp: clientTime,
+                reasoning: m.reasoning || null,
+                quickActions: m.quickActions || null,
+                groundingMetadata: m.groundingMetadata || null,
+                imageUrl: m.imageUrl || null,
+                imageCaption: m.imageCaption || null,
+                fileData: m.fileData || null
+              }
+            };
+          })
         }
       },
       include: {

@@ -963,6 +963,339 @@ export const MAJOR_KNOWLEDGE: Record<string, MajorKnowledge> = {
     },
     entrepreneurshipPath: 'Bisa buka digital marketing agency, jual produk sendiri via e-commerce, atau jadi affiliate marketer.',
   },
+
+  // ──────────────────────────────────────────────────────────
+  // BROADCASTING — Broadcasting dan Perfilman
+  // ──────────────────────────────────────────────────────────
+  broadcasting: {
+    id: 'broadcasting',
+    name: 'Broadcasting',
+    fullName: 'Broadcasting dan Perfilman',
+    emoji: '🎬',
+    description: 'Jurusan yang mempelajari pembuatan konten video, acaraTV, film pendek, podcast, dan produksi media broadcast. Kamu akan belajar sinematografi, editing, penulisan naskah, dan bagaimana menyampaikan pesan melalui audio-visual.',
+    coreSubjects: [
+      'Produksi Video dan Film',
+      'Penyiaran dan Televisi',
+      'Sinematografi dan Komposisi Visual',
+      'Editing Video dan Audio',
+      'Penulisan Naskah (Screenwriting)',
+      'Presentasi dan Kepemanduan',
+      'Lighting dan Sound Recording',
+    ],
+    hardSkills: [
+      'Pengoperasian kamera video dan DSLR/mirrorless',
+      'Editing video: Premiere Pro, DaVinci Resolve, CapCut',
+      'Color grading dan sound design',
+      'Lighting untuk studio dan lokasi',
+      'Live streaming setup dan equipment',
+      'Content planning dan scripting',
+      'Motion graphics: After Effects',
+    ],
+    softSkills: [
+      'Kreativitas dalam bercerita (storytelling)',
+      'Ketahanan fisik (bisa berdiri lama, lembur editing)',
+      'Komunikasi dan kerja tim tim produksi',
+      'Manajemen waktu (deadline shooting sering ketat)',
+      'Adaptasi terhadap teknologi baru (AI video, drone)',
+      'Confidence di depan dan di belakang kamera',
+    ],
+    tools: [
+      'Adobe Premiere Pro (editing video)',
+      'DaVinci Resolve (color grading)',
+      'After Effects (motion graphics)',
+      'CapCut / Final Cut Pro (editing ringan)',
+      'OBS Studio (live streaming)',
+      'Canon / Sony mirrorless (kamera utama)',
+      'DJI Drone (aerial footage)',
+    ],
+    careerTracks: [
+      {
+        name: 'Content Creator & YouTuber',
+        entryLevel: [
+          { role: 'YouTuber / Content Creator', salary: 'Rp 0 – 10.000.000+ (tergantung monetize)' },
+          { role: 'Video Editor Freelance', salary: 'Rp 2.000.000 – 5.000.000' },
+          { role: 'Social Media Video Specialist', salary: 'Rp 2.500.000 – 4.500.000' },
+        ],
+        midLevel: [
+          { role: 'Senior Video Editor', salary: 'Rp 5.000.000 – 12.000.000', yearsExp: '2–4 tahun' },
+          { role: ' Cinematographer', salary: 'Rp 5.000.000 – 15.000.000', yearsExp: '2–4 tahun' },
+          { role: 'Creative Content Lead', salary: 'Rp 6.000.000 – 15.000.000', yearsExp: '3–5 tahun' },
+        ],
+        seniorLevel: [
+          { role: 'Film Director / Creative Director', salary: 'Rp 15.000.000 – 50.000.000+', yearsExp: '6+ tahun' },
+          { role: 'Post-Production Supervisor', salary: 'Rp 15.000.000 – 40.000.000', yearsExp: '6+ tahun' },
+        ],
+        requiredSkills: ['Video editing', 'Storytelling visual', 'Color grading', 'Sound design'],
+      },
+      {
+        name: 'Broadcasting & TV Production',
+        entryLevel: [
+          { role: 'Cameraman / Juru Gamber', salary: 'Rp 2.500.000 – 4.500.000' },
+          { role: 'Video Editor TV', salary: 'Rp 2.500.000 – 4.500.000' },
+          { role: 'Reporter / Broadcaster', salary: 'Rp 2.500.000 – 5.000.000' },
+        ],
+        midLevel: [
+          { role: 'TV Producer', salary: 'Rp 6.000.000 – 15.000.000', yearsExp: '2–4 tahun' },
+          { role: 'News Producer', salary: 'Rp 6.000.000 – 14.000.000', yearsExp: '2–4 tahun' },
+          { role: 'Creative Director TV', salary: 'Rp 10.000.000 – 25.000.000', yearsExp: '4–6 tahun' },
+        ],
+        seniorLevel: [
+          { role: 'Executive Producer', salary: 'Rp 20.000.000 – 60.000.000+', yearsExp: '8+ tahun' },
+          { role: 'Station Manager', salary: 'Rp 25.000.000 – 70.000.000+', yearsExp: '10+ tahun' },
+        ],
+        requiredSkills: ['Produksi TV', 'manajemen produksi', 'scriptwriting', 'live direction'],
+      },
+    ],
+    salaryData: {
+      freshGraduate: 'Rp 2.500.000 – 4.500.000/bulan (biasanya kontrak/leasing TV station)',
+      oneToThreeYears: 'Rp 4.000.000 – 10.000.000/bulan',
+      fiveYearsPlus: 'Rp 10.000.000 – 30.000.000/bulan',
+      topEarner: 'Rp 50.000.000+/bulan (creative director, YouTuber ternama, film director)',
+      notes: 'Broadcasting punya potensi monetisasi paling besar dari YouTube/content platform. Gaji tetap di TV station biasanya rendah, tapi pengalaman dan portofolio video adalah aset sangat值钱.',
+    },
+    certifications: [
+      { name: 'Adobe Certified Professional (Premiere Pro)', provider: 'Adobe', cost: 'Rp 1.500.000', difficulty: 'sedang', value: 'tinggi', link: 'https://adobe.com' },
+      { name: 'DaVinci Resolve Certification', provider: 'Blackmagic Design', cost: 'Gratis', difficulty: 'sedang', value: 'tinggi', link: 'https://blackmagicdesign.com' },
+      { name: 'Drone License (SIMNAWA)', provider: 'Kementerianhubud', cost: 'Rp 3.000.000', difficulty: 'sedang', value: 'sedang', link: 'https://115.124.78.36' },
+    ],
+    higherEducation: [
+      {
+        type: 'S1',
+        major: 'Komunikasi / Broadcast / Film',
+        institutions: ['ISI Surakarta', 'UGM', 'UNDIP', 'UniversitasAtma Jaya', 'Universitas Multimedia Nusantara'],
+        notes: 'Tapi portofolio video lebih penting dari ijazah. Banyak filmmaker sukses tanpa gelar Broadcast — yang penting karya dan pengalaman produksi.',
+      },
+    ],
+    pklTips: [
+      'Minta ikut produksi konten dari awal sampai akhir — jangan cuma jadi runner',
+      'Buat showreel (reel 1-2 menit) dari footage PKL untuk portofolio',
+      'TV lokal, production house, digital agency, atau studio foto bisa jadi tempat PKL',
+      'Networking dengan crew dan talent selama PKL — industri ini sangat relationship-based',
+      'Pelajari basic editing sebelum PKL — akan sangat membantu',
+    ],
+    commonMisconceptions: [
+      {
+        myth: 'Broadcasting harus punya kamera mahal dan studio canggih',
+        fact: 'Smartphone sekarang sudah bisa produki video 4K. Yang lebih penting adalah skill storytelling dan editing. Canva, CapCut, dan DaVinci Resolve bisa dipakai gratis.',
+      },
+      {
+        myth: 'Harus jadi selebriti untuk sukses di broadcasting',
+        fact: 'Banyak profesional sukses di belakang layar — video editor, colorist, sound designer, producer — tanpa perlu tampil di kamera.',
+      },
+      {
+        myth: 'Industri broadcasting hanya ada di Jakarta',
+        fact: 'Content creator dan production house ada di semua kota besar. Solo punya komunitas kreatif yang berkembang. Remote editing dan kolaborasi online sangat umum.',
+      },
+    ],
+    commonStudentQuestions: [
+      {
+        q: 'Gimana cara mulai jadi YouTuber yang serious?',
+        a: 'Tentukan niche yang kamu suka dan paham. Buat jadwal upload konsisten (misal 1 video/minggu). Fokus pada kualitas editing dan storytelling, bukan peralatan. Pakai smartphone + ring light + lapel mic sudah cukup untuk mulai. Monetisasi YouTube biasanya baru masuk setelah 1000 subscriber — fokus bangun audience dulu.',
+      },
+      {
+        q: 'AI kayak Sora atau Runway bisa gantiin videographer?',
+        a: 'Belum. AI video generator masih punya keterbatasan: hasil belum fotorealistik untuk banyak use case, tidak bisa capture momen real-life, dan masih sulit untuk konten yang butuh autentisitas. Yang terjadi justru sebaliknya — demand videographer naik karena semua brand butuh konten video.',
+      },
+      {
+        q: 'CapCut cukup gak untuk editing profesional?',
+        a: 'Cukup untuk social media content. Tapi untuk kerja di TV, film, atau iklan, kamu perlu Premiere Pro atau DaVinci Resolve. Mulai dari CapCut untuk belajar dasar editing, lalu upgrade ke software profesional.',
+      },
+    ],
+    localCompanies: [
+      'TVRI Solo (stasiun TV pemerintah)',
+      'Production house dan wedding studio di Surakarta',
+      'Digital agency yang butuh content video',
+      'Kreator konten lokal dan micro-influencer Solo',
+    ],
+    nationalPlatforms: [
+      'YouTube — platform utama monetisasi video',
+      'TikTok — viral dan monetisasi直播',
+      'Skillshare — kursus video production',
+      'Pewworld剪辑 — tutorial editing gratis',
+      'Frame.io — kolaborasi review video',
+    ],
+    industryDemand: {
+      level: 'tinggi',
+      trend: 'Setiap brand dan bisnis butuh konten video. Platform seperti TikTok, YouTube, dan Instagram Reels mendorong demand videographer dan content creator terus naik.',
+      hotRoles: ['Content Creator', 'Video Editor', 'Cinematographer', 'Live Streaming Operator', 'Drone Pilot'],
+    },
+    freelanceOpportunity: {
+      possible: true,
+      description: 'Broadcasting/Content Creation adalah bidang dengan peluang freelance paling bebas — bisa mulai dari kelas X dengan modal HP.',
+      platforms: ['YouTube (monetisasi)', 'TikTok Creator Fund', 'Sribulancer (jasa editing)', 'Fiverr (video editing internasional)', 'Referral dari klien'],
+      estimatedIncome: 'Rp 500.000 – 5.000.000 per project video. YouTuber/influencer: tidak terbatas.',
+    },
+    entrepreneurshipPath: 'Bisa buka production house kecil, wedding video studio, content agency untuk brand, atau build personal brand sebagai content creator.',
+  },
+
+  // ──────────────────────────────────────────────────────────
+  // ULP — Usaha Layanan Pariwisata
+  // ──────────────────────────────────────────────────────────
+  ulp: {
+    id: 'ulp',
+    name: 'ULP',
+    fullName: 'Usaha Layanan Pariwisata',
+    emoji: '✈️',
+    description: 'Jurusan yang mempelajari industri pariwisata dan perhotelan — dari cara melayani tamu, mengelola reservasi, hingga mengelola usaha biro perjalanan dan event tourism. Cocok untuk kamu yang suka bertemu orang baru, suka traveling, dan punya rasa ingin tahu tinggi.',
+    coreSubjects: [
+      'Patiseri (Pembuatan Kue dan RotI)',
+      'Housekeeping (Perawatan Kamar Hotel)',
+      'Front Office (Resepsionis Hotel)',
+      'Tour and Travel Management',
+      'MICE (Meeting, Incentive, Conference, Exhibition)',
+      'Dasar Perhotelan dan Hospidality',
+      'Bahasa Inggris Pariwisata',
+    ],
+    hardSkills: [
+      'Patiseri: baking, dekorasI kue, pastry dasar',
+      'Housekeeping: tidying, deep cleaning, turndown service',
+      'Front office: OPERA/PMS system, check-in/out, handling complaint',
+      'Tour planning: itinerary, budgeting, koordinasi transportasi',
+      'Food & beverage service: table setting, serving',
+      'Event organizing dasar',
+    ],
+    softSkills: [
+      'Keramahan dan empati (hospitality mindset)',
+      'Komunikasi multibahasa (minimal Inggris)',
+      'Ketahanan fisik (banyak berdiri, shift kerja)',
+      'Manajemen stres (saat拥挤 atau komplain tamu)',
+      'Detail-oriented (kebersihan dan kerapian)',
+      'Problem solving cepat',
+    ],
+    tools: [
+      'OPERA Cloud (Property Management System hotel)',
+      'Sabre / Amadeus (sistem reservasi tiket pesawat)',
+      'Microsoft Excel (untuk planning dan budgeting tour)',
+      'Canva (buat itinerary dan materi promosi wisata)',
+      'Google Workspace (email, calendar, meet)',
+      'WhatsApp Business (komunikasi tamu)',
+    ],
+    careerTracks: [
+      {
+        name: 'Hotel & Hospitality',
+        entryLevel: [
+          { role: 'Front Office Staff / Resepsionis', salary: 'Rp 2.000.000 – 3.500.000 + service charge' },
+          { role: 'Housekeeping Staff', salary: 'Rp 1.800.000 – 3.000.000 + service charge' },
+          { role: 'Waiter / F&B Staff', salary: 'Rp 1.800.000 – 3.000.000 + tips' },
+        ],
+        midLevel: [
+          { role: 'Front Office Supervisor', salary: 'Rp 4.000.000 – 8.000.000', yearsExp: '2–4 tahun' },
+          { role: 'Housekeeping Supervisor', salary: 'Rp 4.000.000 – 7.000.000', yearsExp: '2–4 tahun' },
+          { role: 'Guest Relations Officer', salary: 'Rp 3.500.000 – 7.000.000', yearsExp: '2–4 tahun' },
+        ],
+        seniorLevel: [
+          { role: 'Front Office Manager', salary: 'Rp 8.000.000 – 20.000.000', yearsExp: '5+ tahun' },
+          { role: 'Resort Manager / Hotel Manager', salary: 'Rp 15.000.000 – 40.000.000', yearsExp: '8+ tahun' },
+        ],
+        requiredSkills: ['OPERA PMS', 'Bahasa Inggris', 'Handling complaint', 'Leadership'],
+      },
+      {
+        name: 'Tour & Travel',
+        entryLevel: [
+          { role: 'Tour Guide', salary: 'Rp 2.500.000 – 4.500.000 + tips' },
+          { role: 'Travel Agent / Counter', salary: 'Rp 2.000.000 – 3.500.000' },
+          { role: 'Reservation Staff', salary: 'Rp 2.000.000 – 3.500.000' },
+        ],
+        midLevel: [
+          { role: 'Tour Coordinator', salary: 'Rp 4.000.000 – 8.000.000', yearsExp: '2–4 tahun' },
+          { role: 'Corporate Travel Consultant', salary: 'Rp 4.500.000 – 9.000.000', yearsExp: '2–4 tahun' },
+          { role: 'MICE Coordinator', salary: 'Rp 4.000.000 – 8.000.000', yearsExp: '2–4 tahun' },
+        ],
+        seniorLevel: [
+          { role: 'Tour Manager / Travel Manager', salary: 'Rp 10.000.000 – 25.000.000', yearsExp: '6+ tahun' },
+          { role: 'Biro Perjalanan Manager', salary: 'Rp 12.000.000 – 30.000.000', yearsExp: '8+ tahun' },
+        ],
+        requiredSkills: ['Itinerary planning', 'Manajemen grup', 'Koordinasi vendor', 'Budgeting'],
+      },
+    ],
+    salaryData: {
+      freshGraduate: 'Rp 1.800.000 – 3.500.000/bulan + service charge/tips (hotel) atau Rp 2.500.000 – 4.500.000 + tips (tour guide)',
+      oneToThreeYears: 'Rp 3.000.000 – 7.000.000/bulan',
+      fiveYearsPlus: 'Rp 7.000.000 – 20.000.000/bulan',
+      topEarner: 'Rp 30.000.000+/bulan (hotel manager, travel agency owner, event organizer senior)',
+      notes: 'Tour guide freelance bisa earn lebih dari gaji tetap — especially jika guide untuk wisata premium atau luar kota. Hospitality adalah industri yang tidak pernah mati.',
+    },
+    certifications: [
+      { name: 'Sertifikasi Bahasa Inggris Pariwisata (ILEC/IELTS)', provider: 'British Council', cost: 'Rp 2.000.000', difficulty: 'sedang', value: 'tinggi', link: 'https://britishcouncil.org' },
+      { name: 'AHLEI (American Hotel & Lodging Educational Institute)', provider: 'AHLEI', cost: 'Rp 1.500.000', difficulty: 'sedang', value: 'tinggi', link: 'https://ahlei.org' },
+      { name: 'Sertifikasi Tour Guide (KEMENPAREKRAF)', provider: 'Kemenparekraf', cost: 'Rp 500.000', difficulty: 'mudah', value: 'sedang', link: 'https://kemenparekraf.go.id' },
+    ],
+    higherEducation: [
+      {
+        type: 'S1',
+        major: 'Manajemen Perhotelan / Pariwisata / Hospitaliti',
+        institutions: ['UNS Surakarta', 'UMS Solo', 'Universitas Parasarjana Surakarta', 'Politeknik Negeri Bali', 'UPN Veteran Yogyakarta'],
+        notes: 'Kuliah bukan wajib, tapi bisa bantu naik posisi ke managerial lebih cepat. Yang lebih penting: experience dan service attitude.',
+      },
+      {
+        type: 'D4',
+        major: 'Perhotelan / Usaha Perjalanan Wisata',
+        institutions: ['Politeknik Negeri Bali', 'Politeknik Negeri Bandung (HTN)', 'Politeknik Negeri Samarinda'],
+        notes: 'D4 sangat praktis dan langsung dapat pengalaman industri. Banyak langsung ditawari kerja sebelum lulus.',
+      },
+    ],
+    pklTips: [
+      'Pilih hotel bintang 3-5 untuk dapat pengalaman lengkap dari front office sampai housekeeping',
+      'Biro perjalanan (travel agent) atau tour operator lokal untuk pengalaman tourism management',
+      'Minta ikut briefing dan debriefing tamu — ini where the learning happens',
+      'Catat semua prosedur OPERA atau PMS yang dipakai — bisa jadi modal utama melamar kerja',
+      'Tour guide ke Candi Prambanan atau Borobudur adalah pengalaman PKL yang sangat berharga',
+    ],
+    commonMisconceptions: [
+      {
+        myth: 'Pariwisata tidak stabil — pandemi dulu membuktikan旅游业 bisa collapse',
+        fact: 'Pandemi adalah black swan event. Pariwisata selalu rebound cepat karena kebutuhan manusia untuk berwisata tidak hilang. Justru setelah pandemi, industri pariwisata recover sangat cepat dan bahkan terjadi boom. Selama kamu punya skill yang transferable (Bahasa Inggris, pelayanan prima), kamu tidak akan kehilangan pekerjaan.',
+      },
+      {
+        myth: 'Harus jago Bahasa Inggris lancar untuk bisa kerja di pariwisata',
+        fact: 'Minimal English conversation yang baik sudah cukup untuk banyak posisi. Kamu bisa belajar sambil kerja. Yang lebih penting adalah attitude — keramahan, keterbukaan, dan willingness to help.',
+      },
+      {
+        myth: 'Kerja di hotel/ulp cuma jadi pelayan dan bersih-bersih',
+        fact: 'Industri pariwisata punya banyak jalur karier: revenue manager, event planner, digital marketing tourism, food & beverage manager, sustainable tourism consultant. Bahkan digital nomadism paling cocok untuk lulusan pariwisata — bisa kerja dari mana saja.',
+      },
+    ],
+    commonStudentQuestions: [
+      {
+        q: 'Kerja di hotel itu membosankan gak? Shift terus, lembur, gak ada waktu pribadi?',
+        a: 'Ya, shift itu nyata. Tapi hospitality industry justru punya schedule yang fleksibel compared to office jobs. Shift pagi/sore/malam biasanya rotate. Days off juga di weekday saat orang lain kerja. Yang butuh waktu pribadi: coba posisi reservation, travel agent, atau tourism management yang lebih ke office setting.',
+      },
+      {
+        q: 'Bisa kerja remote di Pariwisata?',
+        a: 'Bisa! Travel blogger, remote travel consultant, digital nomad tourism writer, atau work dari mana aja dengan skill reservation system. Bahkan bisa jadi "digital guide" — bikin virtual tour content. Tapi front office dan hotel operations tetap butuh onsite presence.',
+      },
+      {
+        q: 'Tour guide harus public speaking bagus? Aku introvert.',
+        a: 'Introvert bisa jadi tour guide yang excellent — justru lebih good listener dan lebih prepared. Public speaking itu skill yang bisa dilatih. Banyak tour guide top yang introvert tapi punya cara storytelling yang compelling. Yang penting: knowledge tentang destinasi dan genuine interest untuk berbagi.',
+      },
+    ],
+    localCompanies: [
+      'Hotel stars di Surakarta (The Royal Surakarta, Alila, dll)',
+      'PT. Taman Wisata Candi Borobudur / Prambanan',
+      'Travel agent lokal Solo (Kerta Travel, Dwidaya, dll)',
+      'Artotel Solo (hospitality chain)',
+      'Wonosoco Lodge / Agrowisatas di sekitar Surakarta',
+    ],
+    nationalPlatforms: [
+      'Traveloka / Tiket.com — loker hospitality & tourism',
+      'LinkedIn — loker hotel chain international',
+      'Glassdoor — review gaji dan culture perusahaan hospitality',
+      'Skillshare — kursus hospitality management',
+      'AHLA (American Hotel & Lodging Association) — resource gratis',
+    ],
+    industryDemand: {
+      level: 'sedang',
+      trend: 'Pariwisata Indonesia terus recover dan grow pasca-pandemi. Pemerintah gencar promosikan wisata domestik dan internasional. Trend sustainable tourism dan digital tourism membuka peluang baru.',
+      hotRoles: ['Guest Relations', 'Revenue Manager', 'Event Coordinator', 'Sustainable Tourism Consultant', 'Digital Tourism Marketer'],
+    },
+    freelanceOpportunity: {
+      possible: true,
+      description: 'Tour guide freelance, wedding planner, event organizer, atau tourism content creator bisa dimulai tanpa modal besar.',
+      platforms: ['Airbnb Experiences (guide lokal)', 'Instagram (personal branding pariwisata)', 'GetYourGuide', 'Kaskus Freelance', 'Referral dari wisatawan'],
+      estimatedIncome: 'Rp 300.000 – 1.500.000/hari sebagai tour guide freelance. Wedding/event planner: Rp 5.000.000 – 20.000.000 per event.',
+    },
+    entrepreneurshipPath: 'Bisa buka travel agent kecil, home bakery untuk hospitality, wedding/event planning, tourism content creator dengan monetisasi, atau even management service.',
+  },
 }
 
 // ============================================================

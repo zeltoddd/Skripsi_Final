@@ -6,7 +6,7 @@ import ChatInterface from '@/components/chat/ChatInterface';
 import WelcomeScreen from '@/components/chat/WelcomeScreen';
 import { sendMessageToNvidia } from '@/services/nvidiaService';
 import { useChat } from '@/context/ChatContext';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 
 export default function ChatSessionPage() {
   const { data: authSession, status } = useSession();
@@ -25,7 +25,7 @@ export default function ChatSessionPage() {
   const isAuthenticated = !!authSession;
   const effectiveMajor = isAuthenticated ? sessionMajor : userMajor;
 
-  const { currentSessionId, setCurrentSessionId, refreshSessions, sessions } = useChat();
+  const { currentSessionId, setCurrentSessionId, refreshSessions, sessions, saveGuestSession } = useChat();
   const params = useParams();
   const router = useRouter();
   const sessionIdFromUrl = params.sessionId as string;
@@ -33,6 +33,38 @@ export default function ChatSessionPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const onSendMessageRef = useRef<((textOverride?: any) => Promise<void>) | null>(null);
+  const prevSessionIdRef = useRef<string | null>(null);
+
+  // Sync messages from database when currentSessionId changes
+  useEffect(() => {
+    if (!currentSessionId) {
+      if (!isLoading) setMessages([]);
+      prevSessionIdRef.current = null;
+      return;
+    }
+
+    const isNewSessionSwitch = prevSessionIdRef.current !== currentSessionId;
+    prevSessionIdRef.current = currentSessionId;
+
+    const activeSession = sessions.find(s => s.id === currentSessionId);
+    
+    if (activeSession) {
+      setMessages(prev => {
+        // Load from DB only on initial load or session switch
+        if ((isNewSessionSwitch || prev.length === 0) && !isLoading) {
+          return activeSession.messages;
+        }
+        
+        // During active chat, NEVER overwrite local state with DB state
+        // Local React state is the single source of truth for the active UI
+        // This completely eliminates any UI flickering or re-ordering!
+        return prev;
+      });
+    } else if (isNewSessionSwitch && !isLoading) {
+      setMessages([]);
+    }
+  }, [currentSessionId, sessions, isLoading]);
 
   // Show loading while session is loading
   if (status === 'loading') {
@@ -54,7 +86,7 @@ export default function ChatSessionPage() {
             }
             if (prompt) {
               setInput(prompt);
-              setTimeout(() => onSendMessage(prompt), 100);
+              setTimeout(() => onSendMessageRef.current?.(prompt), 100);
             }
           }
         }}
@@ -62,26 +94,22 @@ export default function ChatSessionPage() {
     );
   }
 
-  // Sync messages from database when currentSessionId changes
-  const lastLoadedSessionId = useRef<string | null>(null);
-  useEffect(() => {
-    if (isLoading) return;
-    if (currentSessionId !== lastLoadedSessionId.current) {
-      if (currentSessionId) {
-        const activeSession = sessions.find(s => s.id === currentSessionId);
-        if (activeSession) {
-          setMessages(activeSession.messages);
-          lastLoadedSessionId.current = currentSessionId;
-        }
-      } else {
-        setMessages([]);
-        lastLoadedSessionId.current = null;
-      }
-    }
-  }, [currentSessionId, sessions, isLoading]);
+
 
   // Auto-save to DB after successful AI response
    const saveChatToDb = async (sessionId: string, updatedMessages: any[], title?: string) => {
+    if (!isAuthenticated && saveGuestSession) {
+      saveGuestSession({
+        id: sessionId,
+        title: title || 'Sesi Tamu',
+        messages: updatedMessages,
+        major: effectiveMajor || '',
+        lastMessageAt: new Date()
+      });
+      router.refresh();
+      return;
+    }
+
     try {
       const res = await fetch(`/api/chat/sessions/${sessionId}`, {
         method: 'PATCH',
@@ -91,8 +119,11 @@ export default function ChatSessionPage() {
       });
       if (res.ok) {
         refreshSessions();
+      } else if (res.status === 401) {
+        console.error("DB Save failed: Unauthorized. Logging out...");
+        signOut({ callbackUrl: '/login' });
       } else {
-        console.error("DB Save failed:", await res.json());
+        console.error("DB Save failed:", await res.json().catch(() => ({})));
       }
     } catch (error) {
       console.error("DB Save failed:", error);
@@ -128,33 +159,47 @@ export default function ChatSessionPage() {
     let activeSessionId = currentSessionId;
     const isAuthenticated = !!authSession;
 
-    // Create new session only for authenticated users
-    if (!activeSessionId && isAuthenticated) {
-      try {
-        const res = await fetch('/api/chat/sessions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: textToUse.slice(0, 30) + (textToUse.length > 30 ? '...' : ''),
-            messages: updatedMessages
-          }),
-          credentials: 'include',
-        });
+    // Create new session
+    if (!activeSessionId) {
+      if (isAuthenticated) {
+        try {
+          const res = await fetch('/api/chat/sessions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: textToUse.slice(0, 30) + (textToUse.length > 30 ? '...' : ''),
+              messages: updatedMessages
+            }),
+            credentials: 'include',
+          });
 
-        if (res.ok) {
-          const newSession = await res.json();
-          activeSessionId = newSession.id;
-          setCurrentSessionId(activeSessionId);
-          // Mark this session as loaded to prevent the sync effect from overwriting
-          // our local streaming messages with stale DB data
-          lastLoadedSessionId.current = activeSessionId;
-          refreshSessions();
-        } else {
-          const errData = await res.json().catch(() => ({}));
-          console.error("Failed to create session in DB:", errData.error || res.statusText);
+          if (res.ok) {
+            const newSession = await res.json();
+            activeSessionId = newSession.id;
+            setCurrentSessionId(activeSessionId);
+            window.history.replaceState(null, '', `/chat/${activeSessionId}`);
+            refreshSessions();
+          } else if (res.status === 401) {
+            console.error("Failed to create session in DB: Unauthorized. Logging out...");
+            signOut({ callbackUrl: '/login' });
+            return;
+          } else {
+            const errData = await res.json().catch(() => ({}));
+            console.error("Failed to create session in DB:", errData.error || res.statusText);
+          }
+        } catch (error) {
+          console.error("Failed to create session in DB:", error);
         }
-      } catch (error) {
-        console.error("Failed to create session in DB:", error);
+      } else if (saveGuestSession) {
+        activeSessionId = crypto.randomUUID();
+        setCurrentSessionId(activeSessionId);
+        window.history.replaceState(null, '', `/chat/${activeSessionId}`);
+        saveGuestSession({
+          id: activeSessionId,
+          title: textToUse.slice(0, 30) + (textToUse.length > 30 ? '...' : ''),
+          messages: updatedMessages,
+          major: effectiveMajor || ''
+        });
       }
     }
 
@@ -170,7 +215,7 @@ export default function ChatSessionPage() {
         sender: 'ai',
         text: '',
         reasoning: '',
-        timestamp: new Date(),
+        timestamp: new Date(Date.now() + 1000), // Add 1s to guarantee strict ordering in DB if ms are truncated
         isStreaming: true
       };
 
@@ -225,10 +270,6 @@ export default function ChatSessionPage() {
              }
            }
            await saveChatToDb(activeSessionId, finalMessages, finalTitle);
-           // If we are still on the 'new' placeholder page, navigate to the real session URL
-           if (params.sessionId === 'new') {
-             router.replace(`/chat/${activeSessionId}`);
-           }
          } catch (err) {
            console.error("Final save failed", err);
          }
@@ -244,6 +285,11 @@ export default function ChatSessionPage() {
       setMessages(prev => prev.filter(m => !(m.sender === 'ai' && m.isStreaming)));
     }
   };
+
+  // Keep onSendMessageRef updated so early-return callbacks can call it
+  useEffect(() => {
+    onSendMessageRef.current = onSendMessage;
+  });
 
   const handleRetry = async (userId: string) => {
     // Find the user message by ID

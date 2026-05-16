@@ -95,6 +95,21 @@ export function detectIntents(message: string): QueryIntent[] {
     .map(([intent]) => intent)
 }
 
+/**
+ * Detect emotional signals in user message
+ * Used to boost emotional support chunks in retrieval
+ */
+export function detectEmotionSignals(message: string): boolean {
+  const signals = [
+    'bingung', 'takut', 'khawatir', 'galau', 'stress', 'cemas',
+    'minder', 'nggak yakin', 'gamau', 'nyerah', 'susah', 'susah banget',
+    'nangis', 'sedih', 'hopeless', 'nyesel', 'malu', 'nggak bisa',
+    'overwhelmed', 'burnout', 'capek banget', 'udah usaha', 'gak sanggup'
+  ]
+  const lower = message.toLowerCase()
+  return signals.some(signal => lower.includes(signal))
+}
+
 // ============================================================
 // TIER CLASSIFICATION
 // Ditentukan dari kombinasi intent + karakteristik pesan

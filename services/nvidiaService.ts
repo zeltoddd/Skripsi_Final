@@ -6,10 +6,14 @@ import { QuickAction, FileData, VideoRecommendation, TrendData } from '../types'
 import {
   route,
   pruneHistory,
-  buildCompactSystemPrompt,
   extractQuickActions,
+  detectEmotionSignals,
 } from './smartRouter'
-import { sendMessageToGemini } from './geminiService'
+import { retrieveContext } from '@/lib/rag/retriever';
+import { buildVekoraSystemPrompt } from '@/lib/systemPrompt';
+ import { sendMessageToGemini } from './geminiService'
+ import { normalizeMajor } from './RAG_SETUP';
+
 
 const NVIDIA_BASE_URL = '/api/chat/nvidia'
 const getApiKey = () => {
@@ -58,7 +62,21 @@ export const sendMessageToNvidia = async (
     throw new Error('Analisis file (multimodal) membutuhkan Gemini yang sedang dinonaktifkan sementara.');
   }
 
-  const systemPrompt = buildCompactSystemPrompt(userMajor, decision.ragKeys)
+   // RAG retrieval
+   const emotionDetected = detectEmotionSignals(message);
+   const normalizedJurusan = userMajor ? normalizeMajor(userMajor) : undefined;
+   const context = retrieveContext({
+     jurusan: normalizedJurusan,
+     intents: decision.intents,
+     emotionDetected,
+     maxTokens: decision.maxTokens,
+   });
+
+  const systemPrompt = buildVekoraSystemPrompt({
+    userMajor,
+    context,
+    hasTTS: true, // TTS is available in this deployment
+  });
   const prunedHistory = pruneHistory(history, decision.historyLimit)
 
   const messages = [

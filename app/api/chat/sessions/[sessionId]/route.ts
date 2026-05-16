@@ -35,19 +35,41 @@ export async function PATCH(
       data: {
         title: title || existing.title,
         messages: {
-          deleteMany: {},
-          create: messages.map((m: any) => ({
-            role: m.sender === 'user' ? 'user' : 'assistant',
-            content: m.text || "", // Fallback to empty string if text is missing
-            metadata: {
-              reasoning: m.reasoning || null,
-              quickActions: m.quickActions || null,
-              groundingMetadata: m.groundingMetadata || null,
-              imageUrl: m.imageUrl || null,
-              imageCaption: m.imageCaption || null,
-              fileData: m.fileData || null
-            }
-          }))
+          upsert: messages.map((m: any) => {
+            const clientTime = m.timestamp || new Date().toISOString();
+            return {
+              where: { id: m.id || "new_record" },
+              update: {
+                role: m.sender === 'user' ? 'user' : 'assistant',
+                content: m.text || "", // Fallback to empty string if text is missing
+                createdAt: new Date(clientTime),
+                metadata: {
+                  clientTimestamp: clientTime,
+                  reasoning: m.reasoning || null,
+                  quickActions: m.quickActions || null,
+                  groundingMetadata: m.groundingMetadata || null,
+                  imageUrl: m.imageUrl || null,
+                  imageCaption: m.imageCaption || null,
+                  fileData: m.fileData || null
+                }
+              },
+              create: {
+                id: m.id || undefined,
+                role: m.sender === 'user' ? 'user' : 'assistant',
+                content: m.text || "", // Fallback to empty string if text is missing
+                createdAt: new Date(clientTime),
+                metadata: {
+                  clientTimestamp: clientTime,
+                  reasoning: m.reasoning || null,
+                  quickActions: m.quickActions || null,
+                  groundingMetadata: m.groundingMetadata || null,
+                  imageUrl: m.imageUrl || null,
+                  imageCaption: m.imageCaption || null,
+                  fileData: m.fileData || null
+                }
+              }
+            };
+          })
         }
       }
     });

@@ -37,5 +37,5 @@ export class SimpleCache {
 }
 
 // Singleton instance for server-side use (in-memory per instance)
-const cache = new SimpleCache(5 * 60 * 1000);
+const cache = new SimpleCache(30 * 1000); // 30 seconds
 export { cache };

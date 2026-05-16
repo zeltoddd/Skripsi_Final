@@ -37,11 +37,20 @@ const NAV_ITEMS = [
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const user = session?.user;
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
-  const { sessions, currentSessionId, setCurrentSessionId, deleteSession, createNewChat } = useChat();
+  const { 
+    sessions, 
+    currentSessionId, 
+    setCurrentSessionId, 
+    deleteSession, 
+    createNewChat,
+    hasGuestSessions,
+    mergeGuestSessions,
+    clearGuestSessions
+  } = useChat();
 
   React.useEffect(() => {
     setIsMobileOpen(false);
@@ -300,6 +309,36 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </header>
+
+        {/* Guest Session Merge Prompt */}
+        {status === 'authenticated' && hasGuestSessions && (
+          <div className="bg-primary/10 border-b border-primary/20 px-4 py-3 flex items-center justify-between shrink-0 animate-in slide-in-from-top-2">
+            <div className="flex items-center gap-3">
+              <Sparkles className="h-4 w-4 text-primary shrink-0" />
+              <p className="text-sm font-medium text-foreground">
+                Kamu memiliki chat saat menjadi tamu. Ingin menyimpannya ke akunmu?
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => clearGuestSessions?.()}
+                className="h-8 px-3 text-xs"
+              >
+                Hapus
+              </Button>
+              <Button 
+                variant="default" 
+                size="sm" 
+                onClick={() => mergeGuestSessions()}
+                className="h-8 px-3 text-xs"
+              >
+                Simpan
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* Page Content */}
         <div className={cn(
