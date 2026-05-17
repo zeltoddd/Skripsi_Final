@@ -33,6 +33,7 @@ export async function POST(req: Request) {
 
     // Proxy the stream with headers to disable buffering (critical for Cloudflare/Nginx)
     return new Response(response.body, {
+      status: response.status,
       headers: {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache, no-transform',

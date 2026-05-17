@@ -47,17 +47,27 @@ export function useGuestSession() {
   const saveGuestSession = (session: Partial<GuestSession>) => {
     try {
       const now = Date.now();
-      const newSession: GuestSession = {
-        id: session.id || crypto.randomUUID(),
-        title: session.title || 'Sesi Tamu',
-        messages: session.messages ? session.messages.slice(-MAX_MESSAGES) : [],
-        lastMessageAt: session.lastMessageAt || new Date(),
-        major: session.major || '',
-        expiresAt: now + SESSION_TTL,
-      };
+      const targetId = session.id || crypto.randomUUID();
 
       setGuestSessions(prev => {
-        const existingIndex = prev.findIndex(s => s.id === newSession.id);
+        const existingIndex = prev.findIndex(s => s.id === targetId);
+        const existingSession = existingIndex >= 0 ? prev[existingIndex] : null;
+
+        // Resolve title: preserve existing if new is empty/default or same
+        let resolvedTitle = session.title;
+        if (!resolvedTitle || resolvedTitle === 'Sesi Tamu') {
+          resolvedTitle = existingSession?.title || session.title || 'Sesi Tamu';
+        }
+
+        const newSession: GuestSession = {
+          id: targetId,
+          title: resolvedTitle,
+          messages: session.messages ? session.messages.slice(-MAX_MESSAGES) : (existingSession?.messages || []),
+          lastMessageAt: session.lastMessageAt || new Date(),
+          major: session.major || existingSession?.major || '',
+          expiresAt: now + SESSION_TTL,
+        };
+
         let updated = [...prev];
         if (existingIndex >= 0) {
           updated[existingIndex] = newSession;
@@ -68,7 +78,7 @@ export function useGuestSession() {
         return updated;
       });
 
-      return newSession.id;
+      return targetId;
     } catch (error) {
       console.error('Failed to save guest session:', error);
       return null;

@@ -77,16 +77,28 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
 
     const cleanText = message.text
       .replace(/<[^>]*>/g, '') 
+      .replace(/```card/gi, '')   // Remove the opening ```card
+      .replace(/```/g, '')        // Remove closing backticks
+      .replace(/\*\*/g, '')       // Remove bold markdown
+      .replace(/#/g, '')          // Remove heading tags
+      .replace(/\n+/g, '. ')      // Replace newlines with periods for natural pauses
       .trim();
 
     if (!cleanText) return;
 
     try {
       setIsPlaying(true);
-      const url = `/api/chat/tts?text=${encodeURIComponent(message.text)}&speed=1.15&engine=sherpa&t=${Date.now()}`;
+      const url = `/api/chat/tts`;
       console.log(`🔊 Playing full audio response...`);
       
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: cleanText
+        })
+      });
+
       if (!response.ok) throw new Error("Failed to fetch audio");
       
       const blob = await response.blob();
@@ -211,6 +223,58 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
               remarkPlugins={[remarkGfm, remarkBreaks]}
               components={{
                 p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
+                pre: ({ children }: any) => {
+                  // extract language from the child <code> element
+                  const childProps = children?.props || {};
+                  const match = /language-(\w+)/.exec(childProps.className || '');
+                  
+                  if (match && match[1] === 'card') {
+                    const rawContent = String(childProps.children).replace(/\n$/, '');
+                    const lines = rawContent.split('\n');
+                    let title = lines[0] || 'Insight Tambahan';
+                    title = title.replace(/\*\*/g, '').replace(/^#+\s/, '').trim();
+                    const body = lines.slice(1).join('\n');
+
+                    return (
+                      <details className="my-3 rounded-2xl bg-[#F9F9F9] border border-border/60 shadow-sm group overflow-hidden transition-all duration-300">
+                        <summary className="px-4 py-3 cursor-pointer bg-[#1A1A1A] text-white flex items-center justify-between hover:bg-[#2A2A2A] transition-colors select-none font-medium list-none [&::-webkit-details-marker]:hidden">
+                          <span className="text-[14px] leading-snug">{title}</span>
+                          <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-300 group-open:rotate-180 shrink-0 ml-3" />
+                        </summary>
+                        {body.trim() && (
+                          <div className="px-4 pb-4 pt-4 text-[#1A1A1A]">
+                            <div className="prose prose-sm max-w-none prose-ul:list-none prose-ul:pl-0 prose-ul:ml-[6px] prose-ul:border-l-2 prose-ul:border-gray-300 prose-li:relative prose-li:pl-5 prose-li:before:absolute prose-li:before:w-[8px] prose-li:before:h-[8px] prose-li:before:rounded-full prose-li:before:bg-gray-400 prose-li:before:-left-[5px] prose-li:before:top-[7px] prose-p:mb-2 prose-li:mb-3">
+                              <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+                                {body}
+                              </ReactMarkdown>
+                            </div>
+                          </div>
+                        )}
+                      </details>
+                    );
+                  }
+
+                  return (
+                    <pre className="bg-[#1a1a1a] dark:bg-muted p-4 rounded-xl overflow-x-auto my-4 text-white dark:text-foreground shadow-inner">
+                      {children}
+                    </pre>
+                  );
+                },
+                code: ({ inline, className, children, ...props }: any) => {
+                  if (!inline) {
+                    return (
+                      <code className={cn("text-[13px] font-mono leading-relaxed", className)} {...props}>
+                        {children}
+                      </code>
+                    );
+                  }
+
+                  return (
+                    <code className={cn("bg-muted px-1.5 py-0.5 rounded-md text-[13px] font-mono text-[#E94B35]", className)} {...props}>
+                      {children}
+                    </code>
+                  );
+                },
                 table: ({ children }) => (
                   <div className="my-4 overflow-x-auto rounded-xl border border-border/60 bg-muted/5 shadow-sm">
                     <table className="w-full text-left text-sm border-collapse">
@@ -259,33 +323,60 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
 
         {/* Quick Actions + Metadata Row */}
         {!isError && !message.isStreaming && (
-          <div className="flex items-end justify-between gap-4 mt-4">
-            {/* Left: Quick Actions */}
-            <div className="flex flex-wrap items-center gap-2">
-              {message.quickActions?.slice(0, 2).map((action: any, idx: number) => (
-                <Button 
-                  key={idx} 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => onQuickAction?.(action)}
-                  className="rounded-xl h-10 px-4 text-xs font-bold border-border/60 bg-muted/30 hover:bg-muted transition-all gap-2"
+          <div className="flex flex-col gap-4 mt-4">
+            {/* Left: Quick Actions (Only on Latest) */}
+            {isLatest && message.quickActions && message.quickActions.length > 0 && (
+              <div className="flex flex-col gap-2 w-full mt-2">
+                {/* Dynamic Options (Full width light blocks) */}
+                {message.quickActions.filter((a: any) => a.actionId === 'dynamic_option').map((action: any, idx: number) => (
+                  <Button 
+                    key={`dyn-${idx}`} 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => onQuickAction?.(action)}
+                    className="w-full justify-start rounded-xl py-3 px-4 text-[13px] font-medium border border-border/60 bg-[#F9F9F9] hover:bg-[#F0F0F0] text-[#1A1A1A] transition-all gap-3 whitespace-normal text-left h-auto"
+                  >
+                    <div className="shrink-0"><MessageCircle className="h-4 w-4 text-muted-foreground/80" /></div>
+                    <span className="leading-snug">{action.label}</span>
+                  </Button>
+                ))}
+                
+                {/* Fixed/Hardcoded Actions (Horizontal Pills) */}
+                <div className="flex flex-wrap items-center gap-2 mt-1">
+                  {message.quickActions.filter((a: any) => a.actionId !== 'dynamic_option').slice(0, 3).map((action: any, idx: number) => (
+                    <Button 
+                      key={`fixed-${idx}`} 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => onQuickAction?.(action)}
+                      className="rounded-xl h-auto py-2 px-3 text-[12px] font-semibold border-border/80 bg-background hover:bg-muted text-[#1A1A1A] shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all gap-2"
+                    >
+                      <div className="shrink-0">{getActionIcon(action.actionId)}</div>
+                      <span>{action.label}</span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Bottom Row: Actions & Metadata */}
+            <div className="flex justify-between items-center opacity-30 mt-2">
+              <div className="flex items-center gap-1.5">
+                <button 
+                  className={`transition-colors p-1 rounded-lg hover:bg-muted ${isPlaying ? 'text-red-500 hover:text-red-600' : 'hover:text-foreground'}`}
+                  onClick={handleSpeak}
+                  title={isPlaying ? "Berhenti" : "Dengarkan Jawaban"}
                 >
-                  {getActionIcon(action.actionId)}
-                  {action.label}
-                </Button>
-              ))}
-            </div>
-
-            {/* Right: Stacked Metadata */}
-            <div className="flex flex-col items-end gap-1 shrink-0 pb-1 opacity-30">
-
-              <button 
-                className="hover:text-foreground transition-colors p-1 rounded-lg hover:bg-muted" 
-                onClick={handleCopy}
-                title="Salin Teks"
-              >
-                {copied ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
-              </button>
+                  {isPlaying ? <Square className="h-3.5 w-3.5 fill-current" /> : <Volume2 className="h-3.5 w-3.5" />}
+                </button>
+                <button 
+                  className="hover:text-foreground transition-colors p-1 rounded-lg hover:bg-muted" 
+                  onClick={handleCopy}
+                  title="Salin Teks"
+                >
+                  {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                </button>
+              </div>
               <span className="text-[10px] font-bold tabular-nums uppercase leading-none">
                 {new Date(message.timestamp).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).replace(':', '.').toUpperCase()}
               </span>

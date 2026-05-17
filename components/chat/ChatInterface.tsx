@@ -38,6 +38,8 @@ interface ChatInterfaceProps {
   summarizingId: string | null;
   failedMessages: Set<string>;
   onRetry: (userId: string) => void;
+  suggestedPrompts?: string[];
+  onSuggestionClick?: (prompt: string) => void;
 }
 
 export default function ChatInterface(props: ChatInterfaceProps) {
@@ -59,13 +61,30 @@ export default function ChatInterface(props: ChatInterfaceProps) {
       <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-hide">
         <div className="max-w-2xl mx-auto w-full space-y-6 pb-44">
           {props.messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center flex-1 gap-8">
+            <div className="flex flex-col items-center justify-center flex-1 gap-8 mt-12 md:mt-24">
               <div className="animate-in fade-in zoom-in-95 duration-700 flex justify-center">
                 <img src="/vokara-stacked.svg" alt="VOKARA" className="h-24 dark:invert opacity-100 pl-12" />
               </div>
               <p className="text-sm text-foreground/80 text-center max-w-[280px] leading-relaxed animate-in fade-in slide-in-from-bottom-4 delay-300 duration-700">
                 Halo! Aku siap bantu kamu soal karir, beasiswa, loker, dan banyak lagi. Mulai chat aja ya!
               </p>
+              
+              {props.suggestedPrompts && props.suggestedPrompts.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-2xl mt-4 animate-in fade-in slide-in-from-bottom-6 delay-500 duration-700">
+                  {props.suggestedPrompts.map((prompt, i) => (
+                    <button
+                      key={i}
+                      onClick={() => props.onSuggestionClick && props.onSuggestionClick(prompt)}
+                      className="text-left bg-background/50 hover:bg-muted border border-border/50 hover:border-border rounded-2xl p-4 transition-all duration-200 text-sm text-foreground/80 hover:text-foreground group flex items-start gap-3"
+                    >
+                      <div className="p-2 rounded-xl bg-muted group-hover:bg-background border border-border/30 text-muted-foreground group-hover:text-foreground transition-colors shrink-0 mt-0.5">
+                        <FileText className="w-4 h-4" />
+                      </div>
+                      <span className="leading-relaxed line-clamp-3 font-medium">{prompt}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
             <>
@@ -168,7 +187,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
                   size="icon" 
                   disabled={props.isLoading}
                   onClick={() => props.fileInputRef.current?.click()}
-                  className="rounded-xl h-9 w-9 text-foreground/70 hover:text-foreground hover:bg-muted transition-all"
+                  className="rounded-xl h-9 w-9 -ml-2 text-foreground/70 hover:text-foreground hover:bg-muted transition-all"
                 >
                   <Plus className="h-5 w-5" />
                 </Button>

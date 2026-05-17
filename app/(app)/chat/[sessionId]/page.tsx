@@ -7,6 +7,7 @@ import WelcomeScreen from '@/components/chat/WelcomeScreen';
 import { sendMessageToNvidia } from '@/services/nvidiaService';
 import { useChat } from '@/context/ChatContext';
 import { useSession, signOut } from 'next-auth/react';
+import { getSuggestedPromptsForSession } from '@/lib/rag/suggestedPrompts';
 
 export default function ChatSessionPage() {
   const { data: authSession, status } = useSession();
@@ -20,6 +21,7 @@ export default function ChatSessionPage() {
   const [attachedFiles, setAttachedFiles] = useState<any[]>([]);
   const [failedMessages, setFailedMessages] = useState<Set<string>>(new Set());
   const [summarizingId, setSummarizingId] = useState<string | null>(null);
+  const [suggestedPrompts, setSuggestedPrompts] = useState<string[]>([]);
 
   // Determine effective major: use session major if authenticated, else local userMajor (for guests)
   const isAuthenticated = !!authSession;
@@ -35,6 +37,33 @@ export default function ChatSessionPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const onSendMessageRef = useRef<((textOverride?: any) => Promise<void>) | null>(null);
   const prevSessionIdRef = useRef<string | null>(null);
+
+  // Load suggested prompts on mount or when effectiveMajor changes
+  useEffect(() => {
+    // Attempt to load guest profile from localStorage if it exists (run once logic)
+    const guestProfileStr = localStorage.getItem('vokara_guest_profile');
+    if (guestProfileStr && !userMajor) {
+      try {
+        const profile = JSON.parse(guestProfileStr);
+        if (profile.major) {
+          setUserMajor(profile.major);
+        }
+      } catch(e) {}
+    }
+
+    if (messages.length === 0 && effectiveMajor) {
+      if (sessionIdFromUrl === 'new' || !currentSessionId) {
+        // Force refresh the cache so every "New Chat" click gets fresh prompts
+        import('@/lib/rag/suggestedPrompts').then(({ refreshSuggestedPrompts }) => {
+          setSuggestedPrompts(refreshSuggestedPrompts('new-session', effectiveMajor));
+        });
+      } else {
+        import('@/lib/rag/suggestedPrompts').then(({ getSuggestedPromptsForSession }) => {
+          setSuggestedPrompts(getSuggestedPromptsForSession(currentSessionId, effectiveMajor));
+        });
+      }
+    }
+  }, [messages.length, effectiveMajor, sessionIdFromUrl, currentSessionId, userMajor]);
 
   // Sync messages from database when currentSessionId changes
   useEffect(() => {
@@ -66,33 +95,24 @@ export default function ChatSessionPage() {
     }
   }, [currentSessionId, sessions, isLoading]);
 
-  // Show loading while session is loading
-  if (status === 'loading') {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <p className="text-sm text-muted-foreground">Memuat...</p>
-      </div>
-    );
-  }
+  // Keep onSendMessageRef updated so early-return callbacks can call it
+  useEffect(() => {
+    // We cannot access onSendMessage directly here if it's defined later, but since it uses state, 
+    // it's tricky. Let's just define it inline or leave it if onSendMessage is defined below.
+    // Wait, since onSendMessage is defined BELOW the early returns, how can we update the ref here?
+    // We can't access onSendMessage before it is initialized!
+  });
 
-  // If no effectiveMajor, show WelcomeScreen (for guests or if somehow missing)
-  if (!effectiveMajor) {
-    return (
-      <WelcomeScreen
-        onSuggestionClick={(prompt, major) => {
-          if (major) {
-            if (!isAuthenticated) {
-              setUserMajor(major);
-            }
-            if (prompt) {
-              setInput(prompt);
-              setTimeout(() => onSendMessageRef.current?.(prompt), 100);
-            }
-          }
-        }}
-      />
-    );
-  }
+  // Online status handling
+  useEffect(() => {
+    const handleOnline = () => {
+      // Could show toast
+    };
+    window.addEventListener('online', handleOnline);
+    return () => window.removeEventListener('online', handleOnline);
+  }, []);
+
+
 
 
 
@@ -101,7 +121,7 @@ export default function ChatSessionPage() {
     if (!isAuthenticated && saveGuestSession) {
       saveGuestSession({
         id: sessionId,
-        title: title || 'Sesi Tamu',
+        title: title,
         messages: updatedMessages,
         major: effectiveMajor || '',
         lastMessageAt: new Date()
@@ -286,10 +306,6 @@ export default function ChatSessionPage() {
     }
   };
 
-  // Keep onSendMessageRef updated so early-return callbacks can call it
-  useEffect(() => {
-    onSendMessageRef.current = onSendMessage;
-  });
 
   const handleRetry = async (userId: string) => {
     // Find the user message by ID
@@ -421,14 +437,47 @@ export default function ChatSessionPage() {
     }
   };
 
-   // Online status handling
-   useEffect(() => {
-     const handleOnline = () => {
-       // Could show toast
-     };
-     window.addEventListener('online', handleOnline);
-     return () => window.removeEventListener('online', handleOnline);
-   }, []);
+  // Keep onSendMessageRef updated
+  useEffect(() => {
+    onSendMessageRef.current = onSendMessage;
+  });
+
+  // Online status handling
+  useEffect(() => {
+    const handleOnline = () => {
+      // Could show toast
+    };
+    window.addEventListener('online', handleOnline);
+    return () => window.removeEventListener('online', handleOnline);
+  }, []);
+
+  // Show loading while session is loading
+  if (status === 'loading') {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <p className="text-sm text-muted-foreground">Memuat...</p>
+      </div>
+    );
+  }
+
+  // If no effectiveMajor, show WelcomeScreen (for guests or if somehow missing)
+  if (!effectiveMajor) {
+    return (
+      <WelcomeScreen
+        onSuggestionClick={(prompt, major) => {
+          if (major) {
+            if (!isAuthenticated) {
+              setUserMajor(major);
+            }
+            if (prompt) {
+              setInput(prompt);
+              setTimeout(() => onSendMessageRef.current?.(prompt), 100);
+            }
+          }
+        }}
+      />
+    );
+  }
 
    return (
     <div className="flex h-full overflow-hidden bg-background">
@@ -493,9 +542,14 @@ export default function ChatSessionPage() {
             setInput(prompt);
             setTimeout(() => onSendMessage(prompt), 50);
           }}
-           summarizingId={summarizingId}
-           failedMessages={failedMessages}
-           onRetry={handleRetry}
+          summarizingId={summarizingId}
+          failedMessages={failedMessages}
+          onRetry={handleRetry}
+          suggestedPrompts={suggestedPrompts}
+          onSuggestionClick={(prompt) => {
+            setInput(prompt);
+            setTimeout(() => onSendMessage(prompt), 50);
+          }}
          />
       </main>
     </div>

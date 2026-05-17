@@ -1,13 +1,17 @@
 // components/auth/Login.tsx
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { signIn } from "next-auth/react";
+import { SMK_MAJORS } from '@/constants/majors';
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
@@ -22,6 +26,19 @@ function GoogleIcon({ className }: { className?: string }) {
 
 export default function Login() {
   const router = useRouter();
+  const [name, setName] = useState('');
+  const [kelas, setKelas] = useState('');
+  const [major, setMajor] = useState('');
+  const [hobby, setHobby] = useState('');
+
+  const handleStart = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !kelas || !major) return;
+
+    const guestProfile = { name, kelas, major, hobby };
+    localStorage.setItem('vokara_guest_profile', JSON.stringify(guestProfile));
+    router.push('/chat');
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
@@ -36,43 +53,91 @@ export default function Login() {
           <div>
             <h1 className="text-xl font-semibold tracking-tight">VOKARA</h1>
             <p className="text-sm text-muted-foreground">
-              Masuk untuk mulai bimbingan karir
+              Mulai bimbingan karirmu sekarang
             </p>
           </div>
         </div>
 
         <Card className="border border-border shadow-sm">
           <CardContent className="pt-6 pb-6 space-y-4">
+            
+            <form onSubmit={handleStart} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-xs">Nama Panggilan</Label>
+                <Input 
+                  id="name" 
+                  placeholder="Misal: Budi" 
+                  value={name} 
+                  onChange={e => setName(e.target.value)} 
+                  required 
+                  className="h-9 text-sm"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="kelas" className="text-xs">Kelas</Label>
+                <Select value={kelas} onValueChange={setKelas} required>
+                  <SelectTrigger className="h-9 text-sm">
+                    <SelectValue placeholder="Pilih Kelas" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="X">Kelas X</SelectItem>
+                    <SelectItem value="XI">Kelas XI</SelectItem>
+                    <SelectItem value="XII">Kelas XII</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="major" className="text-xs">Jurusan</Label>
+                <Select value={major} onValueChange={setMajor} required>
+                  <SelectTrigger className="h-9 text-sm">
+                    <SelectValue placeholder="Pilih Jurusan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SMK_MAJORS.map(m => (
+                      <SelectItem key={m.id} value={m.id}>{m.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="hobby" className="text-xs">Hobi / Minat (Opsional)</Label>
+                <Input 
+                  id="hobby" 
+                  placeholder="Misal: Editing video, main game" 
+                  value={hobby} 
+                  onChange={e => setHobby(e.target.value)} 
+                  className="h-9 text-sm"
+                />
+              </div>
+
+              <Button type="submit" className="w-full mt-2" size="sm" disabled={!name || !kelas || !major}>
+                Mulai Chat Sekarang
+                <ArrowRight className="h-3.5 w-3.5 ml-2" />
+              </Button>
+            </form>
+
+            <div className="relative pt-2">
+              <div className="absolute inset-0 flex items-center pt-2">
+                <Separator />
+              </div>
+              <div className="relative flex justify-center text-xs text-muted-foreground pt-2">
+                <span className="bg-card px-2">atau</span>
+              </div>
+            </div>
+
             {/* Google Sign-In */}
             <Button
               className="w-full gap-2.5"
               size="sm"
               variant="outline"
+              type="button"
               onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
             >
               <GoogleIcon className="h-4 w-4" />
               Masuk dengan Google
-            </Button>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <Separator />
-              </div>
-              <div className="relative flex justify-center text-xs text-muted-foreground">
-                <span className="bg-card px-2">atau</span>
-              </div>
-            </div>
-
-            {/* Guest Mode */}
-            <Button
-              variant="ghost"
-              className="w-full text-muted-foreground"
-              size="sm"
-              type="button"
-              onClick={() => router.push('/chat')}
-            >
-              Lanjutkan sebagai Tamu
-              <ArrowRight className="h-3.5 w-3.5 ml-1" />
             </Button>
           </CardContent>
         </Card>

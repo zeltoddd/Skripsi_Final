@@ -84,7 +84,7 @@
         "uncond_masker": {
             "prob_both_uncond": 0.04,
             "prob_text_uncond": 0.01,
-            "std": 0.12,
+            "std": 0.1,
             "text_dim": 256,
             "n_style": 50,
             "style_key_dim": 256,

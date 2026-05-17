@@ -70,9 +70,14 @@ export function retrieveContext(opts: RetrievalOptions): string {
   // 5. Fetch context blocks for each category
   const contextBlocks: { category: string; content: string }[] = [];
 
+  // Import JSON dataset dynamically or static?
+  // Next.js handles static JSON imports automatically
+  const dataset = require('@/data/rag/SMKN6_RAG_Dataset_Complete.json');
+
   for (const category of targetCategories) {
     let content = '';
     
+    // Fallbacks or specialized formatting from our TS constants
     switch (category) {
       case 'scholarships':
       case 'financial':
@@ -113,6 +118,27 @@ export function retrieveContext(opts: RetrievalOptions): string {
          break;
      }
 
+    // Fetch complementary chunks from the complete JSON dataset
+    const jsonChunks = dataset.filter((chunk: any) => {
+      // Map intents to dataset categories appropriately
+      let matchCat = chunk.metadata.category === category;
+      if (category === 'scholarships') matchCat = matchCat || chunk.metadata.category === 'financial';
+      if (category === 'dudi') matchCat = matchCat || chunk.metadata.category === 'industry' || chunk.metadata.category === 'pkl';
+      if (category === 'careers') matchCat = matchCat || chunk.metadata.category === 'careers';
+      
+      if (!matchCat) return false;
+
+      // Filter by jurusan
+      const chunkMajor = chunk.metadata.jurusan.toLowerCase();
+      const reqMajor = jurusan ? jurusan.toLowerCase() : 'general';
+      
+      return chunkMajor === 'general' || chunkMajor === reqMajor;
+    }).map((c: any) => c.content);
+
+    if (jsonChunks.length > 0) {
+      content += (content ? '\n\n' : '') + '### Data Ekstra Dataset:\n- ' + jsonChunks.join('\n- ');
+    }
+
     if (content && content.trim().length > 0) {
       contextBlocks.push({ category, content });
     }
@@ -131,8 +157,8 @@ export function retrieveContext(opts: RetrievalOptions): string {
  * Format context blocks into a single string with headers
  */
 function formatContextBlocks(blocks: { category: string; content: string }[], jurusan?: string): string {
-  // Optionally apply token budget limiting (very coarse estimation)
-  // For now, we return all blocks; can be enhanced later with token counting
+  // We can implement token budgeting here later.
+  // Currently relies on Gemini's large context window.
   
   const header = jurusan
     ? `DATA REFERENSI — Konteks VEKORA untuk jurusan ${jurusan.toUpperCase()} di SMKN 6 Surakarta\nGunakan sebagai acuan utama. Jangan tambahkan data di luar ini.\n\n`

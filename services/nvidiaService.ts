@@ -173,7 +173,49 @@ export const sendMessageToNvidia = async (
     throw error;
   }
 
-  const quickActions = extractQuickActions(fullText)
+  let hardcodedActions = extractQuickActions(fullText)
+  let dynamicActions: any[] = [];
+
+  // Parse dynamic multiple choice options
+  const opsiRegex = /\[OPSI:\s*(.*?)\]/g;
+  let match;
+  while ((match = opsiRegex.exec(fullText)) !== null) {
+    dynamicActions.push({
+      label: match[1].trim(),
+      actionId: 'dynamic_option',
+      payload: match[1].trim()
+    });
+  }
+  
+  // Combine: dynamic actions first, then hardcoded ones
+  if (dynamicActions.length === 0) {
+    // Fallback: If AI ignores [OPSI:] and just outputs a bullet list at the end
+    const fallbackRegex = /(?:\n\n|^)(?:(?:[^:\n]{0,80}:\s*[\n\s]*))?((?:(?:-|\*|\d+\.)\s+[^\n]+(?:\n|$))+)$/;
+    const fallbackMatch = fullText.match(fallbackRegex);
+    
+    if (fallbackMatch && fallbackMatch[1]) {
+      const bullets = fallbackMatch[1].split('\n').filter(l => l.trim().length > 0);
+      
+      if (bullets.length >= 1 && bullets.length <= 5) {
+        bullets.forEach(b => {
+          const text = b.replace(/^(?:-|\*|\d+\.)\s*/, '').replace(/\*\*|__/g, '').trim();
+          if (text) {
+            dynamicActions.push({
+              label: text,
+              actionId: 'dynamic_option',
+              payload: text
+            });
+          }
+        });
+        fullText = fullText.substring(0, fallbackMatch.index).trim();
+      }
+    }
+  }
+
+  let quickActions = [...dynamicActions, ...hardcodedActions];
+
+  // Remove the [OPSI: ...] tags from the final text, including surrounding newlines
+  fullText = fullText.replace(/\s*\[OPSI:\s*(.*?)\]\s*/g, '\n').trim();
 
   let trendData: TrendData | undefined
   let videoRecommendation: VideoRecommendation | undefined

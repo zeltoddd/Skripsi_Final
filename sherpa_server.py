@@ -383,7 +383,7 @@ def apply_word_map(text: str) -> str:
 # ──────────────────────────────────────────────────────────
 # 7. PIPELINE UTAMA
 # ──────────────────────────────────────────────────────────
-def clean_for_tts(raw_text: str) -> str:
+def clean_for_tts(raw_text: str, engine: str = 'sherpa') -> str:
     text = raw_text
 
     # Step 1 — Bersihkan noise visual
@@ -394,11 +394,11 @@ def clean_for_tts(raw_text: str) -> str:
     text = re.sub(r'([A-Za-z]+)/([A-Za-z]+)',
                   lambda m: m.group(1) + ' dan ' + m.group(2), text)
 
-    # Step 3 — Ganti pasangan kata dulu (sebelum single-word map)
-    text = apply_word_map(text)
-
-    # Step 4 — Ganti singkatan
-    text = apply_spell_out(text)
+    # Step 3 & 4 — Hanya diaplikasikan untuk model lokal Sherpa
+    # Azure udah pinter baca bahasa Inggris, jadi jangan di-"bodohin" pakai ejaan fonetik
+    if engine == 'sherpa':
+        text = apply_word_map(text)
+        text = apply_spell_out(text)
 
     # Step 5 — Expand angka
     text = expand_numbers(text)
@@ -472,7 +472,7 @@ tts = sherpa_onnx.OfflineTts(tts_config)
 
 # Default config — identitas resmi Vokara
 DEFAULT_SID   = 1       # Sesuai pilihan user: Suara Mentor
-DEFAULT_SPEED = 1.15    # Disesuaikan biar lebih gercep tapi natural
+DEFAULT_SPEED = 1.0    # Disesuaikan biar lebih gercep tapi natural
 
 
 # ──────────────────────────────────────────────────────────
@@ -489,8 +489,11 @@ def synthesize():
         if not raw_text:
             return "Empty text", 400
 
+        # ── PILIH ENGINE ──
+        engine = data.get('engine', 'sherpa')
+
         # ── Preprocess ────────────────────────────────
-        processed = clean_for_tts(raw_text)
+        processed = clean_for_tts(raw_text, engine)
         sentences = split_to_sentences(processed)
 
         print("\n" + "═"*60)
@@ -501,8 +504,7 @@ def synthesize():
             print(f"   [{i}] ({len(s)}ch) {s}")
         print("═"*60)
 
-        # ── PILIH ENGINE ──
-        engine = data.get('engine', 'sherpa')
+
 
         # Logika Azure (Hanya jalan kalau Key sudah diganti)
         if engine == 'azure' and AZURE_SPEECH_KEY != "MASUKKAN_KEY_AZURE_DISINI":
@@ -549,7 +551,9 @@ def synthesize():
                 print(f"❌ Azure Unexpected Reason: {result.reason}. Falling back to Sherpa...")
 
         # ── SHERPA GENERATE (Default/Fallback) ─────────
-        print("🎙️ Using Sherpa-ONNX Local Engine...")
+        print(f"🎙️ Using Sherpa-ONNX Local Engine...")
+        print(f"   Model: {MODEL_DIR}")
+        print(f"   Lang : id (Bahasa Indonesia)")
         cfg = sherpa_onnx.GenerationConfig()
         cfg.sid   = sid
         cfg.speed = speed
@@ -577,7 +581,6 @@ def synthesize():
         timestamp = int(time.time())
         debug_filename = os.path.join(DEBUG_DIR, f"debug_{timestamp}.wav")
         sf.write(debug_filename, final, sample_rate)
-        print(f"💾 Audio saved for debug: {debug_filename}")
 
         buf = io.BytesIO()
         sf.write(buf, final, sample_rate, format='WAV')
