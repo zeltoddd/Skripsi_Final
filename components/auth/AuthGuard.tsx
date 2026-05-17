@@ -13,7 +13,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const isPublicRoute = pathname === '/login' || pathname === '/register';
   const isOnboarding = pathname === '/onboarding';
   const isChat = pathname.startsWith('/chat');
-  
+
   // Routes that can be accessed without login
   const isGuestAllowed = isPublicRoute || isChat;
 
@@ -53,10 +53,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-primary animate-pulse" />
-          <p className="text-sm font-bold text-muted-foreground animate-pulse">
-            Menyiapkan VOKARA...
-          </p>
+          <img
+            src="/vokara-stacked.svg"
+            alt="VOKARA Logo"
+            className="w-36 h-auto animate-pulse dark:invert"
+          />
+
         </div>
       </div>
     );

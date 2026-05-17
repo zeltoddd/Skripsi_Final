@@ -26,12 +26,7 @@ import { Separator } from '@/components/ui/separator';
 import { useChat } from '@/context/ChatContext';
 
 const NAV_ITEMS = [
-  { label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
   { label: 'AI Chat', icon: MessageSquare, href: '/chat' },
-  { label: 'CV Builder', icon: FileText, href: '/cv-builder' },
-  { label: 'Lowongan Kerja', icon: Briefcase, href: '/jobs' },
-  { label: 'Beasiswa', icon: GraduationCap, href: '/scholarships' },
-  { label: 'Peta Karir', icon: MapIcon, href: '/career-path' },
 ];
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -141,7 +136,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <Button
                   variant="ghost"
                   className={cn(
-                    "w-full h-10 justify-start px-0 gap-0 overflow-hidden transition-all duration-300 rounded-xl",
+                    "w-full h-10 justify-start px-0 gap-0 overflow-hidden transition-all duration-200 rounded-xl active:scale-[0.98]",
                     isActive 
                       ? "bg-primary/10 text-primary hover:bg-primary/15" 
                       : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent"
@@ -179,11 +174,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 {sessions.length === 0 ? (
                   <p className="pl-10 py-2 text-[11px] text-muted-foreground/40 italic">Belum ada chat...</p>
                 ) : (
-                  sessions.slice(0, 8).map((session) => (
+                  sessions.map((session) => (
                     <div 
                       key={session.id}
                       className={cn(
-                        "group flex items-center h-10 rounded-xl cursor-pointer transition-all duration-200",
+                        "group flex items-center h-10 rounded-xl cursor-pointer transition-all duration-200 active:scale-[0.98]",
                         currentSessionId === session.id 
                           ? "bg-sidebar-accent text-sidebar-accent-foreground font-bold" 
                           : "text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 font-medium"

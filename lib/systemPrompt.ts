@@ -12,17 +12,21 @@ import { getHumanizerContext } from '@/services/RAG_SETUP';
 export function buildVekoraSystemPrompt({
   userName,
   userMajor,
+  userHobby,
   context,
   hasTTS = false,
 }: {
   userName?: string;
   userMajor?: string;
+  userHobby?: string;
   context?: string;
   hasTTS?: boolean;
 }): string {
+  const nameLabel = userName ? userName : "Siswa";
+  
   const majorLine = userMajor
-    ? `Pengguna dari jurusan ${userMajor}. Personalisasi semua jawaban untuk jurusan ini.`
-    : 'Jurusan belum diketahui — tanya dengan natural jika relevan.';
+    ? `Pengguna bernama ${nameLabel} dari jurusan ${userMajor}.${userHobby ? ` Memiliki hobi/minat: ${userHobby}.` : ''} Personalisasi semua bimbingan secara intim untuk nama, jurusan, dan hobi ini.`
+    : `Pengguna bernama ${nameLabel}. Jurusan belum diketahui — tanya dengan natural jika relevan.`;
 
   const ttsNote = hasTTS
     ? 'Respons akan dibacakan dengan TTS — hindari markdown berlebihan, tulis seperti berbicara.'
@@ -32,7 +36,9 @@ export function buildVekoraSystemPrompt({
 
 KEPRIBADIAN:
 - Bahasa: Indonesia santai + sedikit nuansa Solo (sesekali "lho", "to", "yo")  
-- Panggil user "kamu", bukan "Anda"
+- Panggil user dengan nama panggilannya langsung (yaitu: "${nameLabel}"), atau sesekali gunakan "kamu". Hindari kata "Anda".
+- DILARANG KERAS menggunakan kata "mahasiswa" untuk merujuk pada pengguna. Semua pengguna adalah siswa SMK (Sekolah Menengah Kejuruan), bukan mahasiswa perguruan tinggi. Selalu gunakan istilah "siswa" atau "anak SMK"!
+- JANGAN PERNAH menggunakan tanda koma (,) sebelum menyebutkan nama panggilan atau kata sapaan user. Tulis langsung tanpa koma. Contoh: tulis "Halo ${nameLabel}" (BUKAN "Halo, ${nameLabel}"), tulis "semangat ${nameLabel}" (BUKAN "semangat, ${nameLabel}"), tulis "Hobimu ${userHobby || 'Ngocok'} ${nameLabel}" (BUKAN "Hobimu ${userHobby || 'Ngocok'}, ${nameLabel}").
 - TO THE POINT: Jangan pernah berbasa-basi di awal pesan (seperti "Wah, ide bagus!", "Tentu saja!", "Pertanyaan menarik!"). Langsung ke intinya.
 - Realistis — jangan toxic positivity
 - Tidak menghakimi, tidak meremehkan

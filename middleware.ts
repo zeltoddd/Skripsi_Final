@@ -14,6 +14,7 @@ export default auth((req) => {
     pathname.startsWith('/api/auth') || 
     pathname.startsWith('/api/chat/tts') ||
     pathname.startsWith('/api/chat/nvidia') ||
+    pathname.startsWith('/api/upload/pdf') ||
     pathname === '/favicon.ico' ||
     pathname.match(/\.(svg|png|jpg|jpeg|gif|webp)$/)
   ) {
@@ -40,5 +41,5 @@ export default auth((req) => {
 
 export const config = {
   // Exclude internal paths and public files
-  matcher: ['/((?!api/auth|api/chat/tts|api/chat/nvidia|_next/static|_next/image|_next/webpack-hmr|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
+  matcher: ['/((?!api/auth|api/chat/tts|api/chat/nvidia|api/upload/pdf|_next/static|_next/image|_next/webpack-hmr|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
 }

@@ -40,6 +40,7 @@ interface ChatMessageBubbleProps {
   isLatest?: boolean;
   failed?: boolean;
   onRetry?: (userId: string) => void;
+  loadingStep?: string | null;
 }
 
 const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
@@ -50,6 +51,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
   isLatest,
   failed,
   onRetry,
+  loadingStep,
 }) => {
   const sender = message.sender as string;
   const isAi = sender === 'ai' || sender === 'model';
@@ -61,7 +63,12 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(message.text);
+    const cleanTextToCopy = message.text
+      .replace(/<[^>]*>/g, '')
+      .replace(/(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*.*?(?:\]|$)/gmi, '')
+      .replace(/(?:\n|^)\s*(?:[-*_]\s*){3,}\s*$/g, '')
+      .trim();
+    navigator.clipboard.writeText(cleanTextToCopy);
     setCopied(true);
     toast.success("Teks berhasil disalin");
     setTimeout(() => setCopied(false), 2000);
@@ -77,6 +84,8 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
 
     const cleanText = message.text
       .replace(/<[^>]*>/g, '') 
+      .replace(/(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*.*?(?:\]|$)/gmi, '') // Strip out raw UI tags
+      .replace(/(?:\n|^)\s*(?:[-*_]\s*){3,}\s*$/g, '') // Remove trailing HRs more aggressively
       .replace(/```card/gi, '')   // Remove the opening ```card
       .replace(/```/g, '')        // Remove closing backticks
       .replace(/\*\*/g, '')       // Remove bold markdown
@@ -140,7 +149,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
   // ─── User Message ───
   if (!isAi) {
     return (
-      <div className="w-full text-right mb-6 animate-in fade-in slide-in-from-right-2 duration-300">
+      <div className="w-full text-right mb-6 animate-in fade-in slide-in-from-right-2 slide-in-from-bottom-1 ease-out duration-500">
         <div className="inline-block text-left max-w-[85%] sm:max-w-[70%] rounded-2xl px-5 py-3 text-[14px] leading-relaxed bg-[#1a1a1a] text-white font-medium shadow-sm break-words">
           {message.fileData && Array.isArray(message.fileData) && message.fileData.length > 0 && (
             <div className="flex flex-row flex-wrap gap-1.5 mb-3 justify-end items-center">
@@ -178,7 +187,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
   // ─── AI Message ───
   return (
     <div className={cn(
-      "mb-10 group/ai animate-in fade-in duration-500",
+      "mb-10 group/ai animate-in fade-in slide-in-from-bottom-2 ease-out duration-700",
     )}>
       <div className="space-y-4">
         
@@ -189,29 +198,120 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
           </div>
         )}
 
-        {!isError && message.reasoning && (
+        {!isError && (message.reasoning || loadingStep) && (
           <div className="py-1">
             <button 
-              onClick={() => setIsReasoningOpen(!isReasoningOpen)}
-              className="flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors group/reasoning"
+              onClick={() => message.reasoning ? setIsReasoningOpen(!isReasoningOpen) : null}
+              className={cn(
+                "flex items-center gap-2 text-sm font-semibold transition-colors group/reasoning",
+                loadingStep && !message.reasoning ? "text-primary cursor-default" : "text-muted-foreground hover:text-foreground"
+              )}
             >
               <div className={cn("transition-transform duration-200 shrink-0 w-4 flex justify-center", isReasoningOpen ? "rotate-90" : "")}>
-                <ChevronRight className="h-4 w-4" />
+                {message.reasoning ? <ChevronRight className="h-4 w-4" /> : <Loader2 className="h-4 w-4 animate-spin text-primary" />}
               </div>
-              Proses Berpikir
-              {message.isStreaming && <Loader2 className="h-3 w-3 animate-spin ml-1 opacity-40" />}
+              {loadingStep && !message.reasoning ? loadingStep : "Analisis Konteks"}
+              {message.isStreaming && message.reasoning && <Loader2 className="h-3 w-3 animate-spin ml-1 opacity-40" />}
             </button>
             
-            {isReasoningOpen && (
-              <div className="mt-2 ml-2 pl-4 border-l border-border/60 space-y-4">
-                {message.reasoning.split('\n\n').filter(Boolean).map((paragraph: string, idx: number) => (
-                  <div key={idx} className="relative py-0.5">
-                    <div className="absolute -left-[1.25rem] top-[0.6rem] w-2 h-2 rounded-full bg-border border-2 border-background" />
-                    <p className="text-[13px] leading-relaxed text-muted-foreground/80">
-                      {paragraph}
-                    </p>
-                  </div>
-                ))}
+            {isReasoningOpen && message.reasoning && (
+              <div className="mt-2 ml-2 pl-4 border-l border-border/60 space-y-3">
+                {(() => {
+                  // High-fidelity Contextual Dynamic Step Engine (3-5 steps)
+                  // Genuinely parses, cleans, and translates real-time AI thoughts into polished career diagnostics
+                  const cleanReasoning = (raw: string): string[] => {
+                    if (!raw) return [];
+
+                    // Step 1: Clean raw markdown and formatting
+                    let cleanText = raw.replace(/```[\s\S]*?```/g, '').trim();
+
+                    // Step 2: Split into sentences/clauses
+                    const rawSentences = cleanText
+                      .split(/[.!?\n]+/g)
+                      .map(s => s.trim())
+                      .filter(s => s.length > 15);
+
+                    const processedSteps: string[] = [];
+
+                    for (let sentence of rawSentences) {
+                      // Block system prompts, system instructions, and token/rule references
+                      if (
+                        /system\s*instruction|system\s*prompt|model\s*id|nvidia|stepfun|smart\s*router|rag\s*key|api\s*key|bearer|dummy|history\s*limit|max\s*token|temperature|top_p|stream|choices|delta|content/i.test(sentence) ||
+                        /format\s*opsi|pilihan\s*ganda|suggested\s*replies|ui\s*card|bullet\s*point|markdown\s*berlebihan|heading|paragraf\s*penjelasan|dua\s*opsi/i.test(sentence) ||
+                        /bahasa\s*santai|ala\s*solo|panggil\s*kamu|jangan\s*basa-basi|to\s*the\s*point|tanpa\s*basa-basi|jangan\s*ngarang|jangan\s*bilang\s*maaf/i.test(sentence) ||
+                        /aturan|rule|identitas|kepribadian|domain|batasan|blok\s*kode|card\s*demo/i.test(sentence) ||
+                        /tugas\s*utama|rag_majors|referensi/i.test(sentence)
+                      ) {
+                        continue;
+                      }
+
+                      // Strip conversational filler words from start of thought sentences
+                      let processed = sentence
+                        .replace(/^(hmm|oke|nah|jadi|di sini|tampaknya|sepertinya|baiklah|pertama-tama|selanjutnya|lalu|kemudian|tapi|namun|maka|oleh karena itu|lalu karena),\s*/gi, '')
+                        .replace(/^(hmm|oke|nah|jadi|di sini|tampaknya|sepertinya|baiklah|pertama-tama|selanjutnya|lalu|kemudian|tapi|namun|maka|oleh karena itu|lalu karena)\s/gi, '');
+
+                      // Premium dynamic semantic replacements (convert raw thinking style to professional actions)
+                      processed = processed
+                        .replace(/\b(user\s+mau\s+tahu\s+apakah|user\s+spesifik\s+mau\s+tahu|pengguna\s+ingin\s+mengetahui|user\s+tanya|user\s+nanya)\b/gi, 'Menganalisis ketertarikan siswa mengenai')
+                        .replace(/\b(file\s+yang\s+dikirim\s+ternyata\s+isinya|file\s+tidak\s+valid|file\s+tidak\s+bisa\s+dibaca)\b/gi, 'Mendeteksi adanya ketidaksesuaian format berkas digital')
+                        .replace(/\b(aku\s+bisa\s+berikan|aku\s+harus\s+kasih|saya\s+perlu\s+menjelaskan|aku\s+bisa\s+jelaskan)\b/gi, 'Menyusun penjelasan komprehensif terkait')
+                        .replace(/\b(perlu\s+dijelaskan\s+dulu\s+adalah|yang\s+perlu\s+dijelaskan)\b/gi, 'Menguraikan prioritas informasi utama bahwa');
+
+                      // Prefix alignment: Ensure every dynamic sentence starts with an active professional Indonesian verb
+                      if (!/^(menganalisis|mengidentifikasi|menyelaraskan|mengevaluasi|mencocokkan|merumuskan|menyusun|merekomendasikan|melakukan|mendeteksi|menelaah|menjelaskan|mempersiapkan|memetakan|menghubungkan|memverifikasi|mengarahkan|mengukur|menilai|menguraikan)/i.test(processed)) {
+                        if (processed.toLowerCase().includes('beasiswa') || processed.toLowerCase().includes('kip')) {
+                          processed = "Mengevaluasi kelayakan administrasi beasiswa " + processed.charAt(0).toLowerCase() + processed.slice(1);
+                        } else if (processed.toLowerCase().includes('magang') || processed.toLowerCase().includes('pkl') || processed.toLowerCase().includes('kerja')) {
+                          processed = "Menganalisis kecocokan program magang industri " + processed.charAt(0).toLowerCase() + processed.slice(1);
+                        } else if (processed.toLowerCase().includes('jurusan') || processed.toLowerCase().includes('smk')) {
+                          processed = "Menyelaraskan dengan kurikulum program keahlian " + processed.charAt(0).toLowerCase() + processed.slice(1);
+                        } else {
+                          processed = "Mengidentifikasi indikator bimbingan " + processed.charAt(0).toLowerCase() + processed.slice(1);
+                        }
+                      }
+
+                      // Capitalize and clean punctuation
+                      processed = processed.trim();
+                      processed = processed.charAt(0).toUpperCase() + processed.slice(1);
+
+                      if (processed.length > 20 && !processedSteps.includes(processed)) {
+                        processedSteps.push(processed);
+                      }
+                    }
+
+                    // Fallback to contextual defaults if the thinking text didn't yield enough clean points
+                    if (processedSteps.length < 3) {
+                      const lowerRaw = raw.toLowerCase();
+                      if (lowerRaw.includes('file') || lowerRaw.includes('pdf')) {
+                        processedSteps.push("Menelaah validitas isi berkas digital yang diunggah pengguna.");
+                      } else {
+                        processedSteps.push("Menganalisis parameter pertanyaan siswa guna memetakan arah eksplorasi.");
+                      }
+
+                      if (lowerRaw.includes('beasiswa') || lowerRaw.includes('kuliah')) {
+                        processedSteps.push("Mengevaluasi peluang bantuan pendidikan tinggi dan prasyarat administrasi.");
+                      } else if (lowerRaw.includes('magang') || lowerRaw.includes('pkl') || lowerRaw.includes('kerja')) {
+                        processedSteps.push("Menganalisis kesiapan vokasional siswa terhadap program pelatihan kerja industri.");
+                      } else {
+                        processedSteps.push("Menyelaraskan bimbingan karir dengan kompetensi program keahlian SMK.");
+                      }
+
+                      processedSteps.push("Menyusun peta jalan taktis dan opsi tindak lanjut interaktif bagi siswa.");
+                    }
+
+                    // Strict limit to the sweet spot of 3 to 5 steps
+                    return processedSteps.slice(0, 5);
+                  };
+
+                  return cleanReasoning(message.reasoning).map((paragraph: string, idx: number) => (
+                    <div key={idx} className="relative py-0.5 animate-in fade-in duration-300">
+                      <div className="absolute -left-[1.25rem] top-[0.6rem] w-1.5 h-1.5 rounded-full bg-primary/40 border border-background" />
+                      <p className="text-[12.5px] leading-relaxed text-muted-foreground/80 font-medium">
+                        {paragraph}
+                      </p>
+                    </div>
+                  ));
+                })()}
               </div>
             )}
           </div>
@@ -298,7 +398,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
                   </td>
                 ),
               }}
-            >{message.text.replace(/<[^>]*>/g, '')}</ReactMarkdown>
+            >{message.text.replace(/<[^>]*>/g, '').replace(/(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*.*?(?:\]|$)/gmi, '').replace(/(?:\n|^)\s*(?:[-*_]\s*){3,}\s*$/g, '')}</ReactMarkdown>
           </div>
         )}
 
@@ -322,55 +422,66 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
         )}
 
         {/* Quick Actions + Metadata Row */}
-        {!isError && !message.isStreaming && (
-          <div className="flex flex-col gap-4 mt-4">
-            {/* Left: Quick Actions (Only on Latest) */}
-            {isLatest && message.quickActions && message.quickActions.length > 0 && (
-              <div className="flex flex-col gap-2 w-full mt-2">
-                {/* Dynamic Options (Full width light blocks) */}
-                {message.quickActions.filter((a: any) => a.actionId === 'dynamic_option').map((action: any, idx: number) => (
-                  <Button 
-                    key={`dyn-${idx}`} 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => onQuickAction?.(action)}
-                    className="w-full justify-start rounded-xl py-3 px-4 text-[13px] font-medium border border-border/60 bg-[#F9F9F9] hover:bg-[#F0F0F0] text-[#1A1A1A] transition-all gap-3 whitespace-normal text-left h-auto"
-                  >
-                    <div className="shrink-0"><MessageCircle className="h-4 w-4 text-muted-foreground/80" /></div>
-                    <span className="leading-snug">{action.label}</span>
-                  </Button>
-                ))}
-                
-                {/* Fixed/Hardcoded Actions (Horizontal Pills) */}
-                <div className="flex flex-wrap items-center gap-2 mt-1">
-                  {message.quickActions.filter((a: any) => a.actionId !== 'dynamic_option').slice(0, 3).map((action: any, idx: number) => (
-                    <Button 
-                      key={`fixed-${idx}`} 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => onQuickAction?.(action)}
-                      className="rounded-xl h-auto py-2 px-3 text-[12px] font-semibold border-border/80 bg-background hover:bg-muted text-[#1A1A1A] shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all gap-2"
-                    >
-                      <div className="shrink-0">{getActionIcon(action.actionId)}</div>
-                      <span>{action.label}</span>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            )}
+        {!isError && (
+          <div className={cn(
+            "grid transition-[grid-template-rows,opacity,margin] duration-700 ease-out",
+            message.isStreaming ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100"
+          )}>
+            <div className="overflow-hidden">
+              <div className="flex flex-col gap-4 pt-1">
+                {/* Left: Quick Actions (Only on Latest) */}
+                {isLatest && message.quickActions && message.quickActions.length > 0 && (
+                  <div className="flex flex-col gap-2 w-full">
+                    {/* Dynamic Options (Full width light blocks) */}
+                    {message.quickActions.filter((a: any) => a.actionId === 'dynamic_option').map((action: any, idx: number) => (
+                      <div key={`dyn-${idx}`} className="animate-in fade-in slide-in-from-bottom-3 duration-500 ease-out" style={{ animationDelay: `${idx * 100}ms`, animationFillMode: 'backwards' }}>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => onQuickAction?.(action)}
+                          className="group w-full justify-start rounded-xl py-3 px-4 text-[13px] font-medium border border-border/60 bg-[#F9F9F9] hover:bg-[#F0F0F0] text-[#1A1A1A] transition-all duration-300 hover:shadow-md hover:-translate-y-[1px] active:scale-[0.99] gap-3 whitespace-normal text-left h-auto"
+                        >
+                          <div className="shrink-0 transition-transform duration-300 group-hover:scale-110"><MessageCircle className="h-4 w-4 text-muted-foreground/80" /></div>
+                          <span className="leading-snug">{action.label}</span>
+                        </Button>
+                      </div>
+                    ))}
+                    
+                    {/* Fixed/Hardcoded Actions (Horizontal Pills) */}
+                    <div className="flex flex-wrap items-center gap-2 mt-1">
+                      {message.quickActions.filter((a: any) => a.actionId !== 'dynamic_option').slice(0, 3).map((action: any, idx: number) => {
+                        const dynCount = message.quickActions.filter((a: any) => a.actionId === 'dynamic_option').length;
+                        const delayMs = (dynCount + idx) * 100;
+                        return (
+                          <div key={`fixed-${idx}`} className="animate-in fade-in slide-in-from-bottom-2 duration-500 ease-out" style={{ animationDelay: `${delayMs}ms`, animationFillMode: 'backwards' }}>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => onQuickAction?.(action)}
+                              className="group rounded-xl h-auto py-2 px-3 text-[12px] font-semibold border-border/80 bg-background hover:bg-muted text-[#1A1A1A] shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all duration-300 hover:shadow-md hover:-translate-y-[1px] active:scale-[0.97] gap-2"
+                            >
+                              <div className="shrink-0 transition-transform duration-300 group-hover:scale-110">{getActionIcon(action.actionId)}</div>
+                              <span>{action.label}</span>
+                            </Button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
-            {/* Bottom Row: Actions & Metadata */}
-            <div className="flex justify-between items-center opacity-30 mt-2">
+                {/* Bottom Row: Actions & Metadata */}
+                <div className="flex justify-between items-center opacity-30 mt-1 animate-in fade-in duration-700" style={{ animationDelay: `${message.quickActions && message.quickActions.length > 0 ? message.quickActions.length * 100 : 0}ms`, animationFillMode: 'backwards' }}>
               <div className="flex items-center gap-1.5">
                 <button 
-                  className={`transition-colors p-1 rounded-lg hover:bg-muted ${isPlaying ? 'text-red-500 hover:text-red-600' : 'hover:text-foreground'}`}
+                  className={`transition-all duration-200 p-1.5 rounded-lg hover:bg-muted hover:scale-110 active:scale-95 ${isPlaying ? 'text-red-500 hover:text-red-600' : 'hover:text-foreground'}`}
                   onClick={handleSpeak}
                   title={isPlaying ? "Berhenti" : "Dengarkan Jawaban"}
                 >
                   {isPlaying ? <Square className="h-3.5 w-3.5 fill-current" /> : <Volume2 className="h-3.5 w-3.5" />}
                 </button>
                 <button 
-                  className="hover:text-foreground transition-colors p-1 rounded-lg hover:bg-muted" 
+                  className="transition-all duration-200 p-1.5 rounded-lg hover:bg-muted hover:scale-110 active:scale-95 hover:text-foreground" 
                   onClick={handleCopy}
                   title="Salin Teks"
                 >
@@ -382,11 +493,16 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
               </span>
             </div>
           </div>
-        )}
+        </div>
+        </div>
+      )}
 
         {/* VOKARA Branding Footer */}
-        {isLatest && isAi && !message.isStreaming && (
-          <div className="pt-4 mt-6 border-t border-border/40 flex items-center justify-between animate-in fade-in duration-1000">
+        {isLatest && isAi && (
+          <div className={cn(
+            "pt-3 mt-2 border-t border-border/40 flex items-center justify-between transition-all duration-1000 ease-out",
+            message.isStreaming ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+          )}>
             <img src="/vokara-stacked.svg" alt="VOKARA" className="h-10 dark:invert opacity-60" />
             
             <div className="text-right">

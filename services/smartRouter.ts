@@ -169,7 +169,7 @@ export function route(
   const tier = classifyTier(intents, message, hasFile)
   const budget = TOKEN_BUDGET[tier]
 
-  const forceGemini = hasFile
+  const forceGemini = false // We handle PDF by parsing to text and sending to StepFlash
   const fetchMetadataBg =
     tier !== 'QUICK' &&
     (intents.includes('trend_data') ||

@@ -73,6 +73,57 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Natively handle Azure Edge TTS inside Vercel without requiring the Python/Sherpa gateway
+    if (engine === 'azure') {
+      console.log("☁️ Memanggil Azure Edge TTS (Native Serverless) secara langsung...");
+      try {
+        const { Communicate } = await import('edge-tts-universal');
+        
+        let voiceName = 'id-ID-GadisNeural'; // Default female voice
+        if (sid === '1') {
+          voiceName = 'id-ID-ArdiNeural'; // Male voice
+        } else if (sid === '2') {
+          voiceName = 'id-ID-GadisNeural';
+        }
+        
+        // Convert speed factor (e.g. 1.18) to rate percentage (e.g. "+18%")
+        let ratePercentage = '+0%';
+        const speedVal = parseFloat(speed) || 1.0;
+        if (speedVal !== 1.0) {
+          const pct = Math.round((speedVal - 1.0) * 100);
+          ratePercentage = pct >= 0 ? `+${pct}%` : `${pct}%`;
+        }
+
+        console.log(`🗣️ Sintesis Azure Edge: Voice: ${voiceName}, Rate: ${ratePercentage}`);
+
+        const communicate = new Communicate(text, {
+          voice: voiceName,
+          rate: ratePercentage,
+          pitch: "+0Hz"
+        });
+
+        const audioChunks: Buffer[] = [];
+        for await (const chunk of communicate.stream()) {
+          if (chunk.type === 'audio' && chunk.data) {
+            audioChunks.push(chunk.data);
+          }
+        }
+
+        if (audioChunks.length > 0) {
+          const audioBuffer = Buffer.concat(audioChunks);
+          console.log("✅ Azure Edge TTS Berhasil! Mengirim audio MP3 ke client.");
+          return new NextResponse(audioBuffer, {
+            headers: {
+              'Content-Type': 'audio/mpeg',
+              'Cache-Control': 'no-cache',
+            },
+          });
+        }
+      } catch (nativeAzureErr) {
+        console.warn("⚠️ Native Azure Edge TTS gagal, beralih ke fallback Sherpa...", nativeAzureErr);
+      }
+    }
+
     // Fallback to Sherpa if engine is not gemini
     const response = await fetch(SHERPA_URL, {
       method: 'POST',

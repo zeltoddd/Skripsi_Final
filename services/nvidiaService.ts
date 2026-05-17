@@ -11,8 +11,8 @@ import {
 } from './smartRouter'
 import { retrieveContext } from '@/lib/rag/retriever';
 import { buildVekoraSystemPrompt } from '@/lib/systemPrompt';
- import { sendMessageToGemini } from './geminiService'
- import { normalizeMajor } from './RAG_SETUP';
+import { sendMessageToGemini } from './geminiService'
+import { normalizeMajor } from './RAG_SETUP';
 
 
 const NVIDIA_BASE_URL = '/api/chat/nvidia'
@@ -30,11 +30,11 @@ const getApiKey = () => {
 }
 
 interface NvidiaChunk {
-  choices: { 
-    delta: { 
+  choices: {
+    delta: {
       content?: string;
       reasoning_content?: string;
-    } 
+    }
   }[]
 }
 
@@ -57,27 +57,46 @@ export const sendMessageToNvidia = async (
 
   const decision = route(message, !!fileData)
 
-  if (decision.forceGemini) {
-    console.info('[Router] File detected → (Multimodal needed, but Gemini is currently disabled)')
-    throw new Error('Analisis file (multimodal) membutuhkan Gemini yang sedang dinonaktifkan sementara.');
+  // RAG retrieval
+  const emotionDetected = detectEmotionSignals(message);
+  const normalizedJurusan = userMajor ? normalizeMajor(userMajor) : undefined;
+  const context = retrieveContext({
+    jurusan: normalizedJurusan,
+    intents: decision.intents,
+    emotionDetected,
+    maxTokens: decision.maxTokens,
+  });
+
+  // Retrieve guest profile dynamically if available (runs on client side)
+  let profileName = undefined;
+  let profileHobby = undefined;
+  if (typeof window !== 'undefined') {
+    const guestProfileStr = localStorage.getItem('vokara_guest_profile');
+    if (guestProfileStr) {
+      try {
+        const profile = JSON.parse(guestProfileStr);
+        if (profile.name) profileName = profile.name;
+        if (profile.hobby) profileHobby = profile.hobby;
+      } catch (e) {}
+    }
   }
 
-   // RAG retrieval
-   const emotionDetected = detectEmotionSignals(message);
-   const normalizedJurusan = userMajor ? normalizeMajor(userMajor) : undefined;
-   const context = retrieveContext({
-     jurusan: normalizedJurusan,
-     intents: decision.intents,
-     emotionDetected,
-     maxTokens: decision.maxTokens,
-   });
-
   const systemPrompt = buildVekoraSystemPrompt({
+    userName: profileName,
     userMajor,
+    userHobby: profileHobby,
     context,
     hasTTS: true, // TTS is available in this deployment
   });
   const prunedHistory = pruneHistory(history, decision.historyLimit)
+
+  let userContent = message;
+  const normalizedFileData = Array.isArray(fileData) ? fileData : (fileData ? [fileData] : []);
+  
+  if (normalizedFileData.length > 0) {
+    const fileTexts = normalizedFileData.map((f: any) => `[Isi File: ${f.fileName}]\n${f.text}\n[Akhir Isi File]`).join('\n\n');
+    userContent = `Berikut adalah dokumen PDF yang diunggah oleh pengguna:\n\n${fileTexts}\n\nPertanyaan/Instruksi Pengguna:\n${message}`;
+  }
 
   const messages = [
     { role: 'system', content: systemPrompt },
@@ -85,7 +104,7 @@ export const sendMessageToNvidia = async (
       role: h.role === 'model' ? 'assistant' : 'user',
       content: h.parts[0].text,
     })),
-    { role: 'user', content: message },
+    { role: 'user', content: userContent },
   ]
 
   let fullText = ''
@@ -132,7 +151,7 @@ export const sendMessageToNvidia = async (
 
         buffer += decoder.decode(value, { stream: true })
         const lines = buffer.split('\n')
-        
+
         // Simpan baris terakhir yang mungkin belum lengkap ke buffer
         buffer = lines.pop() || ''
 
@@ -145,14 +164,25 @@ export const sendMessageToNvidia = async (
               const chunk = JSON.parse(jsonStr)
               const delta = chunk.choices?.[0]?.delta
               if (!delta) continue
-              
+
               const content = delta.content || ''
               const reasoning = delta.reasoning_content || ''
-              
+
               if (content || reasoning) {
-                if (content) fullText += content
-                if (reasoning) fullReasoning += reasoning
-                onChunk({ content, reasoning })
+                if (reasoning) {
+                  fullReasoning += reasoning
+                  onChunk({ content: '', reasoning })
+                }
+                if (content) {
+                  // Break down large chunks into small typewriter-like keystrokes
+                  const chars = content.split('')
+                  for (let i = 0; i < chars.length; i += 4) {
+                    const chunkPart = chars.slice(i, i + 4).join('')
+                    fullText += chunkPart
+                    onChunk({ content: chunkPart, reasoning: '' })
+                    await new Promise(resolve => setTimeout(resolve, 10))
+                  }
+                }
               }
             } catch (e) {
               // Abaikan chunk yang korup
@@ -176,26 +206,28 @@ export const sendMessageToNvidia = async (
   let hardcodedActions = extractQuickActions(fullText)
   let dynamicActions: any[] = [];
 
-  // Parse dynamic multiple choice options
-  const opsiRegex = /\[OPSI:\s*(.*?)\]/g;
+  // Parse dynamic multiple choice options (more robust regex for AI formatting mistakes)
+  const opsiRegex = /(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*(.*?)(?:\]|\n|$)/gi;
   let match;
   while ((match = opsiRegex.exec(fullText)) !== null) {
-    dynamicActions.push({
-      label: match[1].trim(),
-      actionId: 'dynamic_option',
-      payload: match[1].trim()
-    });
+    if (match[1].trim()) {
+      dynamicActions.push({
+        label: match[1].replace(/\*\*/g, '').trim(),
+        actionId: 'dynamic_option',
+        payload: match[1].replace(/\*\*/g, '').trim()
+      });
+    }
   }
-  
+
   // Combine: dynamic actions first, then hardcoded ones
   if (dynamicActions.length === 0) {
     // Fallback: If AI ignores [OPSI:] and just outputs a bullet list at the end
     const fallbackRegex = /(?:\n\n|^)(?:(?:[^:\n]{0,80}:\s*[\n\s]*))?((?:(?:-|\*|\d+\.)\s+[^\n]+(?:\n|$))+)$/;
     const fallbackMatch = fullText.match(fallbackRegex);
-    
+
     if (fallbackMatch && fallbackMatch[1]) {
       const bullets = fallbackMatch[1].split('\n').filter(l => l.trim().length > 0);
-      
+
       if (bullets.length >= 1 && bullets.length <= 5) {
         bullets.forEach(b => {
           const text = b.replace(/^(?:-|\*|\d+\.)\s*/, '').replace(/\*\*|__/g, '').trim();
@@ -215,7 +247,7 @@ export const sendMessageToNvidia = async (
   let quickActions = [...dynamicActions, ...hardcodedActions];
 
   // Remove the [OPSI: ...] tags from the final text, including surrounding newlines
-  fullText = fullText.replace(/\s*\[OPSI:\s*(.*?)\]\s*/g, '\n').trim();
+  fullText = fullText.replace(/(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*.*?(?:\]|$)/gmi, '\n').trim();
 
   let trendData: TrendData | undefined
   let videoRecommendation: VideoRecommendation | undefined
@@ -265,7 +297,7 @@ Balas HANYA JSON:
         Authorization: `Bearer ${getApiKey()}`,
       },
       body: JSON.stringify({
-        model: 'stepfun-ai/step-3.5-flash', 
+        model: 'stepfun-ai/step-3.5-flash',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.1,
         max_tokens: 256,
@@ -360,19 +392,19 @@ export async function generateChatTitle(firstMessage: string): Promise<string> {
     });
 
     if (!response.ok) throw new Error('Failed to generate title');
-    
+
     const reader = response.body?.getReader();
     let title = "";
-    
+
     if (reader) {
       const decoder = new TextDecoder();
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        
+
         const chunk = decoder.decode(value);
         const lines = chunk.split('\n');
-        
+
         for (const line of lines) {
           const trimmed = line.trim();
           if (!trimmed || trimmed === 'data: [DONE]') continue;
@@ -388,7 +420,7 @@ export async function generateChatTitle(firstMessage: string): Promise<string> {
         }
       }
     }
-    
+
     const finalTitle = title.trim()
       .replace(/^["']|["']$/g, '')
       .replace(/\.\.\.$/, ''); // Hapus titik-titik di akhir kalau ada dari AI

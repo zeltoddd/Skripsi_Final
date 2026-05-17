@@ -7,7 +7,8 @@ import WelcomeScreen from '@/components/chat/WelcomeScreen';
 import { sendMessageToNvidia } from '@/services/nvidiaService';
 import { useChat } from '@/context/ChatContext';
 import { useSession, signOut } from 'next-auth/react';
-import { getSuggestedPromptsForSession } from '@/lib/rag/suggestedPrompts';
+import { getSuggestedPromptsForSession, refreshSuggestedPrompts } from '@/lib/rag/suggestedPrompts';
+import { toast } from 'sonner';
 
 export default function ChatSessionPage() {
   const { data: authSession, status } = useSession();
@@ -54,13 +55,9 @@ export default function ChatSessionPage() {
     if (messages.length === 0 && effectiveMajor) {
       if (sessionIdFromUrl === 'new' || !currentSessionId) {
         // Force refresh the cache so every "New Chat" click gets fresh prompts
-        import('@/lib/rag/suggestedPrompts').then(({ refreshSuggestedPrompts }) => {
-          setSuggestedPrompts(refreshSuggestedPrompts('new-session', effectiveMajor));
-        });
+        setSuggestedPrompts(refreshSuggestedPrompts('new-session', effectiveMajor));
       } else {
-        import('@/lib/rag/suggestedPrompts').then(({ getSuggestedPromptsForSession }) => {
-          setSuggestedPrompts(getSuggestedPromptsForSession(currentSessionId, effectiveMajor));
-        });
+        setSuggestedPrompts(getSuggestedPromptsForSession(currentSessionId, effectiveMajor));
       }
     }
   }, [messages.length, effectiveMajor, sessionIdFromUrl, currentSessionId, userMajor]);
@@ -245,6 +242,39 @@ export default function ChatSessionPage() {
       let accumulatedText = '';
       let accumulatedReasoning = '';
 
+      let extractedFilesData: any[] = [];
+      if (attachedFiles.length > 0) {
+        setLoadingStep('Membaca dokumen PDF...');
+        const parsePromises = attachedFiles.map(async (f) => {
+          if (f.fileType === 'application/pdf' || f.fileName.endsWith('.pdf')) {
+            const formData = new FormData();
+            formData.append('file', f.originalFile);
+            
+            const res = await fetch('/api/upload/pdf', {
+              method: 'POST',
+              body: formData,
+            });
+            const parsed = await res.json();
+            if (parsed.text && parsed.text.trim()) {
+               return {
+                 type: 'text',
+                 text: parsed.text,
+                 fileName: f.fileName,
+                 mimeType: f.fileType
+               };
+            } else if (parsed.error) {
+               throw new Error(`Gagal membaca PDF: ${parsed.error}`);
+            } else {
+               throw new Error('Gagal membaca PDF: Dokumen PDF kosong atau berupa scan gambar tanpa teks digital.');
+            }
+          }
+          return null;
+        });
+        
+        const results = await Promise.all(parsePromises);
+        extractedFilesData = results.filter(r => r !== null);
+      }
+
       const response = await sendMessageToNvidia(
         textToUse,
         history,
@@ -257,7 +287,7 @@ export default function ChatSessionPage() {
             m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
           ));
         },
-        attachedFiles.length > 0 ? attachedFiles.map(f => ({ data: f.data, mimeType: f.fileType, fileName: f.fileName })) : undefined
+        extractedFilesData.length > 0 ? extractedFilesData : undefined
       );
 
       const finalAiMsg = {
@@ -372,6 +402,39 @@ export default function ChatSessionPage() {
       let accumulatedText = '';
       let accumulatedReasoning = '';
 
+      let extractedFilesData: any[] = [];
+      if (attachedFiles.length > 0) {
+        setLoadingStep('Membaca dokumen PDF...');
+        const parsePromises = attachedFiles.map(async (f) => {
+          if (f.fileType === 'application/pdf' || f.fileName.endsWith('.pdf')) {
+            const formData = new FormData();
+            formData.append('file', f.originalFile);
+            
+            const res = await fetch('/api/upload/pdf', {
+              method: 'POST',
+              body: formData,
+            });
+            const parsed = await res.json();
+            if (parsed.text && parsed.text.trim()) {
+               return {
+                 type: 'text',
+                 text: parsed.text,
+                 fileName: f.fileName,
+                 mimeType: f.fileType
+               };
+            } else if (parsed.error) {
+               throw new Error(`Gagal membaca PDF: ${parsed.error}`);
+            } else {
+               throw new Error('Gagal membaca PDF: Dokumen PDF kosong atau berupa scan gambar tanpa teks digital.');
+            }
+          }
+          return null;
+        });
+        
+        const results = await Promise.all(parsePromises);
+        extractedFilesData = results.filter(r => r !== null);
+      }
+
       const response = await sendMessageToNvidia(
         userPrompt,
         history,
@@ -384,7 +447,7 @@ export default function ChatSessionPage() {
             m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
           ));
         },
-        attachedFiles.length > 0 ? attachedFiles.map(f => ({ data: f.data, mimeType: f.fileType, fileName: f.fileName })) : undefined
+        extractedFilesData.length > 0 ? extractedFilesData : undefined
       );
 
       const finalAiMsg = {
@@ -423,10 +486,14 @@ export default function ChatSessionPage() {
         }
       }
 
-    } catch (error) {
+    } catch (error: any) {
       console.error("API Error:", error);
       setIsLoading(false);
       setLoadingStep(null);
+      
+      const errorMessage = error?.message || 'Terjadi kesalahan saat mengirim pesan.';
+      toast.error(errorMessage);
+
       // Mark the user message that triggered this as failed (so user can retry)
       const lastUserMsg = baseMessages[baseMessages.length - 1];
       if (lastUserMsg && lastUserMsg.sender === 'user') {
