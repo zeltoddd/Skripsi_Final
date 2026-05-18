@@ -49,7 +49,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://vitals.vercel-insights.com" crossOrigin="anonymous" />
       </head>
       <body className="font-sans antialiased min-h-screen bg-background overflow-x-hidden">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SessionProvider>
             <AuthGuard>
               <ChatProvider>
