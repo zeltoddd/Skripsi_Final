@@ -44,6 +44,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className={`${spaceGrotesk.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://va.vercel-scripts.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://vitals.vercel-insights.com" crossOrigin="anonymous" />
+      </head>
       <body className="font-sans antialiased min-h-screen bg-background overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <SessionProvider>
