@@ -48,8 +48,8 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     }
   }, [status, session, pathname, router, isPublicRoute, isOnboarding, isGuestAllowed]);
 
-  // Global loading state
-  if (status === 'loading') {
+  // Global loading state (only for non-guest/protected routes to boost FCP/LCP speed)
+  if (status === 'loading' && !isGuestAllowed) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
@@ -58,7 +58,6 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
             alt="VOKARA Logo"
             className="w-36 h-auto animate-pulse dark:invert"
           />
-
         </div>
       </div>
     );
