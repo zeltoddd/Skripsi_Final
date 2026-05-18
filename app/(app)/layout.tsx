@@ -359,7 +359,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         {/* Page Content */}
         <div className={cn(
-          "flex-1 min-h-0", // min-h-0 is important for flex children to shrink
+          "flex-1 min-h-0 flex flex-col h-full relative overflow-hidden",
           !pathname.startsWith('/chat') && "overflow-y-auto scrollbar-hide"
         )}>
           <React.Suspense fallback={
