@@ -2,8 +2,55 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import ChatInterface from '@/components/chat/ChatInterface';
-import WelcomeScreen from '@/components/chat/WelcomeScreen';
+import dynamic from 'next/dynamic';
+
+const ChatInterface = dynamic(() => import('@/components/chat/ChatInterface'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex flex-col h-full bg-background overflow-hidden relative animate-pulse">
+      <div className="flex-1 overflow-y-auto px-4 pt-6 space-y-4">
+        {[1, 2, 3].map(i => (
+          <div key={i} className="flex gap-3 max-w-lg">
+            <div className="w-8 h-8 rounded-full bg-muted shrink-0" />
+            <div className="space-y-2 flex-1">
+              <div className="h-4 bg-muted rounded w-2/3" />
+              <div className="h-4 bg-muted rounded w-1/2" />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="shrink-0 p-4 border-t border-border bg-background">
+        <div className="h-10 bg-muted rounded-md" />
+      </div>
+    </div>
+  )
+});
+
+const WelcomeScreen = dynamic(() => import('@/components/chat/WelcomeScreen'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex flex-col items-center justify-center min-h-[70vh] p-6 max-w-2xl mx-auto w-full animate-pulse">
+      <div className="w-full space-y-6">
+        <div className="space-y-2">
+          <div className="h-7 w-56 bg-muted rounded-md" />
+          <div className="h-4 w-96 bg-muted rounded-md opacity-60" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div
+              key={i}
+              className="h-[58px] p-3 rounded-lg border border-border bg-card/50 flex items-center gap-3"
+            >
+              <div className="w-8 h-8 rounded-md bg-muted shrink-0" />
+              <div className="h-4 w-32 bg-muted rounded-md" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+});
+
 import { sendMessageToNvidia } from '@/services/nvidiaService';
 import { useChat } from '@/context/ChatContext';
 import { useSession, signOut } from 'next-auth/react';
@@ -521,8 +568,24 @@ export default function ChatSessionPage() {
   // Show loading while session is loading
   if (status === 'loading') {
     return (
-      <div className="flex h-full items-center justify-center">
-        <p className="text-sm text-muted-foreground">Memuat...</p>
+      <div className="flex flex-col items-center justify-center min-h-[70vh] p-6 max-w-2xl mx-auto w-full animate-pulse">
+        <div className="w-full space-y-6">
+          <div className="space-y-2">
+            <div className="h-7 w-56 bg-muted rounded-md" />
+            <div className="h-4 w-96 bg-muted rounded-md opacity-60" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div
+                key={i}
+                className="h-[58px] p-3 rounded-lg border border-border bg-card/50 flex items-center gap-3"
+              >
+                <div className="w-8 h-8 rounded-md bg-muted shrink-0" />
+                <div className="h-4 w-32 bg-muted rounded-md" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
