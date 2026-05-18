@@ -31,6 +31,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/vite": "^4.2.1",
+    "@vercel/speed-insights": "^2.0.0",
     "aceternity-ui": "^0.2.2",
     "ai": "^6.0.180",
     "class-variance-authority": "^0.7.1",

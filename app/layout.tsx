@@ -10,6 +10,7 @@ import { ThemeProvider } from 'next-themes';
 import SessionProvider from '@/components/providers/SessionProvider';
 import AuthGuard from '@/components/auth/AuthGuard';
 import { ChatProvider } from '@/context/ChatContext';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const spaceGrotesk = Space_Grotesk({ 
   subsets: ['latin'],
@@ -52,6 +53,7 @@ export default function RootLayout({
             </AuthGuard>
           </SessionProvider>
           <Toaster position="top-center" richColors />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
