@@ -84,7 +84,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     : '?';
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-[100dvh] overflow-hidden bg-background">
       {/* Mobile Overlay */}
       {isMobileOpen && (
         <div 
@@ -322,21 +322,26 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        {/* Guest Session Merge Prompt */}
+        {/* Guest Session Merge Prompt (Floating Toast Modal) */}
         {status === 'authenticated' && hasGuestSessions && (
-          <div className="bg-primary/10 border-b border-primary/20 px-4 py-3 flex items-center justify-between shrink-0 animate-in slide-in-from-top-2">
-            <div className="flex items-center gap-3">
-              <Sparkles className="h-4 w-4 text-primary shrink-0" />
-              <p className="text-sm font-medium text-foreground">
-                Kamu memiliki chat saat menjadi tamu. Ingin menyimpannya ke akunmu?
-              </p>
+          <div className="fixed top-6 left-6 right-6 md:left-auto md:right-6 md:w-[420px] z-50 bg-background/95 border border-border p-3.5 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-sm flex items-center justify-between gap-4 animate-in fade-in slide-in-from-top-5 duration-300">
+            <div className="flex gap-3 items-center min-w-0">
+              <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                <Clock className="h-4.5 w-4.5 text-primary" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <h4 className="text-xs font-bold text-foreground truncate">Simpan Chat Tamu?</h4>
+                <p className="text-[11px] text-muted-foreground leading-normal truncate">
+                  Simpan riwayat chat sesi sebelumnya ke akunmu.
+                </p>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 shrink-0">
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={() => clearGuestSessions?.()}
-                className="h-8 px-3 text-xs"
+                className="h-8 px-2.5 text-xs rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted"
               >
                 Hapus
               </Button>
@@ -344,7 +349,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 variant="default" 
                 size="sm" 
                 onClick={() => mergeGuestSessions()}
-                className="h-8 px-3 text-xs"
+                className="h-8 px-3.5 text-xs font-semibold rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm"
               >
                 Simpan
               </Button>
@@ -355,7 +360,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         {/* Page Content */}
         <div className={cn(
           "flex-1 min-h-0", // min-h-0 is important for flex children to shrink
-          pathname !== '/chat' && "overflow-y-auto scrollbar-hide"
+          !pathname.startsWith('/chat') && "overflow-y-auto scrollbar-hide"
         )}>
           <React.Suspense fallback={
             <div className="flex items-center justify-center h-full">
