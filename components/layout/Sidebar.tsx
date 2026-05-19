@@ -106,14 +106,7 @@ export function AppSidebar({
           <SidebarGroupLabel className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 group-data-[collapsible=icon]:hidden">Layanan Karir</SidebarGroupLabel>
           <SidebarGroupContent className="p-0 group-data-[collapsible=icon]:p-0">
             <SidebarMenu className="p-2 gap-1 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:gap-0">
-              <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
-                <SidebarMenuButton asChild tooltip="Dashboard" isActive={pathname === '/dashboard'} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-                   <Link href="/dashboard" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">
-                    <LayoutDashboard className="h-5 w-5 shrink-0" />
-                    <span className="group-data-[collapsible=icon]:hidden">Dashboard</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+
                <SidebarMenuItem className="group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
                  <SidebarMenuButton asChild tooltip="Chat" isActive={isChatActive} className="h-11 group-data-[collapsible=icon]:h-14 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
                    <Link href="/chat" className="flex items-center gap-3 w-full group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center">

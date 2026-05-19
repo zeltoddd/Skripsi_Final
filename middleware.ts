@@ -33,7 +33,7 @@ export default auth((req) => {
   }
 
   if (isLoggedIn && pathname === '/login') {
-    return NextResponse.redirect(new URL('/dashboard', req.url))
+    return NextResponse.redirect(new URL('/chat', req.url))
   }
 
   return NextResponse.next()

@@ -43,7 +43,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       (session?.user as any)?.major &&
       isOnboarding
     ) {
-      router.replace('/dashboard');
+      router.replace('/chat');
       return;
     }
   }, [status, session, pathname, router, isPublicRoute, isOnboarding, isGuestAllowed]);
