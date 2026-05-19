@@ -26,7 +26,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'VOKARA — Bimbingan Karir SMK #1',
+  title: 'VEKORA — Bimbingan Karir SMK #1',
   description: 'Platform bimbingan karir berbasis AI khusus untuk siswa dan lulusan SMK di Indonesia.',
 };
 
