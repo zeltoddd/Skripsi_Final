@@ -7,7 +7,7 @@ import WelcomeScreen from '@/components/chat/WelcomeScreen';
 
 import { sendMessageToNvidia } from '@/services/nvidiaService';
 import { useChat } from '@/context/ChatContext';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { getSuggestedPromptsForSession, refreshSuggestedPrompts } from '@/lib/rag/suggestedPrompts';
 import { toast } from 'sonner';
 import { SMK_MAJORS } from '@/constants/majors';
