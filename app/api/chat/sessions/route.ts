@@ -20,30 +20,19 @@ export async function GET() {
     const chatSessions = await prisma.chatSession.findMany({
       where: { userId: session.user.id },
       orderBy: { updatedAt: 'desc' },
-      include: {
-        messages: {
-          orderBy: { createdAt: 'asc' }
-        }
+      select: {
+        id: true,
+        title: true,
+        updatedAt: true
       }
     });
 
     // Map ke format yang diharapkan UI
     const formattedSessions = chatSessions.map(s => {
-      const msgs = s.messages.map(m => ({
-        id: m.id,
-        sender: m.role === 'user' ? 'user' : 'ai',
-        text: m.content,
-        timestamp: (m.metadata as any)?.clientTimestamp || m.createdAt,
-        ...(m.metadata as any)
-      }));
-
-      // Sort in memory using the exact client timestamp
-      msgs.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-
       return {
         id: s.id,
         title: s.title,
-        messages: msgs,
+        messages: [], // loaded on-demand when switching sessions
         lastMessageAt: s.updatedAt,
         major: (session.user as any).major
       };

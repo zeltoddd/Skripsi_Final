@@ -42,6 +42,7 @@ export default function ChatSessionPage() {
   const [messages, setMessages] = useState<any[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isMessagesLoading, setIsMessagesLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState<string | null>(null);
   const [attachedFiles, setAttachedFiles] = useState<any[]>([]);
   const [failedMessages, setFailedMessages] = useState<Set<string>>(new Set());
@@ -85,6 +86,7 @@ export default function ChatSessionPage() {
   }, [messages.length, effectiveMajor, sessionIdFromUrl, currentSessionId]);
 
   // Sync messages from database when currentSessionId changes
+  // Sync messages from database when currentSessionId changes
   useEffect(() => {
     if (!currentSessionId) {
       if (!isLoading) setMessages([]);
@@ -95,24 +97,43 @@ export default function ChatSessionPage() {
     const isNewSessionSwitch = prevSessionIdRef.current !== currentSessionId;
     prevSessionIdRef.current = currentSessionId;
 
-    const activeSession = sessions.find(s => s.id === currentSessionId);
-    
-    if (activeSession) {
-      setMessages(prev => {
-        // Load from DB only on initial load or session switch
-        if ((isNewSessionSwitch || prev.length === 0) && !isLoading) {
-          return activeSession.messages;
-        }
-        
-        // During active chat, NEVER overwrite local state with DB state
-        // Local React state is the single source of truth for the active UI
-        // This completely eliminates any UI flickering or re-ordering!
-        return prev;
-      });
-    } else if (isNewSessionSwitch && !isLoading) {
-      setMessages([]);
+    if (isNewSessionSwitch) {
+      setMessages([]); // Clear previous messages while switching sessions to prevent visual overlap
     }
-  }, [currentSessionId, sessions, isLoading]);
+
+    // Guest sessions have messages loaded locally from localStorage, so no fetch needed
+    if (status !== 'authenticated') {
+      const activeSession = sessions.find(s => s.id === currentSessionId);
+      if (activeSession) {
+        setMessages(activeSession.messages || []);
+      }
+      return;
+    }
+
+    // Authenticated users load messages on-demand from database
+    const loadSessionMessages = async () => {
+      setIsMessagesLoading(true);
+      try {
+        const res = await fetch(`/api/chat/sessions/${currentSessionId}`, { credentials: 'include' });
+        if (res.ok) {
+          const data = await res.json();
+          // Double check we are still on the same session when the fetch completes
+          if (prevSessionIdRef.current === currentSessionId) {
+            setMessages(data.messages || []);
+          }
+        } else {
+          toast.error("Gagal memuat pesan obrolan");
+        }
+      } catch (error) {
+        console.error("Failed to load session messages:", error);
+        toast.error("Gagal memuat pesan obrolan");
+      } finally {
+        setIsMessagesLoading(false);
+      }
+    };
+
+    loadSessionMessages();
+  }, [currentSessionId, status, sessions]);
 
   // Keep onSendMessageRef updated so early-return callbacks can call it
   useEffect(() => {
@@ -549,7 +570,7 @@ export default function ChatSessionPage() {
 
   // Prevent SSR flash/flicker by waiting for mount
   // Show skeleton during SSR or session loading to achieve instant FCP/LCP
-  if (!hasMounted || status === 'loading') {
+  if (!hasMounted || status === 'loading' || isMessagesLoading) {
     const isNewChat = sessionIdFromUrl === 'new';
 
     if (isNewChat) {
