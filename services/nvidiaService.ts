@@ -368,7 +368,7 @@ export const sendMessageToNvidia = async (
   }
 
   if (selectedMode === 'fast') {
-    userContent += `\n\n[PENTING - WAJIB PATUH]: Tulis respons kamu super singkat (maksimal 2-3 kalimat), berikan judul ### ... di baris pertama, dan WAJIB sertakan 2 opsi interaktif dengan format [OPSI: Pilihan] di baris paling akhir pesanmu.`;
+    userContent += `\n\n[PENTING - WAJIB PATUH]: Tulis respons kamu dengan jelas, berikan judul ### ... di baris pertama, jelaskan dalam 1-2 paragraf pendek yang kaya wawasan, dan WAJIB sertakan 2 opsi interaktif dengan format [OPSI: Pilihan] di baris paling akhir pesanmu.`;
   }
 
   const rawMessages: NvidiaMessage[] = [
