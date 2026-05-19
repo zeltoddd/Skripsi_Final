@@ -352,7 +352,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
                           <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-300 group-open:rotate-180 shrink-0 ml-3" />
                         </summary>
                         {body.trim() && (
-                          <div className="px-4 pb-4 pt-3 border-t border-border/60 text-foreground/90">
+                          <div className="px-4 pb-1 pt-3 border-t border-border/60 text-foreground/90">
                             <div className="prose prose-sm max-w-none prose-ul:list-none prose-ul:pl-0 prose-ul:ml-[6px] prose-ul:border-l-2 prose-ul:border-gray-300 prose-li:relative prose-li:pl-5 prose-li:before:absolute prose-li:before:w-[8px] prose-li:before:h-[8px] prose-li:before:rounded-full prose-li:before:bg-gray-400 prose-li:before:-left-[5px] prose-li:before:top-[7px] prose-p:mb-2 prose-li:mb-3">
                               <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
                                 {body}

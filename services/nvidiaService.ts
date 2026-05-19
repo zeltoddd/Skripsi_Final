@@ -338,6 +338,22 @@ export const sendMessageToNvidia = async (
   }
   */
 
+  const estimateTokenCount = (text: string): number => {
+    if (!text) return 0;
+    return Math.ceil(text.length / 4); // Standard 4-character rule of thumb for tokens
+  };
+
+  const promptText = messages.map(m => `${m.role}: ${m.content}`).join('\n');
+  const promptTokens = estimateTokenCount(promptText);
+  const completionTokens = estimateTokenCount(fullText + fullReasoning);
+  const totalTokens = promptTokens + completionTokens;
+
+  console.log(`%c[VOKARA TOKEN METRICS]%c
+  - Prompt: ~${promptTokens} tokens (${promptText.length} chars)
+  - Completion: ~${completionTokens} tokens (Content: ${fullText.length} chars, Reasoning: ${fullReasoning.length} chars)
+  - Total: ~${totalTokens} tokens`, 
+  'color: #10b981; font-weight: bold;', 'color: inherit;');
+
   return {
     text: fullText,
     quickActions,
