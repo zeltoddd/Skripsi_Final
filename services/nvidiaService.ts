@@ -435,7 +435,12 @@ export const sendMessageToNvidia = async (
               if (!delta) continue
 
               const content = delta.content || ''
-              const reasoning = delta.reasoning_content || ''
+              let reasoning = delta.reasoning_content || ''
+
+              // Discard reasoning specifically for Gemma models to keep response fast, direct, and distraction-free
+              if (decision.model.includes('gemma')) {
+                reasoning = ''
+              }
 
               if (content || reasoning) {
                 if (reasoning) {
@@ -464,7 +469,12 @@ export const sendMessageToNvidia = async (
             const delta = chunk.choices?.[0]?.delta
             if (delta) {
               const content = delta.content || ''
-              const reasoning = delta.reasoning_content || ''
+              let reasoning = delta.reasoning_content || ''
+              
+              if (decision.model.includes('gemma')) {
+                reasoning = ''
+              }
+
               if (content || reasoning) {
                 if (reasoning) {
                   fullReasoning += reasoning
@@ -486,7 +496,7 @@ export const sendMessageToNvidia = async (
       const data = await response.json()
       const msg = data.choices?.[0]?.message
       fullText = msg?.content ?? ''
-      fullReasoning = msg?.reasoning_content ?? ''
+      fullReasoning = decision.model.includes('gemma') ? '' : (msg?.reasoning_content ?? '')
     }
 
   } catch (error: any) {
