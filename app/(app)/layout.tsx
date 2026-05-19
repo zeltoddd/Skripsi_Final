@@ -197,7 +197,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     : '?';
 
   return (
-    <div className="flex h-[100dvh] overflow-hidden bg-background">
+    <div className="flex h-full w-full overflow-hidden bg-background">
       {/* Mobile Overlay */}
       {isMobileOpen && (
         <div
@@ -416,7 +416,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </div>
             </Button>
 
-            <Link href="/settings" className="shrink-0">
+            <Link href="/settings" className="shrink-0" prefetch={false}>
               <Button
                 variant="ghost"
                 size="icon"
@@ -524,7 +524,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 </div>
               </Button>
 
-              <Link href="/settings">
+              <Link href="/settings" prefetch={false}>
                 <Button
                   variant="ghost"
                   size="icon"
