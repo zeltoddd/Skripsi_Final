@@ -1,6 +1,6 @@
 // ============================================================
 // retriever.ts
-// Core RAG retrieval engine for VEKORA
+// Core RAG retrieval engine for VEKORA (OPTIMIZED VERSION 2.0)
 // ============================================================
 
 import { getCareerPathContext, getScholarshipContext, getDUDIContext, getCourseContext } from '@/services/RAG_SETUP';
@@ -12,6 +12,36 @@ import { getIndustryContext } from './industry';
 import { getFAQContext } from './faq';
 import { getToolsContext } from './tools';
 import { getPKLContext } from './pkl';
+import dataset from '@/data/rag/SMKN6_RAG_Dataset_Complete.json';
+
+/**
+ * List of highly common Indonesian stopwords to filter out from keyword search terms.
+ * This guarantees we score chunks based on actual high-intent vocational keywords.
+ */
+const INDONESIAN_STOPWORDS = new Set([
+  'yang', 'dan', 'untuk', 'dari', 'ada', 'bisa', 'saya', 'kamu', 'akan', 'atau',
+  'dengan', 'ini', 'itu', 'pada', 'juga', 'adalah', 'yaitu', 'yakni', 'oleh',
+  'ke', 'dia', 'mereka', 'kami', 'kita', 'dalam', 'secara', 'karena', 'tentang',
+  'sebagai', 'saja', 'tersebut', 'olehnya', 'hanya', 'ingin', 'tahu', 'mau',
+  'bagaimana', 'gimana', 'kenapa', 'mengapa', 'apakah', 'kalau', 'jika', 'adapun'
+]);
+
+/**
+ * High-value vocational keywords that should carry extra score weight when matched.
+ */
+const HIGH_VALUE_WEIGHTS: Record<string, number> = {
+  // Jurusan & Kompetensi
+  rpl: 3.5, dkv: 3.5, akl: 3.5, pm: 3.5, bp: 3.5, ulp: 3.5, mplb: 3.5,
+  software: 2.0, koding: 2.0, coding: 2.0, figma: 2.0, photoshop: 2.0,
+  
+  // Program & Skema
+  pkl: 3.0, magang: 3.0, beasiswa: 3.0, kip: 3.5, kbi: 2.5,
+  dicoding: 3.0, myskill: 2.5, sertifikasi: 2.5, portofolio: 2.5,
+  
+  // Dunia Industri / Kerja
+  industri: 2.0, dudi: 3.0, kerja: 2.0, gaji: 2.5, loker: 3.0,
+  karir: 2.0, roadmap: 2.0, kuliah: 2.0, snbt: 3.0, snbp: 3.0
+};
 
 /**
  * Intent to category mapping
@@ -71,10 +101,6 @@ export function retrieveContext(opts: RetrievalOptions): string {
   // 5. Fetch context blocks for each category
   const contextBlocks: { category: string; content: string }[] = [];
 
-  // Import JSON dataset dynamically or static?
-  // Next.js handles static JSON imports automatically
-  const dataset = require('@/data/rag/SMKN6_RAG_Dataset_Complete.json');
-
   for (const category of targetCategories) {
     let content = '';
     
@@ -117,7 +143,7 @@ export function retrieveContext(opts: RetrievalOptions): string {
        case 'pkl':
          content = getPKLContext(jurusan);
          break;
-     }
+    }
 
     // Fetch complementary chunks from the complete JSON dataset
     let scoredChunks = dataset.filter((chunk: any) => {
@@ -136,13 +162,14 @@ export function retrieveContext(opts: RetrievalOptions): string {
       return chunkMajor === 'general' || chunkMajor === reqMajor;
     });
 
-    // Smart keyword-matching score
+    // Smart weighted TF-IDF keyword-matching score
     const searchTerms = query
       ? query
           .toLowerCase()
           .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
           .split(/\s+/)
-          .filter(word => word.length > 2) // exclude short words
+          // Exclude stopwords and extremely short words
+          .filter(word => word.length > 2 && !INDONESIAN_STOPWORDS.has(word))
       : [];
 
     let finalChunks: string[] = [];
@@ -152,11 +179,19 @@ export function retrieveContext(opts: RetrievalOptions): string {
         .map((chunk: any) => {
           let score = 0;
           const text = chunk.content.toLowerCase();
+          
           searchTerms.forEach(term => {
-            if (text.includes(term)) {
-              score += 1;
+            // Count frequency of matches
+            const regex = new RegExp(term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g');
+            const matches = text.match(regex);
+            
+            if (matches) {
+              const frequency = matches.length;
+              const weight = HIGH_VALUE_WEIGHTS[term] || 1.0;
+              score += frequency * weight;
             }
           });
+          
           return { content: chunk.content, score };
         })
         .filter((item: any) => item.score > 0) // only keep if at least 1 keyword matches
@@ -170,7 +205,7 @@ export function retrieveContext(opts: RetrievalOptions): string {
     const prunedChunks = finalChunks.slice(0, 2);
 
     if (prunedChunks.length > 0) {
-      content += (content ? '\n\n' : '') + '### Data Ekstra Dataset:\n- ' + prunedChunks.join('\n- ');
+      content += (content ? '\n\n' : '') + '### Data Referensi Tambahan:\n- ' + prunedChunks.join('\n- ');
     }
 
     if (content && content.trim().length > 0) {
@@ -191,9 +226,6 @@ export function retrieveContext(opts: RetrievalOptions): string {
  * Format context blocks into a single string with headers
  */
 function formatContextBlocks(blocks: { category: string; content: string }[], jurusan?: string): string {
-  // We can implement token budgeting here later.
-  // Currently relies on Gemini's large context window.
-  
   const header = jurusan
     ? `DATA REFERENSI — Konteks VEKORA untuk jurusan ${jurusan.toUpperCase()} di SMKN 6 Surakarta\nGunakan sebagai acuan utama. Jangan tambahkan data di luar ini.\n\n`
     : `DATA REFERENSI — Konteks VEKORA untuk SMKN 6 Surakarta\n\n`;
