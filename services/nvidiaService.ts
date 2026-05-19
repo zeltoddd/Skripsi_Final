@@ -638,7 +638,7 @@ Balas HANYA JSON:
 
   try {
     const res = await callNvidiaWithRotation({
-      model: 'google/gemma-4-31b-it',
+      model: 'google/gemma-3n-e4b-it',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.1,
       max_tokens: 256,
@@ -656,7 +656,7 @@ Balas HANYA JSON:
 export const summarizeTextNvidia = async (text: string): Promise<string> => {
   try {
     const res = await callNvidiaWithRotation({
-      model: 'google/gemma-4-31b-it',
+      model: 'google/gemma-3n-e4b-it',
       messages: [{
         role: 'user',
         content: `Ringkas ini menjadi 3-4 poin bullet. Singkat, langsung ke inti:\n\n${text.slice(0, 1000)}`,
@@ -682,7 +682,7 @@ export const fetchCVSuggestionsNvidia = async (
 
   try {
     const res = await callNvidiaWithRotation({
-      model: 'google/gemma-4-31b-it',
+      model: 'google/gemma-3n-e4b-it',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.4,
       max_tokens: 150,
@@ -705,7 +705,7 @@ export async function generateChatTitle(firstMessage: string): Promise<string> {
         { role: 'system', content: 'Anda adalah asisten yang bertugas membuat judul singkat untuk percakapan. Balas HANYA dengan judulnya saja (maksimal 4 kata), tanpa tanda kutip, tanpa penjelasan.' },
         { role: 'user', content: `Buatkan judul singkat untuk percakapan yang dimulai dengan pesan ini: "${firstMessage}"` }
       ],
-      model: "google/gemma-4-31b-it",
+      model: "google/gemma-3n-e4b-it",
       temperature: 0.3,
       max_tokens: 50,
       stream: true
