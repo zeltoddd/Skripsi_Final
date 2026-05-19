@@ -10,7 +10,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isPublicRoute = pathname === '/login' || pathname === '/register';
+  const isPublicRoute = pathname === '/login';
   const isOnboarding = pathname === '/onboarding';
   const isChat = pathname.startsWith('/chat');
 

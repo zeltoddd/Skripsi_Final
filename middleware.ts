@@ -24,7 +24,7 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth
 
    // Public routes
-   const publicRoutes = ['/login', '/register', '/chat']
+   const publicRoutes = ['/login', '/chat']
    const isPublicRoute = publicRoutes.some(r => pathname.startsWith(r))
 
   // Redirect logic
