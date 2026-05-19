@@ -50,6 +50,18 @@ export default function ChatInterface(props: ChatInterfaceProps) {
   const prevMessagesLengthRef = useRef(props.messages.length);
   const latestMessage = props.messages[props.messages.length - 1];
   const isCurrentlyStreaming = latestMessage?.isStreaming;
+  const shouldAutoScrollRef = useRef(true);
+
+  // Monitor user's scroll gestures to enable/disable auto-scroll intelligently
+  const handleScroll = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const distanceToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+    
+    // If user is within 100px of bottom, keep auto-scrolling. Otherwise, lock scroll position to let user read history.
+    shouldAutoScrollRef.current = distanceToBottom < 100;
+  };
 
   // Smart Auto-Scroll for incoming chunks
   useEffect(() => {
@@ -59,13 +71,17 @@ export default function ChatInterface(props: ChatInterfaceProps) {
     const isNewMessage = props.messages.length > prevMessagesLengthRef.current;
     prevMessagesLengthRef.current = props.messages.length;
 
-    // Threshold dikecilin jadi 50px biar user gampang "lepas" dari auto-scroll
-    const distanceToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
-    const isNearBottom = distanceToBottom < 50;
+    if (isNewMessage) {
+      shouldAutoScrollRef.current = true;
+      // Smooth scroll container to the absolute bottom on new message
+      container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+      return;
+    }
 
-    if (isNewMessage || isNearBottom) {
-      // Langsung scroll tanpa timeout kalau masih streaming atau baru
-      props.messagesEndRef.current?.scrollIntoView({ behavior: isNewMessage ? 'smooth' : 'auto' });
+    // During active text streaming, use high-performance instantaneous scrollTop update 
+    // to prevent mobile viewport jitter or keyboard-fighting artifacts.
+    if (shouldAutoScrollRef.current) {
+      container.scrollTop = container.scrollHeight;
     }
   }, [props.messages]);
 
@@ -77,9 +93,10 @@ export default function ChatInterface(props: ChatInterfaceProps) {
 
       const distanceToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
       if (distanceToBottom < 150) { // Toleransi agak gede pas opsi nongol
+        shouldAutoScrollRef.current = true;
         setTimeout(() => {
-          props.messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }, 600); // Nunggu animasi opsi selesai
+          container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+        }, 400); // Snappier response
       }
     }
   }, [isCurrentlyStreaming]);
@@ -88,7 +105,11 @@ export default function ChatInterface(props: ChatInterfaceProps) {
     <div className="flex flex-col h-full bg-background overflow-hidden relative">
 
       {/* ─── Messages Area ─── */}
-      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto px-4 scrollbar-hide">
+      <div 
+        ref={scrollContainerRef} 
+        onScroll={handleScroll} 
+        className="flex-1 overflow-y-auto px-4 scrollbar-hide"
+      >
         <div className="max-w-2xl mx-auto w-full space-y-6 pt-6 pb-6">
           {props.messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center min-h-[calc(100dvh-11rem)] gap-5 sm:gap-6 py-6 animate-in fade-in duration-700">
