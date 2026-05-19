@@ -149,8 +149,15 @@ export const sendMessageToNvidia = async (
     }
   }
 
+  // Extract nickname (first name only) and format in Title Case
+  let nickname = 'Siswa';
+  if (profileName) {
+    const rawFirst = profileName.trim().split(/\s+/)[0];
+    nickname = rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1).toLowerCase();
+  }
+
   const systemPrompt = buildVekoraSystemPrompt({
-    userName: profileName,
+    userName: nickname,
     userMajor,
     context,
     hasTTS: true, // TTS is available in this deployment
@@ -168,13 +175,12 @@ export const sendMessageToNvidia = async (
   }
 
   // FORCE GRAMMAR RULES ON USER CONTENT (CRITICAL FOR STEPFUN INSTRUCTION FOLLOWING)
-  if (profileName) {
-    const titleCaseName = profileName.charAt(0).toUpperCase() + profileName.slice(1).toLowerCase();
+  if (nickname && nickname !== 'Siswa') {
     userContent += `\n\n[ATURAN PENTING - WAJIB PATUH]: 
 - JANGAN gunakan basa-basi/filler pembuka di awal kalimat (seperti "Wah, bagus banget...", "Tentu saja...", dsb). Langsung jawab inti pertanyaan pengguna di kalimat pertama.
-- JANGAN PERNAH gunakan koma sebelum nama panggilan sapaan (contoh: tulis "Halo ${titleCaseName}" atau "Semangat ${titleCaseName}" BUKAN "Halo, ${titleCaseName}").
-- JANGAN meletakkan tanda seru (!) langsung setelah nama saat menyapa (contoh: tulis "Halo ${titleCaseName}." BUKAN "Halo ${titleCaseName}!").
-- Tulis nama panggilan dengan Title Case (contoh: "${titleCaseName}" BUKAN "${profileName.toUpperCase()}").`;
+- JANGAN PERNAH gunakan koma sebelum nama panggilan sapaan (contoh: tulis "Halo ${nickname}" atau "Semangat ${nickname}" BUKAN "Halo, ${nickname}").
+- JANGAN meletakkan tanda seru (!) langsung setelah nama saat menyapa (contoh: tulis "Halo ${nickname}." BUKAN "Halo ${nickname}!").
+- Tulis nama panggilan dengan Title Case (contoh: "${nickname}" BUKAN "${nickname.toUpperCase()}").`;
   } else {
     userContent += `\n\n[ATURAN PENTING - WAJIB PATUH]: 
 - JANGAN gunakan basa-basi/filler pembuka di awal kalimat (seperti "Wah, bagus banget...", "Tentu saja...", dsb). Langsung jawab inti pertanyaan pengguna di kalimat pertama.`;
