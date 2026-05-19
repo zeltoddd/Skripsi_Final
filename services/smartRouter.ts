@@ -52,16 +52,16 @@ const MODELS = {
 // ============================================================
 
 const TOKEN_BUDGET: Record<QueryTier, { maxTokens: number; historyLimit: number }> = {
-  QUICK:    { maxTokens: 1024, historyLimit: 2 },
+  QUICK: { maxTokens: 1024, historyLimit: 2 },
   STANDARD: { maxTokens: 2048, historyLimit: 6 },
-  DEEP:     { maxTokens: 4096, historyLimit: 10 },
+  DEEP: { maxTokens: 4096, historyLimit: 10 },
 }
 
 
 const TEMPERATURE: Record<QueryTier, number> = {
-  QUICK:    0.3,
-  STANDARD: 0.5,
-  DEEP:     0.7,
+  QUICK: 0.3,
+  STANDARD: 0.4,
+  DEEP: 0.5,
 }
 
 // ============================================================
@@ -70,17 +70,17 @@ const TEMPERATURE: Record<QueryTier, number> = {
 // ============================================================
 
 const INTENT_PATTERNS: Record<QueryIntent, string[]> = {
-  greeting:       ['halo', 'hai', 'hi', 'selamat', 'pagi', 'siang', 'malam', 'apa kabar', 'hei', 'test', 'bantu', 'tanya'],
-  career_advice:  ['karir', 'kerja', 'kerjaan', 'profesi', 'bidang', 'jurusan', 'prospek', 'masa depan', 'setelah lulus', 'peluang', 'sukses', 'jadi apa'],
-  job_search:     ['loker', 'lowongan', 'magang', 'pkl', 'rekrut', 'hiring', 'lamar', 'perusahaan', 'gaji', 'dudi', 'industri', 'cari kerja'],
-  scholarship:    ['beasiswa', 'bantuan biaya', 'kip', 'biaya kuliah', 'subsidi', 'dana pendidikan', 'gratis', 'kuliah free'],
-  course_rec:     ['kursus', 'belajar', 'sertifikat', 'pelatihan', 'skill', 'dicoding', 'myskill', 'kompetensi', 'bootcamp', 'belajar apa', 'asah'],
-  cv_help:        ['cv', 'resume', 'lamaran', 'portofolio', 'riwayat hidup', 'surat lamaran', 'bikin cv', 'buat cv'],
-  trend_data:     ['tren', 'grafik', 'statistik', 'data', 'permintaan pasar', 'populer', 'demand'],
-  roadmap:        ['roadmap', 'langkah', 'alur', 'rencana', 'plan', 'tahapan', 'mulai dari mana', 'panduan'],
-  college_info:   ['kuliah', 'snbp', 'snbt', 'universitas', 'perguruan tinggi', 'ptn', 'pts', 'politeknik', 'lanjut sekolah', 'jalur masuk', 'kartu indonesia pintar', 'kip-k'],
+  greeting: ['halo', 'hai', 'hi', 'selamat', 'pagi', 'siang', 'malam', 'apa kabar', 'hei', 'test', 'bantu', 'tanya'],
+  career_advice: ['karir', 'kerja', 'kerjaan', 'profesi', 'bidang', 'jurusan', 'prospek', 'masa depan', 'setelah lulus', 'peluang', 'sukses', 'jadi apa'],
+  job_search: ['loker', 'lowongan', 'magang', 'pkl', 'rekrut', 'hiring', 'lamar', 'perusahaan', 'gaji', 'dudi', 'industri', 'cari kerja'],
+  scholarship: ['beasiswa', 'bantuan biaya', 'kip', 'biaya kuliah', 'subsidi', 'dana pendidikan', 'gratis', 'kuliah free'],
+  course_rec: ['kursus', 'belajar', 'sertifikat', 'pelatihan', 'skill', 'dicoding', 'myskill', 'kompetensi', 'bootcamp', 'belajar apa', 'asah'],
+  cv_help: ['cv', 'resume', 'lamaran', 'portofolio', 'riwayat hidup', 'surat lamaran', 'bikin cv', 'buat cv'],
+  trend_data: ['tren', 'grafik', 'statistik', 'data', 'permintaan pasar', 'populer', 'demand'],
+  roadmap: ['roadmap', 'langkah', 'alur', 'rencana', 'plan', 'tahapan', 'mulai dari mana', 'panduan'],
+  college_info: ['kuliah', 'snbp', 'snbt', 'universitas', 'perguruan tinggi', 'ptn', 'pts', 'politeknik', 'lanjut sekolah', 'jalur masuk', 'kartu indonesia pintar', 'kip-k'],
   interview_tips: ['wawancara', 'interview', 'tes', 'psikotes', 'seleksi', 'pertanyaan hrd', 'teknis', 'user'],
-  out_of_scope:   ['pacar', 'cinta', 'bucin', 'agama', 'politik', 'pemerintah', 'pertandingan', 'bola', 'game', 'netflix', 'puisi', 'pantun', 'cerpen', 'novel'],
+  out_of_scope: ['pacar', 'cinta', 'bucin', 'agama', 'politik', 'pemerintah', 'pertandingan', 'bola', 'game', 'netflix', 'puisi', 'pantun', 'cerpen', 'novel'],
 
 }
 
@@ -131,14 +131,14 @@ export function classifyTier(intents: QueryIntent[], message: string, hasFile: b
 
 function selectRagKeys(intents: QueryIntent[]): RagKey[] {
   const ragMap: Partial<Record<QueryIntent, RagKey[]>> = {
-    scholarship:  ['scholarships'],
-    job_search:   ['dudi'],
-    career_advice:['career_paths'],
-    course_rec:   ['courses'],
-    trend_data:   ['trends', 'career_paths'],
-    roadmap:      ['career_paths', 'courses'],
+    scholarship: ['scholarships'],
+    job_search: ['dudi'],
+    career_advice: ['career_paths'],
+    course_rec: ['courses'],
+    trend_data: ['trends', 'career_paths'],
+    roadmap: ['career_paths', 'courses'],
     college_info: ['career_paths'],
-    cv_help:      ['career_paths'],
+    cv_help: ['career_paths'],
   }
 
   const keys = new Set<RagKey>()
@@ -160,7 +160,7 @@ function selectRagKeys(intents: QueryIntent[]): RagKey[] {
 export function route(
   message: string,
   hasFile: boolean = false,
- ): RouteDecision {
+): RouteDecision {
   const intents = detectIntents(message)
   const tier = classifyTier(intents, message, hasFile)
   const budget = TOKEN_BUDGET[tier]
@@ -192,11 +192,11 @@ export function pruneHistory(
   limit: number
 ): typeof history {
   if (history.length <= limit) return history;
-  
+
   // Ensure we keep at least 6 recent messages to preserve context continuity
   const MIN_RECENT = 6;
   const keepFromEnd = Math.max(limit - 1, MIN_RECENT);
-  
+
   const first = history[0];
   const recent = history.slice(-keepFromEnd);
   return [first, ...recent];
@@ -225,5 +225,5 @@ export function extractQuickActions(text: string) {
   if (['kursus', 'sertifikat', 'pelatihan', 'kuliah', 'kampus'].some(k => lower.includes(k)))
     actions.push({ label: 'Kursus & Kampus', actionId: 'search_courses' as const })
 
-  return actions.slice(0, 2) 
+  return actions.slice(0, 2)
 }
