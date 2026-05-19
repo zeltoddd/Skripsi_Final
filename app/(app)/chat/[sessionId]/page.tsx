@@ -16,11 +16,13 @@ export default function ChatSessionPage() {
   const { data: authSession, status } = useSession();
   const sessionMajor = (authSession?.user as any)?.major || null;
 
+  const [hasMounted, setHasMounted] = useState(false);
   const [userMajor, setUserMajor] = useState<string | null>(null);
   const [cachedUserMajor, setCachedUserMajor] = useState<string | null>(null);
 
   // Read client-side storage after hydration/mount to prevent SSR mismatch
   useEffect(() => {
+    setHasMounted(true);
     try {
       const guestProfileStr = localStorage.getItem('vokara_guest_profile');
       if (guestProfileStr) {
@@ -544,6 +546,11 @@ export default function ChatSessionPage() {
     window.addEventListener('online', handleOnline);
     return () => window.removeEventListener('online', handleOnline);
   }, []);
+
+  // Prevent SSR flash/flicker by waiting for mount
+  if (!hasMounted) {
+    return null;
+  }
 
   // Show loading while session is loading
   if (status === 'loading') {
