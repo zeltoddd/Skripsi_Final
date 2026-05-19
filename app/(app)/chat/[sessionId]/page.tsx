@@ -214,6 +214,9 @@ export default function ChatSessionPage() {
       } else if (res.status === 401) {
         console.error("DB Save failed: Unauthorized. Logging out...");
         signOut({ callbackUrl: '/login' });
+      } else if (res.status === 404) {
+        console.error("DB Save failed: Session not found. Redirecting to fresh chat...");
+        router.push('/chat');
       } else {
         console.error("DB Save failed:", await res.json().catch(() => ({})));
       }

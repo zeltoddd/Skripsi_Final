@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { 
+import {
   Calculator, Building, Plane, TrendingUp, Palette, Video, Code,
   ArrowLeft, Check, Loader2
 } from 'lucide-react';
@@ -59,7 +59,7 @@ export default function Onboarding() {
       if (res.ok) {
         // Refresh session to sync major in session.user
         await update();
-        router.push('/dashboard');
+        router.push('/chat');
       } else {
         const data = await res.json();
         alert(data.error || "Terjadi kesalahan saat memproses onboarding.");
