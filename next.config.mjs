@@ -21,6 +21,19 @@ const nextConfig = {
     appIsrStatus: false,
     buildActivity: false,
   },
+  async headers() {
+    return [
+      {
+        source: '/:all*(svg|png|jpg|webp|ico|woff|woff2)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
