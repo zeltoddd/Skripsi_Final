@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { SMK_MAJORS } from '@/constants/majors';
 import {
   Select,
@@ -60,9 +60,17 @@ export default function Onboarding() {
         // Refresh session to sync major in session.user
         await update();
         router.push('/dashboard');
+      } else {
+        const data = await res.json();
+        alert(data.error || "Terjadi kesalahan saat memproses onboarding.");
+        if (res.status === 404 || res.status === 401) {
+          // Stale session (user deleted from DB) -> clear cookie & force log in again
+          await signOut({ callbackUrl: '/login' });
+        }
       }
     } catch (err) {
       console.error('Onboarding error:', err);
+      alert("Koneksi gagal. Silakan periksa koneksi internet Anda.");
     } finally {
       setIsSaving(false);
     }

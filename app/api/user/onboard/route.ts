@@ -12,13 +12,18 @@ export async function POST(req: Request) {
 
    const { major, grade } = await req.json()
 
-   await prisma.user.update({
-     where: { id: session.user.id },
-     data: { major, grade },
-   })
+   try {
+     await prisma.user.update({
+       where: { id: session.user.id },
+       data: { major, grade },
+     })
 
-   // Invalidate cache
-   cache.delete(`user:${session.user.id}`)
+     // Invalidate cache
+     cache.delete(`user:${session.user.id}`)
 
-  return NextResponse.json({ success: true })
+     return NextResponse.json({ success: true })
+   } catch (err) {
+     console.error("Onboarding DB update failed:", err)
+     return NextResponse.json({ error: "User not found. Please log in again." }, { status: 404 })
+   }
 }
