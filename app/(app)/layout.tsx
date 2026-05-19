@@ -540,9 +540,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-hidden min-w-0">
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top Header */}
-        <header className="h-16 border-b border-border shrink-0 bg-background/80 backdrop-blur-md z-30">
+        <header className="h-16 border-b border-border shrink-0 bg-background/80 backdrop-blur-md z-30 sticky top-0">
           <div className="max-w-2xl mx-auto w-full h-full flex items-center justify-between px-4 relative">
 
             {/* Left Section: Unified Sidebar Trigger, Separator & Truncated Title */}
@@ -629,8 +629,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         {/* Page Content */}
         <div className={cn(
-          "flex-1 min-h-0 flex flex-col h-full relative overflow-hidden",
-          !pathname.startsWith('/chat') && "overflow-y-auto scrollbar-hide"
+          "flex-1 min-h-0 flex flex-col relative",
+          pathname.startsWith('/chat') ? "overflow-hidden" : "overflow-y-auto scrollbar-hide"
         )}>
           <React.Suspense fallback={
             <div className="flex items-center justify-center h-full">

@@ -102,7 +102,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
   }, [isCurrentlyStreaming]);
 
   return (
-    <div className="flex flex-col h-full bg-background overflow-hidden relative">
+    <div className="flex flex-col h-full bg-background overflow-hidden relative" style={{ contain: 'strict' }}>
 
       {/* ─── Messages Area ─── */}
       <div 
@@ -161,7 +161,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
       </div>
 
       {/* ─── Input Area ─── */}
-      <div className="shrink-0 relative px-4 pb-4 md:pb-6 pt-2 z-20 bg-background">
+      <div className="shrink-0 relative px-4 pt-2 z-20 bg-background" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
         <div className="absolute bottom-full left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         <div className="max-w-2xl mx-auto w-full">
 
