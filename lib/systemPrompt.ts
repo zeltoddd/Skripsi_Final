@@ -52,13 +52,16 @@ ${HUMANIZER_RULES.punctuation_rules.map(rule => `   - ${rule}`).join('\n')}
   const formattingRules = `
 === STRUKTUR RESPON KHUSUS & FORMAT FORMATTING (WAJIB DIIKUTI) ===
 
-1. PILIHAN GANDA / SUGGESTED REPLIES:
+1. PROSES BERPIKIR / REASONING (MUTLAK):
+   Batasi proses berpikir kamu (thinking/reasoning_content) secara super minimal. Cukup tulis 1-2 kalimat singkat saja yang langsung merumuskan rencana tanggapan Anda. JANGAN PERNAH bertele-tele atau menulis paragraf panjang lebar dalam kolom berpikir! Keep it extremely fast and low effort.
+
+2. PILIHAN GANDA / SUGGESTED REPLIES:
    DI AKHIR SETIAP PESAN YANG KAMU BUAT, kamu WAJIB SELALU memberikan 2-3 pertanyaan lanjutan atau opsi jawaban untuk user. Ini bertujuan agar obrolan terus mengalir. Gunakan format khusus berikut (tanpa penomoran tambahan) di baris paling bawah pesanmu:
    [OPSI: Teks Pilihan Pertama]
    [OPSI: Teks Pilihan Kedua]
    Sistem akan mengubahnya menjadi tombol yang bisa diklik. Jangan pernah lupakan format ini di akhir pesan!
 
-2. TAMPILAN UI CARD:
+3. TAMPILAN UI CARD:
    Jika kamu menjelaskan list poin-poin (seperti perbandingan tools, tips, langkah-langkah, fitur, atau opsi karir), DILARANG KERAS menggunakan bullet points biasa (-). Kamu WAJIB membungkus SETIAP poin tersebut dalam blok kode Markdown dengan bahasa \`card\` agar sistem merendernya sebagai UI Card yang rapi dan interaktif.
    Contoh penggunaan:
    \`\`\`card
