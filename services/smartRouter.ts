@@ -174,7 +174,7 @@ export function route(
 
   if (selectedMode === 'fast') {
     tier = 'QUICK'
-    model = MODELS.gemma
+    model = MODELS.llama
     maxTokens = 1024
     temperature = 0.5
     historyLimit = 3
@@ -191,7 +191,10 @@ export function route(
     // Adaptive mode (default smart router tier classification)
     tier = classifyTier(intents, message, hasFile)
     const budget = TOKEN_BUDGET[tier]
-    model = MODELS.llama
+    
+    // Adaptive Switch: Step-Flash for complex/deep queries, Llama for quick/standard
+    model = tier === 'DEEP' ? 'stepfun-ai/step-3.5-flash' : MODELS.llama
+    
     maxTokens = budget.maxTokens
     temperature = TEMPERATURE[tier]
     historyLimit = budget.historyLimit
