@@ -251,7 +251,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
               <div className="flex items-center gap-3">
                 {/* Model indicator */}
                 <div className="flex items-center gap-1 text-[10px] text-foreground/50 font-bold tracking-tight cursor-pointer hover:text-foreground/80 transition-colors uppercase">
-                  <span>VOKARA</span>
+                  <span>VEKORA</span>
                   <span className="font-normal normal-case">Adaptive</span>
                   <ChevronDown className="h-2.5 w-2.5 opacity-70" />
                 </div>

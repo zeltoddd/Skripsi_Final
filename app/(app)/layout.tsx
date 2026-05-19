@@ -104,7 +104,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     if (pathname.startsWith('/settings')) {
       return 'Pengaturan';
     }
-    return 'VOKARA';
+    return 'VEKORA';
   };
   const headerTitle = getHeaderTitle();
 
