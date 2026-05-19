@@ -71,6 +71,7 @@ export default function ChatSessionPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const onSendMessageRef = useRef<((textOverride?: any) => Promise<void>) | null>(null);
   const prevSessionIdRef = useRef<string | null>(null);
+  const loadedSessionIdRef = useRef<string | null>(null);
   const sessionCreationPromiseRef = useRef<Promise<any> | null>(null);
 
   // Load suggested prompts on mount or when effectiveMajor changes
@@ -86,32 +87,45 @@ export default function ChatSessionPage() {
   }, [messages.length, effectiveMajor, sessionIdFromUrl, currentSessionId]);
 
   // Sync messages from database when currentSessionId changes
-  // Sync messages from database when currentSessionId changes
   useEffect(() => {
     if (!currentSessionId) {
       if (!isLoading) setMessages([]);
       prevSessionIdRef.current = null;
+      loadedSessionIdRef.current = null;
       return;
     }
 
     const isNewSessionSwitch = prevSessionIdRef.current !== currentSessionId;
     prevSessionIdRef.current = currentSessionId;
 
-    if (isNewSessionSwitch) {
+    const activeSession = sessions.find(s => s.id === currentSessionId);
+
+    if (isNewSessionSwitch && activeSession) {
       setMessages([]); // Clear previous messages while switching sessions to prevent visual overlap
     }
 
     // Guest sessions have messages loaded locally from localStorage, so no fetch needed
     if (status !== 'authenticated') {
-      const activeSession = sessions.find(s => s.id === currentSessionId);
       if (activeSession) {
         setMessages(activeSession.messages || []);
+        loadedSessionIdRef.current = currentSessionId;
       }
       return;
     }
 
     // Authenticated users load messages on-demand from database
     const loadSessionMessages = async () => {
+      // ONLY fetch if it's an existing saved session in the database
+      if (!activeSession) {
+        // If it's not in the sessions list, but it's a new session we just created client-side,
+        // we shouldn't attempt to load it. Set loaded session ID ref immediately.
+        loadedSessionIdRef.current = currentSessionId;
+        return;
+      }
+
+      // Do NOT fetch if we've already loaded this session's messages
+      if (loadedSessionIdRef.current === currentSessionId) return;
+
       setIsMessagesLoading(true);
       try {
         const res = await fetch(`/api/chat/sessions/${currentSessionId}`, { credentials: 'include' });
@@ -120,6 +134,7 @@ export default function ChatSessionPage() {
           // Double check we are still on the same session when the fetch completes
           if (prevSessionIdRef.current === currentSessionId) {
             setMessages(data.messages || []);
+            loadedSessionIdRef.current = currentSessionId;
           }
         } else {
           toast.error("Gagal memuat pesan obrolan");
