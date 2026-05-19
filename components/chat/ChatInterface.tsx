@@ -160,8 +160,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
         </div>
       </div>
 
-      {/* ─── Input Area ─── */}
-      <div className="shrink-0 relative px-4 pt-2 z-20 bg-background" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+      <div className="shrink-0 relative px-4 pt-2 z-20 bg-background" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}>
         <div className="absolute bottom-full left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         <div className="max-w-2xl mx-auto w-full">
 
