@@ -102,7 +102,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
   }, [isCurrentlyStreaming]);
 
   return (
-    <div className="flex flex-col h-full bg-background overflow-hidden relative">
+    <div className="flex-1 flex flex-col min-h-0 bg-background overflow-hidden relative">
 
       {/* ─── Messages Area ─── */}
       <div 
@@ -110,9 +110,9 @@ export default function ChatInterface(props: ChatInterfaceProps) {
         onScroll={handleScroll} 
         className="flex-1 overflow-y-auto px-4 scrollbar-hide"
       >
-        <div className="max-w-2xl mx-auto w-full space-y-6 pt-6 pb-6">
+        <div className="max-w-2xl mx-auto w-full min-h-full flex flex-col space-y-6 pt-6 pb-6">
           {props.messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center min-h-[calc(100dvh-11rem)] gap-5 sm:gap-6 py-6 animate-in fade-in duration-700">
+            <div className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-6 py-6 animate-in fade-in duration-700">
               <div className="animate-in fade-in zoom-in-95 duration-700 flex justify-center">
                 <img src="/vokara-stacked.svg" alt="VOKARA" className="h-[72px] sm:h-20 dark:invert opacity-100 transition-all duration-300" />
               </div>

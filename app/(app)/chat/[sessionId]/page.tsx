@@ -624,9 +624,8 @@ export default function ChatSessionPage() {
   }
 
    return (
-    <div className="flex h-full overflow-hidden bg-background">
-      <main className="flex-1 flex flex-col min-w-0 relative h-full">
-        <ChatInterface
+    <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-background relative">
+      <ChatInterface
           messages={messages}
           input={input}
           setInput={setInput}
@@ -695,7 +694,6 @@ export default function ChatSessionPage() {
             setTimeout(() => onSendMessage(prompt), 50);
           }}
          />
-      </main>
-    </div>
-  );
+      </div>
+   );
 }
