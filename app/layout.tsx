@@ -48,6 +48,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://va.vercel-scripts.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://vitals.vercel-insights.com" crossOrigin="anonymous" />
+        <link rel="preload" as="image" href="/vokara-stacked.svg" type="image/svg+xml" />
       </head>
       <body className="font-sans antialiased h-full overflow-hidden bg-background">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
