@@ -145,6 +145,16 @@
     outline-color: color-mix(in srgb, var(--ring), transparent 50%);
   }
 
+  /* Prevent browser-level scroll on mobile — all scrolling must happen
+     inside our controlled flex containers (messages area). Without this,
+     the mobile browser can scroll the whole page and the header disappears. */
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
@@ -152,10 +162,6 @@
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-
-
-
-
 }
 
 @layer utilities {

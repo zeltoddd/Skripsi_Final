@@ -542,7 +542,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top Header */}
-        <header className="h-16 border-b border-border shrink-0 bg-background/80 backdrop-blur-md z-30 sticky top-0">
+        <header className="h-16 border-b border-border shrink-0 bg-background/80 backdrop-blur-md z-30">
           <div className="max-w-2xl mx-auto w-full h-full flex items-center justify-between px-4 relative">
 
             {/* Left Section: Unified Sidebar Trigger, Separator & Truncated Title */}

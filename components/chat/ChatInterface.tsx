@@ -102,7 +102,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
   }, [isCurrentlyStreaming]);
 
   return (
-    <div className="flex flex-col h-full bg-background overflow-hidden relative" style={{ contain: 'strict' }}>
+    <div className="flex flex-col h-full bg-background overflow-hidden relative">
 
       {/* ─── Messages Area ─── */}
       <div 
