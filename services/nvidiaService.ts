@@ -129,15 +129,51 @@ const callNvidiaWithRotation = async (
   throw lastError || new Error('Semua API Key NVIDIA telah dicoba dan gagal.');
 };
 
+function getDefaultOptions(userMajor: string): QuickAction[] {
+  const majorKey = (userMajor || 'rpl').toLowerCase();
+  let defaultLabels = ["Bagaimana prospek kerja jurusan ini?", "Tips sukses magang industri?"];
+
+  if (majorKey.includes('rpl') || majorKey.includes('perangkat lunak')) {
+    defaultLabels = ["Apa saja prospek kerja RPL?", "Bagaimana cara mulai portofolio?"];
+  } else if (majorKey.includes('akl') || majorKey.includes('akuntansi')) {
+    defaultLabels = ["Sertifikasi Akuntansi apa yang penting?", "Tips magang di bagian finance?"];
+  } else if (majorKey.includes('mplb') || majorKey.includes('perkantoran')) {
+    defaultLabels = ["Bagaimana melatih skill komunikasi?", "Saran karir staff administrasi?"];
+  } else if (majorKey.includes('ulp') || majorKey.includes('pariwisata')) {
+    defaultLabels = ["Peluang kerja industri pariwisata?", "Bahasa asing apa yang wajib dikuasai?"];
+  } else if (majorKey.includes('pemasaran') || majorKey.includes('marketing')) {
+    defaultLabels = ["Bagaimana cara belajar digital marketing?", "Skill penting untuk sales modern?"];
+  } else if (majorKey.includes('dkv') || majorKey.includes('visual')) {
+    defaultLabels = ["Portofolio DKV yang menarik seperti apa?", "Tips mulai jadi freelance designer?"];
+  } else if (majorKey.includes('broadcasting') || majorKey.includes('film')) {
+    defaultLabels = ["Cara belajar editing video pemula?", "Peluang kerja di stasiun TV/Media?"];
+  }
+
+  return defaultLabels.map(label => ({
+    label,
+    actionId: 'dynamic_option',
+    payload: label
+  }));
+}
+
 async function generateOptionsWithGemma(contextText: string, userMajor: string): Promise<QuickAction[]> {
   try {
-    const systemPrompt = `Kamu adalah asisten generator pilihan karir interaktif Vokara.
-Tugasmu adalah membuat tepat 2 (dua) opsi pertanyaan/tindakan kelanjutan yang sangat singkat, ramah, dan interaktif untuk siswa SMK jurusan ${userMajor} berdasarkan kutipan tanggapan mentor karir di bawah ini.
-Setiap opsi harus bertindak sebagai pertanyaan lanjutan dari siswa (maksimal 4-6 kata saja).
+    const systemPrompt = `Kamu adalah AI Assistant khusus untuk membuat opsi pertanyaan kelanjutan (follow-up questions) bagi siswa SMK jurusan ${userMajor}.
+Tugasmu adalah menganalisis tanggapan dari mentor karir di bawah ini, lalu membuat tepat 2 (dua) opsi pertanyaan kelanjutan yang akan dipilih siswa untuk melanjutkan obrolan.
 
-FORMAT OUTPUT (WAJIB KAKU, TANPA PENOMORAN, TANPA PENJELASAN LAIN):
-[OPSI: Pilihan pertama]
-[OPSI: Pilihan kedua]`;
+ATURAN UTAMA:
+1. Harus berupa pertanyaan/pernyataan singkat dari sudut pandang SISWA (seolah-olah siswa yang bertanya ke mentor).
+2. Maksimal 3 sampai 6 kata saja per opsi (sangat singkat, padat, dan langsung ke inti).
+3. HANYA keluarkan format berikut secara kaku, tanpa penjelasan, tanpa penomoran, tanpa teks tambahan:
+[OPSI: Pertanyaan singkat pertama?]
+[OPSI: Pertanyaan singkat kedua?]
+
+CONTOH MASUKAN:
+"Setelah lulus Akuntansi, kamu bisa bekerja di kantor pajak atau bagian finance perusahaan. Kamu akan banyak memakai e-Faktur dan laporan SPT."
+
+CONTOH KELUARAN:
+[OPSI: Bagaimana cara belajar e-Faktur?]
+[OPSI: Apa saja tugas staff finance?]`;
 
     const response = await callNvidiaWithRotation({
       model: 'google/gemma-3n-e4b-it',
@@ -195,14 +231,31 @@ FORMAT OUTPUT (WAJIB KAKU, TANPA PENOMORAN, TANPA PENJELASAN LAIN):
       const opsiRegex = /\[OPS[I:]+\s*(.*?)\]/gi;
       let match;
       while ((match = opsiRegex.exec(content)) !== null) {
-        if (match[1].trim()) {
+        const text = match[1].trim();
+        if (text && text.length > 2 && text.length < 60) {
           actions.push({
-            label: match[1].trim(),
+            label: text,
             actionId: 'dynamic_option',
-            payload: match[1].trim()
+            payload: text
           });
         }
       }
+
+      // If regex failed but model outputted bullet points instead
+      if (actions.length < 2) {
+        const lines = content.split('\n');
+        for (const line of lines) {
+          const trimmed = line.trim().replace(/^(?:-|\*|\d+\.)\s*/, '').replace(/\[OPS[I:]+\s*|\]/gi, '').trim();
+          if (trimmed && trimmed.length > 2 && trimmed.length < 60 && !actions.some(a => a.label === trimmed)) {
+            actions.push({
+              label: trimmed,
+              actionId: 'dynamic_option',
+              payload: trimmed
+            });
+          }
+        }
+      }
+
       return actions;
     }
   } catch (error) {
@@ -446,17 +499,19 @@ export const sendMessageToNvidia = async (
   const opsiRegex = /(?:-|\*|\d+\.)*\s*\[?\*?OPS[I:]+\*?\]?\s*:?\s*(.*?)(?:\]|\n|$)/gi;
   let match;
   while ((match = opsiRegex.exec(fullText)) !== null) {
-    if (match[1].trim()) {
+    const text = match[1].replace(/\*\*/g, '').trim();
+    // Validate length to ensure it is a short option pill (not full paragraphs)
+    if (text && text.length > 2 && text.length < 60) {
       dynamicActions.push({
-        label: match[1].replace(/\*\*/g, '').trim(),
+        label: text,
         actionId: 'dynamic_option',
-        payload: match[1].replace(/\*\*/g, '').trim()
+        payload: text
       });
     }
   }
 
   // Combine: dynamic actions first, then hardcoded ones
-  if (dynamicActions.length === 0) {
+  if (dynamicActions.length < 2) {
     // Fallback: If AI ignores [OPSI:] and just outputs a bullet list at the end
     const fallbackRegex = /(?:\n\n|^)(?:(?:[^:\n]{0,80}:\s*[\n\s]*))?((?:(?:-|\*|\d+\.)\s+[^\n]+(?:\n|$))+)$/;
     const fallbackMatch = fullText.match(fallbackRegex);
@@ -467,7 +522,7 @@ export const sendMessageToNvidia = async (
       if (bullets.length >= 1 && bullets.length <= 5) {
         bullets.forEach(b => {
           const text = b.replace(/^(?:-|\*|\d+\.)\s*/, '').replace(/\*\*|__/g, '').trim();
-          if (text) {
+          if (text && text.length > 2 && text.length < 60) {
             dynamicActions.push({
               label: text,
               actionId: 'dynamic_option',
@@ -480,13 +535,33 @@ export const sendMessageToNvidia = async (
     }
   }
 
-  let quickActions = [...dynamicActions, ...hardcodedActions];
-
-  if (quickActions.length === 0) {
-    console.log('[VOKARA RAG] No options generated by primary model. Calling Gemma-3 to generate high-quality options...');
+  // If we still have less than 2 dynamic options, call Gemma-3 to generate high-quality options
+  if (dynamicActions.length < 2) {
+    console.log(`[VOKARA RAG] Found only ${dynamicActions.length} dynamic options. Calling Gemma-3 to generate high-quality options...`);
     const gemmaActions = await generateOptionsWithGemma(fullText, userMajor);
-    quickActions = [...gemmaActions, ...hardcodedActions];
+    
+    // Merge only valid options from Gemma
+    for (const action of gemmaActions) {
+      if (dynamicActions.length >= 2) break;
+      if (action.label && action.label.length > 2 && action.label.length < 60 && !dynamicActions.some(a => a.label === action.label)) {
+        dynamicActions.push(action);
+      }
+    }
   }
+
+  // Double fallback: if still less than 2 dynamic options, use hardcoded major-specific defaults
+  if (dynamicActions.length < 2) {
+    console.log(`[VOKARA RAG] Options count is still ${dynamicActions.length} after Gemma. Injecting defaults...`);
+    const defaultActions = getDefaultOptions(userMajor);
+    for (const action of defaultActions) {
+      if (dynamicActions.length >= 2) break;
+      if (!dynamicActions.some(a => a.label === action.label)) {
+        dynamicActions.push(action);
+      }
+    }
+  }
+
+  let quickActions = [...dynamicActions, ...hardcodedActions];
 
   // Remove the [OPSI: ...] tags from the final text, including surrounding newlines and any trailing cut-off tags
   fullText = fullText
