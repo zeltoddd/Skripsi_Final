@@ -43,7 +43,7 @@ export type RagKey = 'scholarships' | 'dudi' | 'career_paths' | 'courses' | 'tre
 // ============================================================
 
 const MODELS = {
-  llama: 'meta/llama-3.1-8b-instruct',   // main — warm-cached, ultra-fast & high quality
+  llama: 'google/gemma-3-4b-it',   // main — Google Gemma 3 4B Instruct, extremely fast, lightweight & up-to-date training
   gemma: 'google/gemma-3n-e4b-it',        // Google Gemma 3 4B Instruct — extremely fast & lightweight
 } as const
 
