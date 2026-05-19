@@ -337,8 +337,48 @@ export default function ChatSessionPage() {
         extractedFilesData = results.filter(r => r !== null);
       }
 
-      let lastUpdate = Date.now();
-      let updateTimeout: any = null;
+      let displayedText = '';
+      let displayedReasoning = '';
+      let typewriterInterval: any = null;
+      let streamFinished = false;
+
+      const startTypewriter = () => {
+        typewriterInterval = setInterval(() => {
+          let updated = false;
+          let nextText = displayedText;
+          let nextReasoning = displayedReasoning;
+
+          if (displayedText.length < accumulatedText.length) {
+            const diff = accumulatedText.length - displayedText.length;
+            // Adaptive step size: flow faster if the stream is far ahead
+            const step = diff > 80 ? 6 : (diff > 30 ? 3 : (diff > 10 ? 2 : 1));
+            displayedText = accumulatedText.substring(0, displayedText.length + step);
+            nextText = displayedText;
+            updated = true;
+          }
+
+          if (displayedReasoning.length < accumulatedReasoning.length) {
+            const diff = accumulatedReasoning.length - displayedReasoning.length;
+            const step = diff > 40 ? 4 : 1;
+            displayedReasoning = accumulatedReasoning.substring(0, displayedReasoning.length + step);
+            nextReasoning = displayedReasoning;
+            updated = true;
+          }
+
+          if (updated) {
+            setMessages(prev => prev.map(m =>
+              m.id === aiMsgId ? { ...m, text: nextText, reasoning: nextReasoning } : m
+            ));
+          } else if (streamFinished) {
+            if (typewriterInterval) {
+              clearInterval(typewriterInterval);
+              typewriterInterval = null;
+            }
+          }
+        }, 15);
+      };
+
+      startTypewriter();
 
       const response = await sendMessageToNvidia(
         textToUse,
@@ -348,27 +388,16 @@ export default function ChatSessionPage() {
           setLoadingStep(null);
           if (chunk.content) accumulatedText += chunk.content;
           if (chunk.reasoning) accumulatedReasoning += chunk.reasoning;
-          
-          const now = Date.now();
-          if (now - lastUpdate > 80) {
-            lastUpdate = now;
-            setMessages(prev => prev.map(m =>
-              m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
-            ));
-          } else {
-            if (updateTimeout) clearTimeout(updateTimeout);
-            updateTimeout = setTimeout(() => {
-              setMessages(prev => prev.map(m =>
-                m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
-              ));
-            }, 80);
-          }
         },
         extractedFilesData.length > 0 ? extractedFilesData : undefined,
         authSession?.user?.name || undefined
       );
 
-      if (updateTimeout) clearTimeout(updateTimeout);
+      streamFinished = true;
+      if (typewriterInterval) {
+        clearInterval(typewriterInterval);
+        typewriterInterval = null;
+      }
 
       const finalAiMsg = {
         ...initialAiMsg,
@@ -517,8 +546,48 @@ export default function ChatSessionPage() {
         extractedFilesData = results.filter(r => r !== null);
       }
 
-      let lastUpdate = Date.now();
-      let updateTimeout: any = null;
+      let displayedText = '';
+      let displayedReasoning = '';
+      let typewriterInterval: any = null;
+      let streamFinished = false;
+
+      const startTypewriter = () => {
+        typewriterInterval = setInterval(() => {
+          let updated = false;
+          let nextText = displayedText;
+          let nextReasoning = displayedReasoning;
+
+          if (displayedText.length < accumulatedText.length) {
+            const diff = accumulatedText.length - displayedText.length;
+            // Adaptive step size: flow faster if the stream is far ahead
+            const step = diff > 80 ? 6 : (diff > 30 ? 3 : (diff > 10 ? 2 : 1));
+            displayedText = accumulatedText.substring(0, displayedText.length + step);
+            nextText = displayedText;
+            updated = true;
+          }
+
+          if (displayedReasoning.length < accumulatedReasoning.length) {
+            const diff = accumulatedReasoning.length - displayedReasoning.length;
+            const step = diff > 40 ? 4 : 1;
+            displayedReasoning = accumulatedReasoning.substring(0, displayedReasoning.length + step);
+            nextReasoning = displayedReasoning;
+            updated = true;
+          }
+
+          if (updated) {
+            setMessages(prev => prev.map(m =>
+              m.id === aiMsgId ? { ...m, text: nextText, reasoning: nextReasoning } : m
+            ));
+          } else if (streamFinished) {
+            if (typewriterInterval) {
+              clearInterval(typewriterInterval);
+              typewriterInterval = null;
+            }
+          }
+        }, 15);
+      };
+
+      startTypewriter();
 
       const response = await sendMessageToNvidia(
         userPrompt,
@@ -528,26 +597,15 @@ export default function ChatSessionPage() {
           setLoadingStep(null);
           if (chunk.content) accumulatedText += chunk.content;
           if (chunk.reasoning) accumulatedReasoning += chunk.reasoning;
-          
-          const now = Date.now();
-          if (now - lastUpdate > 80) {
-            lastUpdate = now;
-            setMessages(prev => prev.map(m =>
-              m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
-            ));
-          } else {
-            if (updateTimeout) clearTimeout(updateTimeout);
-            updateTimeout = setTimeout(() => {
-              setMessages(prev => prev.map(m =>
-                m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
-              ));
-            }, 80);
-          }
         },
         extractedFilesData.length > 0 ? extractedFilesData : undefined
       );
 
-      if (updateTimeout) clearTimeout(updateTimeout);
+      streamFinished = true;
+      if (typewriterInterval) {
+        clearInterval(typewriterInterval);
+        typewriterInterval = null;
+      }
 
       const finalAiMsg = {
         ...initialAiMsg,
