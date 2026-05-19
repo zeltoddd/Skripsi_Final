@@ -548,60 +548,81 @@ export default function ChatSessionPage() {
   }, []);
 
   // Prevent SSR flash/flicker by waiting for mount
-  if (!hasMounted) {
-    return null;
-  }
-
-  // Show loading while session is loading
-  if (status === 'loading') {
+  // Show skeleton during SSR or session loading to achieve instant FCP/LCP
+  if (!hasMounted || status === 'loading') {
     const isNewChat = sessionIdFromUrl === 'new';
 
-    // 1. Thread Chat Skeleton (Loading an existing session)
-    if (!isNewChat) {
+    if (isNewChat) {
       return (
         <div className="flex-1 flex flex-col h-full overflow-hidden bg-background">
-          {/* Scrollable messages area skeleton */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-6 max-w-2xl mx-auto w-full animate-pulse pt-8">
-            {/* Message 1 (User) */}
-            <div className="flex justify-end">
-              <div className="max-w-[70%] bg-muted/60 h-10 w-44 rounded-2xl rounded-tr-none" />
+          <div className="flex-1 flex flex-col items-center justify-center p-6 max-w-2xl mx-auto w-full space-y-8 animate-pulse">
+            {/* Logo placeholder */}
+            <div className="h-16 w-48 bg-muted rounded-2xl" />
+            
+            {/* Title / subtitle placeholders */}
+            <div className="space-y-3 w-full flex flex-col items-center">
+              <div className="h-6 bg-muted rounded-lg w-3/4" />
+              <div className="h-4 bg-muted rounded-lg w-1/2" />
             </div>
 
-            {/* Message 2 (AI) */}
-            <div className="flex justify-start items-start gap-3">
-              <div className="w-7 h-7 rounded-full bg-muted/70 shrink-0" />
-              <div className="max-w-[85%] flex-1 space-y-2.5">
-                <div className="h-4 bg-muted rounded w-[90%]" />
-                <div className="h-4 bg-muted rounded w-full" />
-                <div className="h-4 bg-muted rounded w-[60%]" />
-              </div>
-            </div>
-
-            {/* Message 3 (User) */}
-            <div className="flex justify-end">
-              <div className="max-w-[70%] bg-muted/60 h-10 w-32 rounded-2xl rounded-tr-none" />
-            </div>
-
-            {/* Message 4 (AI) */}
-            <div className="flex justify-start items-start gap-3">
-              <div className="w-7 h-7 rounded-full bg-muted/70 shrink-0" />
-              <div className="max-w-[85%] flex-1 space-y-2.5">
-                <div className="h-4 bg-muted rounded w-[80%]" />
-                <div className="h-4 bg-muted rounded w-[45%]" />
-              </div>
+            {/* Grid of options placeholder */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+              <div className="h-14 bg-muted/70 rounded-xl" />
+              <div className="h-14 bg-muted/70 rounded-xl" />
+              <div className="h-14 bg-muted/70 rounded-xl" />
+              <div className="h-14 bg-muted/70 rounded-xl" />
             </div>
           </div>
-
+          
           {/* Bottom input area skeleton */}
-          <div className="border-t border-border/40 p-4 shrink-0 bg-background pb-6">
-            <div className="max-w-2xl mx-auto w-full h-12 bg-muted/40 rounded-xl animate-pulse" />
+          <div className="border-t border-border/40 p-4 shrink-0 bg-background" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}>
+            <div className="max-w-2xl mx-auto w-full h-12 bg-muted/40 rounded-xl" />
           </div>
         </div>
       );
     }
 
-    // Disable welcome skeletons to avoid jarring flash/flicker on fast production mounts
-    return null;
+    // Thread Chat Skeleton (Loading an existing session)
+    return (
+      <div className="flex-1 flex flex-col h-full overflow-hidden bg-background">
+        {/* Scrollable messages area skeleton */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-6 max-w-2xl mx-auto w-full animate-pulse pt-8">
+          {/* Message 1 (User) */}
+          <div className="flex justify-end">
+            <div className="max-w-[70%] bg-muted/60 h-10 w-44 rounded-2xl rounded-tr-none" />
+          </div>
+
+          {/* Message 2 (AI) */}
+          <div className="flex justify-start items-start gap-3">
+            <div className="w-7 h-7 rounded-full bg-muted/70 shrink-0" />
+            <div className="max-w-[85%] flex-1 space-y-2.5">
+              <div className="h-4 bg-muted rounded w-[90%]" />
+              <div className="h-4 bg-muted rounded w-full" />
+              <div className="h-4 bg-muted rounded w-[60%]" />
+            </div>
+          </div>
+
+          {/* Message 3 (User) */}
+          <div className="flex justify-end">
+            <div className="max-w-[70%] bg-muted/60 h-10 w-32 rounded-2xl rounded-tr-none" />
+          </div>
+
+          {/* Message 4 (AI) */}
+          <div className="flex justify-start items-start gap-3">
+            <div className="w-7 h-7 rounded-full bg-muted/70 shrink-0" />
+            <div className="max-w-[85%] flex-1 space-y-2.5">
+              <div className="h-4 bg-muted rounded w-[80%]" />
+              <div className="h-4 bg-muted rounded w-[45%]" />
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom input area skeleton */}
+        <div className="border-t border-border/40 p-4 shrink-0 bg-background" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}>
+          <div className="max-w-2xl mx-auto w-full h-12 bg-muted/40 rounded-xl" />
+        </div>
+      </div>
+    );
   }
 
   // If no effectiveMajor, show WelcomeScreen (for guests or if somehow missing)
