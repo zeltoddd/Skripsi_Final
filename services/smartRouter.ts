@@ -43,7 +43,7 @@ export type RagKey = 'scholarships' | 'dudi' | 'career_paths' | 'courses' | 'tre
 // ============================================================
 
 const MODELS = {
-  flash: 'stepfun-ai/step-3.5-flash',   // main — fast & cheap
+  flash: 'meta/llama-3.1-8b-instruct',   // main — warm-cached, ultra-fast & high quality
 } as const
 
 // ============================================================
