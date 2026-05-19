@@ -106,6 +106,7 @@ export const sendMessageToNvidia = async (
   onChunk?: (chunk: { content?: string; reasoning?: string }) => void,
   fileData?: FileData | FileData[],
   userName?: string,
+  userKelas?: string,
 ): Promise<{
   text: string
   quickActions?: QuickAction[]
@@ -120,6 +121,20 @@ export const sendMessageToNvidia = async (
   const t_start = performance.now();
   console.log(`[VOKARA RAG] Starting request preparation...`);
 
+  // Retrieve guest profile dynamically if available (runs on client side)
+  let profileName = userName;
+  let activeKelas = userKelas;
+  if (typeof window !== 'undefined') {
+    const guestProfileStr = localStorage.getItem('vokara_guest_profile');
+    if (guestProfileStr) {
+      try {
+        const profile = JSON.parse(guestProfileStr);
+        if (!profileName && profile.name) profileName = profile.name;
+        if (!activeKelas && profile.kelas) activeKelas = profile.kelas;
+      } catch (e) {}
+    }
+  }
+
   const decision = route(message, !!fileData)
   const t_route = performance.now();
   console.log(`[VOKARA RAG] Routing took ${(t_route - t_start).toFixed(1)}ms (Model: ${decision.model})`);
@@ -133,21 +148,10 @@ export const sendMessageToNvidia = async (
     emotionDetected,
     maxTokens: decision.maxTokens,
     query: message,
+    kelas: activeKelas,
   });
   const t_rag = performance.now();
   console.log(`[VOKARA RAG] RAG context retrieval took ${(t_rag - t_route).toFixed(1)}ms`);
-
-  // Retrieve guest profile dynamically if available (runs on client side)
-  let profileName = userName;
-  if (typeof window !== 'undefined') {
-    const guestProfileStr = localStorage.getItem('vokara_guest_profile');
-    if (guestProfileStr) {
-      try {
-        const profile = JSON.parse(guestProfileStr);
-        if (!profileName && profile.name) profileName = profile.name;
-      } catch (e) {}
-    }
-  }
 
   // Extract nickname (first name only) and format in Title Case
   let nickname = 'Siswa';
@@ -161,6 +165,7 @@ export const sendMessageToNvidia = async (
     userMajor,
     context,
     hasTTS: true, // TTS is available in this deployment
+    kelas: activeKelas,
   });
   const prunedHistory = pruneHistory(history, decision.historyLimit)
   const t_prompt = performance.now();

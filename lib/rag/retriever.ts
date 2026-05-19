@@ -1,6 +1,6 @@
 // ============================================================
 // retriever.ts
-// Core RAG retrieval engine for VEKORA (OPTIMIZED VERSION 2.0)
+// Core RAG retrieval engine for VEKORA (OPTIMIZED VERSION 2.0 - SEGMENTED & CLASSIFIED)
 // ============================================================
 
 import { getCareerPathContext, getScholarshipContext, getDUDIContext, getCourseContext } from '@/services/RAG_SETUP';
@@ -12,7 +12,45 @@ import { getIndustryContext } from './industry';
 import { getFAQContext } from './faq';
 import { getToolsContext } from './tools';
 import { getPKLContext } from './pkl';
-import dataset from '@/data/rag/SMKN6_RAG_Dataset_Complete.json';
+
+// Static segment imports - prevents "fs" Client-Side Webpack compile issues and avoids Dynamic runtime require overhead!
+import generalSegment from '@/data/rag/segments/general.json';
+import rplSegment from '@/data/rag/segments/rpl.json';
+import dkvSegment from '@/data/rag/segments/dkv.json';
+import broadcastingSegment from '@/data/rag/segments/broadcasting.json';
+import pemasaranSegment from '@/data/rag/segments/pemasaran.json';
+import aklSegment from '@/data/rag/segments/akl.json';
+import mplbSegment from '@/data/rag/segments/mplb.json';
+import ulpSegment from '@/data/rag/segments/ulp.json';
+
+const SEGMENTS_MAP: Record<string, any[]> = {
+  general: generalSegment,
+  rpl: rplSegment,
+  dkv: dkvSegment,
+  broadcasting: broadcastingSegment,
+  pemasaran: pemasaranSegment,
+  akl: aklSegment,
+  mplb: mplbSegment,
+  ulp: ulpSegment,
+  pplg: rplSegment // Fallback mapping in case PPLG is passed directly
+};
+
+/**
+ * Retrieve dataset dynamically by loading ONLY general + specific major segment
+ */
+function getSegmentedData(jurusan?: string): any[] {
+  const target = jurusan ? jurusan.toLowerCase() : 'general';
+  
+  // Always load general (school profiles, basic FAQ, general RAG)
+  const combined = [...generalSegment];
+  
+  // Segment loader: Only append major-specific JSON if valid
+  if (target !== 'general' && SEGMENTS_MAP[target]) {
+    combined.push(...SEGMENTS_MAP[target]);
+  }
+  
+  return combined;
+}
 
 /**
  * List of highly common Indonesian stopwords to filter out from keyword search terms.
@@ -31,7 +69,7 @@ const INDONESIAN_STOPWORDS = new Set([
  */
 const HIGH_VALUE_WEIGHTS: Record<string, number> = {
   // Jurusan & Kompetensi
-  rpl: 3.5, dkv: 3.5, akl: 3.5, pm: 3.5, bp: 3.5, ulp: 3.5, mplb: 3.5,
+  rpl: 3.5, pplg: 3.5, dkv: 3.5, akl: 3.5, pm: 3.5, bp: 3.5, ulp: 3.5, mplb: 3.5,
   software: 2.0, koding: 2.0, coding: 2.0, figma: 2.0, photoshop: 2.0,
   
   // Program & Skema
@@ -70,6 +108,7 @@ export interface RetrievalOptions {
   emotionDetected?: boolean;
   maxTokens?: number;    // token budget (default 800)
   query?: string;        // user raw message for keyword scoring
+  kelas?: string;        // user grade/class: "X", "XI", "XII", "Alumni"
 }
 
 /**
@@ -77,7 +116,7 @@ export interface RetrievalOptions {
  * Returns formatted context string ready for injection into system prompt
  */
 export function retrieveContext(opts: RetrievalOptions): string {
-  const { jurusan, intents, emotionDetected = false, maxTokens = 800, query } = opts;
+  const { jurusan, intents, emotionDetected = false, maxTokens = 800, query, kelas } = opts;
 
   // 1. Determine target categories from intents
   const targetCategories = new Set<string>();
@@ -100,6 +139,9 @@ export function retrieveContext(opts: RetrievalOptions): string {
 
   // 5. Fetch context blocks for each category
   const contextBlocks: { category: string; content: string }[] = [];
+
+  // Get only segmented data instead of searching the complete massive dataset!
+  const datasetSegment = getSegmentedData(jurusan);
 
   for (const category of targetCategories) {
     let content = '';
@@ -145,8 +187,8 @@ export function retrieveContext(opts: RetrievalOptions): string {
          break;
     }
 
-    // Fetch complementary chunks from the complete JSON dataset
-    let scoredChunks = dataset.filter((chunk: any) => {
+    // Fetch complementary chunks from the segmented dataset
+    let scoredChunks = datasetSegment.filter((chunk: any) => {
       // Map intents to dataset categories appropriately
       let matchCat = chunk.metadata.category === category;
       if (category === 'scholarships') matchCat = matchCat || chunk.metadata.category === 'financial';
@@ -191,6 +233,25 @@ export function retrieveContext(opts: RetrievalOptions): string {
               score += frequency * weight;
             }
           });
+
+          // GRADE-LEVEL SEMANTIC BOOST:
+          // Boost scored chunks that explicitly target the user's specific grade level
+          if (kelas) {
+            const k = kelas.toUpperCase();
+            if (k === 'X') {
+              const matchX = text.match(/(kelas\s*x|kelas\s*10|semester\s*1|semester\s*2|dasar|pengenalan)/i);
+              if (matchX) score += 2.0; // Boost foundational topics for grade X
+            } else if (k === 'XI') {
+              const matchXI = text.match(/(kelas\s*xi|kelas\s*11|semester\s*3|semester\s*4|pkl|magang|sertifikasi)/i);
+              if (matchXI) score += 2.0; // Boost internship/PKL topics for grade XI
+            } else if (k === 'XII') {
+              const matchXII = text.match(/(kelas\s*xii|kelas\s*12|semester\s*5|semester\s*6|kerja|kuliah|portofolio|cv|interview|loker|beasiswa|kip)/i);
+              if (matchXII) score += 2.0; // Boost job/college prep for grade XII
+            } else if (k === 'ALUMNI') {
+              const matchAlumni = text.match(/(alumni|lulus|kerja|kuliah|cv|interview|loker)/i);
+              if (matchAlumni) score += 2.0; // Boost graduation/career topics for Alumni
+            }
+          }
           
           return { content: chunk.content, score };
         })

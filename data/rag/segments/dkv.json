@@ -1,0 +1,261 @@
+[
+  {
+    "id": "d108376e-44b9-42f2-98db-4eaf7a224391",
+    "content": "DKV (Desain Komunikasi Visual) mempersiapkan siswa menjadi desainer grafis, ilustrator, dan visual communicator. Mata pelajaran: Dasar Desain, Teori Warna dan Tipografi, Ilustrasi, Fotografi, Desain Grafis Print & Digital, Logo & Branding, Layout & Editorial, Packaging, Motion Graphics, UI/UX Dasar, Advertising Design, Media Sosial Design, Sejarah Seni, dan Kewirausahaan Desain.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "curriculum",
+      "jurusan": "DKV",
+      "tags": [
+        "dkv",
+        "desain",
+        "kurikulum",
+        "visual",
+        "branding"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "e9b2daf6-c7ac-40bb-b929-0be41b4a0816",
+    "content": "Tools industri DKV 2026: Adobe Creative Suite (Photoshop, Illustrator, InDesign, After Effects, Premiere Pro), Figma (UI/UX, prototyping), Canva Pro, Sketch, Blender/Cinema 4D (3D), Procreate (iPad), Midjourney/DALL-E 3/Leonardo AI/Stable Diffusion (AI image gen), Runway ML/Pika Labs (AI video), Krita/Clip Studio Paint, Affinity Designer/Photo, CorelDRAW, CapCut/Premiere Pro, Framer/Webflow (no-code web), Behance/Dribbble (portfolio platform).",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "tools",
+      "jurusan": "DKV",
+      "tags": [
+        "adobe",
+        "figma",
+        "canva",
+        "midjourney",
+        "blender",
+        "after_effects",
+        "behance"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "2aa8f0a6-25f4-4e9f-a73a-52f62227b3af",
+    "content": "AI Impact pada DKV: AI dapat menghasilkan gambar, logo, ilustrasi, dan video dalam hitungan detik. Tapi AI menghasilkan 'generic' design. Kreativitas orisinal, brand strategy, dan human touch tetap dibutuhkan. Skill shift: dari 'membuat dari nol' ke 'mengarahkan AI + refining + strategi brand'. Future-proof: creative direction, brand strategy, original illustration. AI sebagai co-pilot untuk brainstorming, variasi desain cepat, photo manipulation, motion graphics automation.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "ai_impact",
+      "jurusan": "DKV",
+      "tags": [
+        "ai",
+        "midjourney",
+        "creative_direction",
+        "brand_strategy",
+        "generic"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "2873ae9e-fed1-469a-8e07-f976db70b3d0",
+    "content": "Tren industri DKV 2025-2026: AI-Assisted Design, Motion Graphics & Animation dominance, 3D & Immersive Design (AR, metaverse), Sustainable Design, Inclusive Design, Variable Fonts & Typography, Maximalism & Anti-Design, Generative Design, Retro-Futurism, Data Visualization, NFT & Digital Art (volatil), Personal Branding Design.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "trends",
+      "jurusan": "DKV",
+      "tags": [
+        "tren",
+        "2026",
+        "motion_graphics",
+        "3d",
+        "sustainable_design",
+        "generative"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "82b93133-755e-4315-97a6-69e6bfd37e40",
+    "content": "Peluang karier DKV: Entry (Junior Graphic Designer Rp 4-6 juta, Social Media Designer Rp 4-6 juta, UI/UX Junior Rp 5-8 juta, Motion Graphics Junior Rp 4-7 juta). Menengah (Senior Graphic Designer Rp 8-15 juta, Art Director Rp 10-20 juta, UI/UX Lead Rp 12-20 juta). Senior (Creative Director Rp 20-40 juta, Design Director Rp 20-40 juta). Freelance: Rp 500rb-5 juta per project. Remote: high potential untuk UI/UX dan graphic design.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "career",
+      "jurusan": "DKV",
+      "tags": [
+        "gaji",
+        "karier",
+        "freelance",
+        "remote",
+        "ui_ux"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "4172752e-c84f-4ed2-a66d-caba9e9ea13e",
+    "content": "Sertifikasi DKV: Adobe Certified Professional (Photoshop, Illustrator, InDesign), Figma Certification, Google UX Design Certificate (Coursera), Nielsen Norman Group UX Certification, Interaction Design Foundation (IDF) Certification, Certified Brand Strategist, 3D Design Certification (Blender, Cinema 4D), Motion Graphics Certification (After Effects). Portofolio ideal: Brand identity lengkap (3 brand), UI/UX case study (research-wireframe-prototype-testing), Motion graphics reel (30-60 detik), Social media campaign visual, Illustration series konsisten, Packaging design, 3D product visualization.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "certification",
+      "jurusan": "DKV",
+      "tags": [
+        "sertifikasi",
+        "adobe",
+        "figma",
+        "google_ux",
+        "portofolio"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "5453b0c5-994c-43ff-8d3b-747a70987521",
+    "content": "Concern nyata siswa DKV: (1) AI bakal ganti desainer? Anxiety TERTINGGI. (2) Laptop kentang gimana? RAM 4GB, render 10 menit, crash. (3) DKV masih worth it 2026? (4) Harus beli Adobe? Biaya subscription Rp 800rb+/bulan. (5) Portofolio dari mana? (6) Desain dosen vs industri? (7) Freelance desain gak stabil? (8) Harus jago gambar manual? (9) Style desain gak konsisten. (10) Client minta revisi terus. (11) Motion graphics susah? After Effects rumit. (12) UI/UX beda dari desain grafis? Harus belajar coding?",
+    "metadata": {
+      "category": "concerns",
+      "subcategory": "psychology",
+      "jurusan": "DKV",
+      "tags": [
+        "anxiety",
+        "ai",
+        "laptop_kentang",
+        "adobe",
+        "portofolio",
+        "revisi"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "bb30a17b-358e-4d7b-b169-35f0275e44cd",
+    "content": "Solusi laptop kentang untuk DKV: Gunakan Canva (cloud-based, tidak butuh GPU), Figma (web-based, ringan), GIMP (gratis, alternatif Photoshop), Krita (digital art gratis), Photopea (browser-based Photoshop clone), Vectr (vector online), Remove.bg (background removal online), Runway ML (cloud AI video). Manfaatkan laboratorium Tefa SMKN 6 untuk rendering berat setelah jam belajar. Google Colab untuk AI image generation. Alternatif Adobe: Affinity (one-time purchase Rp 1.5 juta sekali).",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "solutions",
+      "jurusan": "DKV",
+      "tags": [
+        "laptop_kentang",
+        "canva",
+        "figma",
+        "gimp",
+        "alternatif",
+        "cloud"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "6575f206-e5d2-4a4c-9c5e-2f14c94eccd5",
+    "content": "FAQ Inferioritas Hardware: 'Jurusan DKV sama PPLG tugasku numpuk harus ngerender video dan 3D, tapi laptop di rumah bener-bener spek kentang. Aku merasa salah jurusan, pindah aja?' Respon: Aktivasi deteksi keresahan dan sentimen empati tanpa solusi toksik. Informasikan optimalisasi aplikasi cloud-based (Google Colab, Figma browser, Canva), open-source (GIMP, Krita), dan proaktif informasikan jam kerja laboratorium Teaching Factory SMKN 6 di mana sekolah menyuplai perangkat berkinerja tinggi. Ketertinggalan fasilitas keluarga tertutupi oleh aset infrastruktur komunal.",
+    "metadata": {
+      "category": "faq",
+      "subcategory": "hardware",
+      "jurusan": "DKV",
+      "tags": [
+        "faq",
+        "laptop_kentang",
+        "cloud",
+        "tefa",
+        "lab",
+        "open_source"
+      ],
+      "priority": "high",
+      "source": "pdf",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "542fd4ea-5e52-4755-a9f5-fd61aae6b456",
+    "content": "Roadmap belajar DKV: Semester 1-2 — Dasar desain, teori warna, tipografi, Photoshop & Illustrator dasar. Semester 3 — Desain grafis lanjut, branding, layout, fotografi. Semester 4 — UI/UX dasar, motion graphics, After Effects, Figma. Semester 5 — PKL, portofolio digital, sertifikasi Adobe, personal branding. Semester 6 — Ujian kompetensi, persiapan kerja. Peluang usaha: Design Studio, Print Shop, UI/UX Agency, Motion Graphics Studio, Digital Product Seller (template, font, mockup).",
+    "metadata": {
+      "category": "roadmap",
+      "subcategory": "learning",
+      "jurusan": "DKV",
+      "tags": [
+        "roadmap",
+        "semester",
+        "belajar",
+        "desain",
+        "adobe",
+        "figma",
+        "usaha"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "142fe17b-7dab-4631-9310-970912f37c8a",
+    "content": "SUGGESTED PROMPTS untuk siswa DKV:\n\n🔹 Anxiety & Mental Support:\n1. \"Kak, Midjourney bisa buat logo 10 detik, masih worth it gak jadi desainer?\"\n2. \"Laptopku kentang, render After Effects crash terus. Ada solusi gak?\"\n3. \"Adobe mahal banget, ada alternatif gratis yang industri terima gak?\"\n4. \"Portofolioku masih kosong, dari mana mulainya, Kak?\"\n5. \"Client minta revisi terus sampai 10 kali, aku capek. Normal gak sih?\"\n\n🔹 Career & Skill:\n6. \"DKV masih prospektif gak 2026? Banyak yang bilang oversaturated.\"\n7. \"UI/UX beda jauh dari desain grafis? Harus belajar coding?\"\n8. \"Gimana caranya punya signature style desain?\"\n9. \"Motion graphics susah gak? After Effects rumit banget.\"\n10. \"Freelance desain cari client dari mana?\"\n\n🔹 Learning & Tools:\n11. \"Canva vs Adobe, mana yang harus dipelajari dulu?\"\n12. \"AI image generator kayak Midjourney boleh dipake untuk portofolio?\"\n13. \"Gimana caranya belajar 3D design? Blender susah gak?\"\n14. \"Desain yang disukai dosen vs industri, bedanya gimana?\"\n15. \"Branding guideline itu isinya apa aja?",
+    "metadata": {
+      "category": "prompts",
+      "subcategory": "suggested_user",
+      "jurusan": "DKV",
+      "tags": [
+        "suggested_prompts",
+        "anxiety",
+        "desain",
+        "career",
+        "tools",
+        "ai"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "4f78797d-0bfa-4bd4-8ced-4471a95ed9d1",
+    "content": "SUGGESTED TOOLS untuk DKV (Tiered by Budget):\n\n💻 LAPTOP KENTANG (RAM 4-8GB, No GPU):\n• Canva (gratis, cloud-based design)\n• Figma (gratis, web-based UI/UX)\n• Photopea (gratis, browser Photoshop clone)\n• GIMP (gratis, raster editing)\n• Inkscape (gratis, vector editing)\n• Krita (gratis, digital painting)\n• Remove.bg (gratis, background removal)\n• Vectr (gratis, online vector)\n• Google Fonts (gratis, typography)\n• Unsplash / Pexels (gratis, stock photos)\n\n⚡ LAPTOP MENENGAH (RAM 8-16GB):\n• Adobe Photoshop Elements (one-time purchase)\n• Affinity Designer (one-time Rp 1.5 juta)\n• Affinity Photo (one-time)\n• Blender (gratis, 3D design)\n• DaVinci Resolve (gratis, video editing)\n• CapCut (gratis, mobile video editing)\n\n🚀 LAPTOP HIGH-END (RAM 16GB+, GPU):\n• Adobe Creative Cloud (subscription)\n• Cinema 4D (3D motion graphics)\n• After Effects (motion graphics)\n• Premiere Pro (video editing)\n• Midjourney / DALL-E (AI image generation)\n• Runway ML (AI video generation)\n\n📱 MOBILE DESIGN:\n• Procreate (iPad, digital illustration)\n• VSCO (mobile photo editing)\n• Canva Mobile (quick design)\n• Adobe Fresco (digital drawing)\n\n🎓 LEARNING RESOURCES (Gratis):\n• YouTube: The Futur, Satori Graphics\n• Behance (inspiration + portfolio)\n• Dribbble (inspiration)\n• Canva Design School (gratis)\n• Google UX Design Certificate (Coursera, berbayar tapi ada financial aid)",
+    "metadata": {
+      "category": "tools",
+      "subcategory": "suggested",
+      "jurusan": "DKV",
+      "tags": [
+        "tools",
+        "gratis",
+        "laptop_kentang",
+        "canva",
+        "figma",
+        "gimp",
+        "learning"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "a8cfe9a2-e09d-4aef-8494-73aa948bc6f6",
+    "content": "BACKEND LEARNING FLOW untuk DKV:\n\n🎯 GOAL DETECTION:\n- \"Mau jadi desainer grafis\" → Branding & print focus\n- \"Mau jadi UI/UX designer\" → Research & prototyping focus\n- \"Takut AI ganti desainer\" → Art direction & strategy pivot\n- \"Laptop kentang\" → Cloud-based design tools\n- \"Mau freelance\" → Portfolio + client management skills\n\n📋 STAGE 1: FOUNDATION (Semester 1-2)\nAI Action: Build design eye + software basics\n→ Suggest: Color theory, typography, composition\n→ Tools: Canva (free) → Figma (free) → GIMP (free)\n→ Milestone: 10 social media posts + 1 logo design\n→ Check-in: \"Sudah bikin berapa desain minggu ini?\"\n\n📋 STAGE 2: CORE SKILLS (Semester 3-4)\nAI Action: Guide specialization path\n→ Graphic Design: Illustrator/Photoshop → Branding → Packaging\n→ UI/UX: Figma → Wireframing → Prototyping → User testing\n→ Motion: After Effects → Lottie → Social media motion\n→ Milestone: Complete brand identity (logo + guideline + mockup)\n→ Check-in: \"Portofolio Behance/Dribbble sudah ada?\"\n\n📋 STAGE 3: SPECIALIZATION (Semester 5)\nAI Action: Niche selection based on market + interest\n→ Options: Brand Designer, UI/UX Designer, Motion Designer, Illustrator, 3D Artist\n→ PKL prep: Portfolio curation, client communication simulation\n→ Milestone: 3 case studies with process documentation\n→ Check-in: \"Sudah punya 3 case study lengkap?\"\n\n📋 STAGE 4: CAREER PREP (Semester 6)\nAI Action: Industry-ready assessment\n→ Portfolio: Behance/Dribbble + personal website\n→ Interview: Design challenge preparation\n→ Job search: Agencies, startups, freelance platforms\n→ Milestone: First client OR first design job\n→ Check-in: \"Sudah apply ke beraga agency?\"\n\n🔄 CONTINUOUS:\n- Weekly design challenge (Daily UI, etc.)\n- Monthly portfolio review\n- Quarterly trend update (\"Tren desain 2026: ...\")\n- Client simulation: \"Client minta revisi, gimana responsmu?\"\n\n⚠️ INTERVENTION TRIGGERS:\n- No new design for 2 weeks → \"Ayo daily design challenge!\"\n- Adobe subscription stress → Free alternatives guide\n- Comparison with Behance top designers → \"Mereka juga pernah pemula\"\n- Client revision trauma → \"Revisi adalah proses, bukan rejection",
+    "metadata": {
+      "category": "learning_flow",
+      "subcategory": "backend",
+      "jurusan": "DKV",
+      "tags": [
+        "learning_flow",
+        "roadmap",
+        "stages",
+        "intervention",
+        "milestone",
+        "portofolio"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  }
+]

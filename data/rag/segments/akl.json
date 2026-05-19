@@ -1,0 +1,205 @@
+[
+  {
+    "id": "840da1cc-182b-4fcd-b187-251345c35b63",
+    "content": "AKL (Akuntansi dan Keuangan Lembaga) mempersiapkan siswa menjadi tenaga akuntansi junior. Mata pelajaran: Akuntansi Dasar, Akuntansi Keuangan, Akuntansi Manajemen, Perpajakan (PPh, PPN, PBB), Ekonomi Bisnis, Administrasi Pajak, APBN/APBD, Komputer Akuntansi (MYOB, Accurate, Zahir, QuickBooks), Lembaga Keuangan, Koperasi & UKM, Audit Dasar, Cost Accounting.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "curriculum",
+      "jurusan": "AKL",
+      "tags": [
+        "akl",
+        "akuntansi",
+        "pajak",
+        "myob",
+        "accurate",
+        "keuangan"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "3e95b746-64d1-4dcb-8040-7527f04d0439",
+    "content": "Tools industri AKL 2026: Cloud Accounting (Accurate Online, QuickBooks Online, Xero, Jurnal.id, Kledo), Desktop (MYOB, Zahir, QuickBooks Desktop), Tax (e-Filing DJP Online, e-SPT, e-Faktur), Spreadsheet (Microsoft Excel advanced: pivot, vlookup, macro; Google Sheets), Integration (payment gateway, e-wallet, e-commerce), AI Tools (ChatGPT untuk analisis laporan, AI OCR untuk invoice processing, machine learning untuk credit scoring). Python untuk analisis data keuangan berskala massal.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "tools",
+      "jurusan": "AKL",
+      "tags": [
+        "accurate",
+        "quickbooks",
+        "xero",
+        "excel",
+        "e_filing",
+        "python",
+        "ocr"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "21b0947c-e54b-4f38-ae03-98cb25d6c692",
+    "content": "AI Impact pada AKL: AI mengotomatisasi pencatatan transaksi dasar, rekonsiliasi bank, dan laporan keuangan sederhana. Tapi AI butuh human untuk interpretasi data, advisory keuangan, deteksi fraud, prediksi arus kas, dan complex judgment. Skill shift: dari 'data entry' ke 'data analysis & financial advisory'. Future-proof: interpretasi data keuangan, bukan sekadar input data. Tren: Cloud Accounting, AI-Powered Bookkeeping, Real-Time Financial Reporting, Tax Digitalization (e-Faktur wajib), Fintech Integration, Sustainability/ESG Reporting, Blockchain Audit, Data Analytics, Remote Accounting, Advisory Role.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "ai_impact",
+      "jurusan": "AKL",
+      "tags": [
+        "ai",
+        "cloud_accounting",
+        "advisory",
+        "esg",
+        "blockchain",
+        "real_time"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "81fe0224-90e2-41df-ab32-8bdda6758d9d",
+    "content": "Peluang karier AKL: Entry (Staff Akuntansi Rp 3.5-5 juta, Junior Auditor KAP Rp 4-6 juta, Tax Staff Rp 4-6 juta, Bookkeeper Rp 3-4.5 juta). Menengah (Senior Accountant Rp 7-12 juta, Tax Consultant Rp 8-15 juta, Finance Supervisor Rp 8-12 juta). Senior (Finance Manager Rp 15-30 juta, Tax Manager Rp 15-30 juta, CFO Rp 30-100+ juta). Freelance: Bookkeeper UMKM Rp 2-5 juta/bulan per client, Tax Consultant Online Rp 500rb-2 juta per SPT. Remote: medium-high potential untuk cloud accounting.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "career",
+      "jurusan": "AKL",
+      "tags": [
+        "gaji",
+        "karier",
+        "freelance",
+        "remote",
+        "auditor",
+        "tax"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "d36790db-2e0d-4e72-884c-fc26295f26e4",
+    "content": "Sertifikasi AKL: Brevet Pajak A & B (wajib untuk tax consultant), Certified Public Accountant (CPA), Certified Management Accountant (CMA), QuickBooks Certified ProAdvisor, Xero Certified Advisor, SAP Certified, Microsoft Excel Expert. Portofolio ideal: Laporan keuangan lengkap (Neraca, Laba Rugi, Arus Kas) untuk 3 perusahaan fiktif, Sistem perpajakan (SPT Tahunan, e-Faktur, bukti potong PPh), Analisis rasio keuangan, Setup akuntansi cloud untuk UMKM, Financial dashboard Excel/Google Sheets.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "certification",
+      "jurusan": "AKL",
+      "tags": [
+        "sertifikasi",
+        "brevet_pajak",
+        "cpa",
+        "quickbooks",
+        "excel",
+        "portofolio"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "63d0454c-720b-4a2e-96d5-06e67fefd248",
+    "content": "Concern nyata siswa AKL: (1) AI bakal ganti akuntan manual? (2) Brevet pajak susah gak? (3) Kerja akuntansi boring gak? Ngitung doang? (4) Gaji akuntan kecil? Rp 3-5 juta. (5) Harus kuliah buat naik jabatan? (6) Matematika harus jago? (7) Software akuntansi mana yang dipelajari? MYOB, Accurate, Zahir, QuickBooks — pilih mana? (8) PKL di kantor akuntansi ngapain? Cuma fotocopy?",
+    "metadata": {
+      "category": "concerns",
+      "subcategory": "psychology",
+      "jurusan": "AKL",
+      "tags": [
+        "anxiety",
+        "ai",
+        "brevet",
+        "matematika",
+        "gaji",
+        "pkl"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "fa0219ec-565b-4edc-b115-bcb77800f2e9",
+    "content": "Roadmap belajar AKL: Semester 1-2 — Dasar akuntansi, siklus akuntansi, jurnal, buku besar, neraca saldo. Semester 3 — Akuntansi keuangan lanjut, laporan keuangan, perpajakan dasar. Semester 4 — Komputer akuntansi (MYOB/Accurate), akuntansi koperasi, audit dasar. Semester 5 — PKL, sertifikasi Brevet Pajak, portofolio. Semester 6 — Ujian kompetensi, persiapan kerja. Peluang usaha: Jasa pembukuan UMKM, Konsultan pajak online, Jasa payroll outsourcing, Financial coaching, Jasa setup akuntansi cloud, Jasa pelaporan SPT tahunan.",
+    "metadata": {
+      "category": "roadmap",
+      "subcategory": "learning",
+      "jurusan": "AKL",
+      "tags": [
+        "roadmap",
+        "semester",
+        "belajar",
+        "akuntansi",
+        "myob",
+        "brevet_pajak",
+        "usaha"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "425c539b-7f3d-4564-8ba9-18a340d61113",
+    "content": "SUGGESTED PROMPTS untuk siswa AKL:\n\n🔹 Anxiety & Mental Support:\n1. \"Kak, AI bisa otomatisasi pembukuan, akuntan junior masih dibutuhkan gak?\"\n2. \"Brevet Pajak susah gak? Kalau gagal, karier di tax consulting tertutup?\"\n3. \"Kerja akuntansi boring gak? Setiap hari ngitung doang?\"\n4. \"Gaji akuntan entry-level kecil, kapan bisa gaji besar?\"\n5. \"Harus kuliah dulu buat jadi auditor? SMK cukup gak?\"\n\n🔹 Career & Skill:\n6. \"Software akuntansi mana yang paling dicari industri: MYOB, Accurate, atau QuickBooks?\"\n7. \"Brevet Pajak A vs B, bedanya apa? Mana yang ambil dulu?\"\n8. \"Freelance bookkeeper cari client UMKM dari mana?\"\n9. \"Konsultan pajak online itu gimana caranya?\"\n10. \"Excel advanced harus jago sampai mana? VLOOKUP cukup gak?\"\n\n🔹 Learning & Tools:\n11. \"Cloud accounting vs desktop, mana yang dipelajari?\"\n12. \"Python untuk akuntansi itu gimana? Berguna gak?\"\n13. \"e-Faktur dan e-SPT itu wajib? Caranya gimana?\"\n14. \"Analisis rasio keuangan itu penting gak untuk junior?\"\n15. \"PKL di kantor akuntansi ngapain aja? Cuma fotocopy?",
+    "metadata": {
+      "category": "prompts",
+      "subcategory": "suggested_user",
+      "jurusan": "AKL",
+      "tags": [
+        "suggested_prompts",
+        "anxiety",
+        "akuntansi",
+        "brevet",
+        "career",
+        "tools"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "71888dcc-7f5a-4971-9a5b-39abe7d132c7",
+    "content": "SUGGESTED TOOLS untuk AKL (Tiered by Budget):\n\n💰 GRATIS / FREEMIUM:\n• Google Sheets (gratis, spreadsheet)\n• Microsoft Excel Online (gratis, limited)\n• LibreOffice Calc (gratis, Excel alternative)\n• Wave Accounting (gratis, UMKM accounting)\n• Google Forms (gratis, data collection)\n• DJP Online (gratis, e-Filing pajak)\n• e-Faktur (gratis, faktur digital)\n• ChatGPT (gratis, analisis laporan)\n\n💵 BERBAYAR / SUBSCRIPTION:\n• MYOB (desktop accounting)\n• Accurate Online (cloud, Rp 300rb-800rb/bulan)\n• QuickBooks Online (cloud)\n• Xero (cloud)\n• Zahir Accounting (desktop + cloud)\n• Jurnal.id (cloud, Indonesian)\n• Kledo (cloud, Indonesian SME)\n• Microsoft Excel (desktop, one-time/subscription)\n\n📱 MOBILE:\n• Accurate Online mobile app\n• QuickBooks mobile\n• Excel mobile\n• Kalkulator Pajak (apps)\n\n🎓 LEARNING RESOURCES (Gratis):\n• YouTube: Accounting Stuff, The Accounting Student\n• Coursera: Financial Accounting (audit)\n• edX: Accounting courses\n• Brevet Pajak online courses\n• Excel Easy (gratis tutorial)\n• Exceljet (gratis reference)",
+    "metadata": {
+      "category": "tools",
+      "subcategory": "suggested",
+      "jurusan": "AKL",
+      "tags": [
+        "tools",
+        "gratis",
+        "excel",
+        "accurate",
+        "myob",
+        "pajak",
+        "learning"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "7b583ed9-85ca-4ebd-a944-c33d63680fc0",
+    "content": "BACKEND LEARNING FLOW untuk AKL:\n\n🎯 GOAL DETECTION:\n- \"Mau jadi akuntan\" → Technical accounting path\n- \"Takut AI ganti akuntan\" → Advisory & analysis pivot\n- \"Mau jadi tax consultant\" → Brevet Pajak focus\n- \"Mau freelance\" → UMKM bookkeeping specialization\n- \"Mau kerja di bank\" → Financial services path\n\n📋 STAGE 1: FOUNDATION (Semester 1-2)\nAI Action: Build accounting logic + basic recording\n→ Suggest: Siklus akuntansi, jurnal, buku besar, neraca saldo\n→ Tools: Google Sheets, Excel basics\n→ Milestone: Complete accounting cycle for 1 fictitious company\n→ Check-in: \"Sudah bisa bikin jurnal dari transaksi sehari-hari?\"\n\n📋 STAGE 2: CORE SKILLS (Semester 3-4)\nAI Action: Software + tax basics\n→ Software: MYOB OR Accurate OR QuickBooks (pilih 1, kuasai)\n→ Tax: PPh 21, PPh 23, PPN, e-Faktur, e-SPT\n→ Reporting: Laporan keuangan (Neraca, L/R, Arus Kas)\n→ Milestone: Full financial statements using software\n→ Check-in: \"Sudah bisa bikin laporan keuangan lengkap?\"\n\n📋 STAGE 3: SPECIALIZATION (Semester 5)\nAI Action: Career path selection\n→ Options: Staff Accountant, Tax Consultant, Auditor, Financial Analyst, Bookkeeper\n→ PKL prep: Real company books, tax filing practice\n→ Certification: Brevet Pajak A (minimum), Excel Advanced\n→ Milestone: Handle 1 UMKM bookkeeping OR pass Brevet A\n→ Check-in: \"Sudah daftar Brevet Pajak?\"\n\n📋 STAGE 4: CAREER PREP (Semester 6)\nAI Action: Industry entry\n→ Portfolio: 3 complete financial statements + tax reports\n→ Job search: KAP, banks, corporate finance, UMKM clients\n→ Freelance: Online bookkeeping service setup\n→ Milestone: First job OR first 3 bookkeeping clients\n→ Check-in: \"Sudah apply ke berapa perusahaan?\"\n\n🔄 CONTINUOUS:\n- Monthly: Update on tax regulation changes\n- Quarterly: Financial health check simulation\n- Yearly: Tax calendar reminder (SPT deadlines)\n- Trend: \"AI accounting baru: ini yang perlu kamu kuasai\"\n\n⚠️ INTERVENTION TRIGGERS:\n- Math anxiety → \"Accounting = logic, bukan kalkulus\"\n- Software confusion → \"Pilih 1, yang lain mirip\"\n- Brevet fear → \"Banyak yang lulus, kamu juga bisa\"\n- Boring perception → \"Akuntansi = detektif keuangan",
+    "metadata": {
+      "category": "learning_flow",
+      "subcategory": "backend",
+      "jurusan": "AKL",
+      "tags": [
+        "learning_flow",
+        "roadmap",
+        "stages",
+        "intervention",
+        "milestone",
+        "brevet"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  }
+]

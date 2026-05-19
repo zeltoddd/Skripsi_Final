@@ -14,16 +14,28 @@ export function buildVekoraSystemPrompt({
   userMajor,
   context,
   hasTTS = false,
+  kelas,
 }: {
   userName?: string;
   userMajor?: string;
   context?: string;
   hasTTS?: boolean;
+  kelas?: string;
 }): string {
   const nameLabel = userName ? userName : "Siswa";
   
   // 1. Get the base system prompt
   const basePrompt = VOKARA_SYSTEM_PROMPT(userMajor || 'RPL', nameLabel, context);
+
+  // 1.5. Dynamic Grade Level Instructions
+  const gradeSection = kelas
+    ? `
+=== INFORMASI TINGKAT KELAS SISWA ===
+Siswa yang sedang mengobrol dengan Anda saat ini berada di KELAS ${kelas.toUpperCase()}. Sesuaikan kedewasaan, kosakata, tingkat kematangan, dan saran Anda agar 100% cocok untuk kelas ${kelas.toUpperCase()}:
+- KELAS X: Fokus pada pemahaman dasar kompetensi, orientasi industri dasar, pengenalan tools mendasar, asah soft-skills, dan cara belajar mandiri yang seru. Hindari menyuruh mereka membuat CV matang atau melamar kerja sekarang.
+- KELAS XI: Fokus utama adalah persiapan magang (PKL) / Praktik Kerja Lapangan, persiapan sertifikasi kompetensi tingkat menengah, dan pembuatan portofolio proyek sederhana.
+- KELAS XII & ALUMNI: Fokus langsung ke karir nyata (CV & portofolio siap kerja, trik hadapi interview, tips melamar kerja), persiapan beasiswa pendidikan (KIP-Kuliah), atau jalur masuk kuliah PTN/PTS (SNBP/SNBT).`
+    : '';
 
   // 2. Generate TTS notice if applicable
   const ttsNote = hasTTS
@@ -76,6 +88,8 @@ ${HUMANIZER_RULES.punctuation_rules.map(rule => `   - ${rule}`).join('\n')}
 
   const finalPrompt = `
 ${basePrompt}
+
+${gradeSection}
 
 ${humanizerSection}
 

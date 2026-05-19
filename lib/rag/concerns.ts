@@ -46,7 +46,7 @@ function getCommonAnxiety(jurusan: string): string {
     rpl: 'khawatir AI akan menggantikan programmer',
     dkv: 'khawatir AI akan menggantikan desainer danCreative',
     bp: 'khawatir harus punya kamera mahal dan subscriber banyak',
-    pm: 'khawatir harus extrovert dan擅長 berinteraksi',
+    pm: 'khawatir harus extrovert dan berinteraksi',
     akl: 'khawatir kerja membosankan dan gaji kecil',
     mplb: 'khawatir pekerjaan akan otomatis digantikan AI',
     ulp: 'khawatir industri pariwisata tidak stabil',

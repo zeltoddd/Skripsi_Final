@@ -15,9 +15,11 @@ import { SMK_MAJORS } from '@/constants/majors';
 export default function ChatSessionPage() {
   const { data: authSession, status } = useSession();
   const sessionMajor = (authSession?.user as any)?.major || null;
+  const sessionKelas = (authSession?.user as any)?.grade || null;
 
   const [hasMounted, setHasMounted] = useState(false);
   const [userMajor, setUserMajor] = useState<string | null>(null);
+  const [userKelas, setUserKelas] = useState<string | null>(null);
   const [cachedUserMajor, setCachedUserMajor] = useState<string | null>(null);
 
   // Read client-side storage after hydration/mount to prevent SSR mismatch
@@ -29,6 +31,9 @@ export default function ChatSessionPage() {
         const profile = JSON.parse(guestProfileStr);
         if (profile.major) {
           setUserMajor(profile.major);
+        }
+        if (profile.kelas) {
+          setUserKelas(profile.kelas);
         }
       }
     } catch (e) {}
@@ -60,6 +65,7 @@ export default function ChatSessionPage() {
   // Determine effective major: use session major if authenticated, else local userMajor (for guests)
   const isAuthenticated = !!authSession;
   const effectiveMajor = isAuthenticated ? sessionMajor : userMajor;
+  const effectiveKelas = isAuthenticated ? sessionKelas : userKelas;
 
   const { currentSessionId, setCurrentSessionId, refreshSessions, sessions, saveGuestSession } = useChat();
   const params = useParams();
@@ -404,7 +410,8 @@ export default function ChatSessionPage() {
           if (chunk.reasoning) accumulatedReasoning += chunk.reasoning;
         },
         extractedFilesData.length > 0 ? extractedFilesData : undefined,
-        authSession?.user?.name || undefined
+        authSession?.user?.name || undefined,
+        effectiveKelas || undefined
       );
 
       streamFinished = true;
@@ -612,7 +619,9 @@ export default function ChatSessionPage() {
           if (chunk.content) accumulatedText += chunk.content;
           if (chunk.reasoning) accumulatedReasoning += chunk.reasoning;
         },
-        extractedFilesData.length > 0 ? extractedFilesData : undefined
+        extractedFilesData.length > 0 ? extractedFilesData : undefined,
+        authSession?.user?.name || undefined,
+        effectiveKelas || undefined
       );
 
       streamFinished = true;

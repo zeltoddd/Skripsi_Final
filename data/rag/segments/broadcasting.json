@@ -1,0 +1,222 @@
+[
+  {
+    "id": "00c05229-8783-4d3e-8600-70b5f13919ea",
+    "content": "Broadcasting mempersiapkan siswa untuk produksi konten audio-visual, penyiaran, dan media digital. Mata pelajaran: Dasar Broadcasting, Teknik Penyiaran, Produksi Radio, Produksi Televisi, Videografi & Sinematografi, Editing Audio & Video, Penulisan Naskah, Presentasi & Public Speaking, Media Sosial & Content Creation, Podcast Production, Live Streaming, Lighting & Sound Design, Directing & Production Management, Jurnalistik Multimedia, Kewirausahaan Media.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "curriculum",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "broadcasting",
+        "video",
+        "content_creation",
+        "podcast",
+        "live_streaming"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "5aa68132-0ab7-4026-81e3-4f0c42634140",
+    "content": "Tools industri Broadcasting 2026: Video Editing (Adobe Premiere Pro, DaVinci Resolve, Final Cut Pro, CapCut), Motion Graphics (After Effects, Motion), Audio (Audition, Audacity, GarageBand), Live Streaming (OBS Studio, Streamlabs, vMix, Wirecast), Podcast (Riverside.fm, Zencastr), Thumbnail/Graphic (Canva, Photoshop), Color Grading (Lightroom, Capture One), Mobile (Filmic Pro), AI Tools (Descript text-based editing, Runway ML/Pika Labs AI video, ElevenLabs/Murf.ai AI voiceover), YouTube Tools (TubeBuddy, VidIQ, Social Blade).",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "tools",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "premiere",
+        "davinci",
+        "obs",
+        "capcut",
+        "descript",
+        "elevenlabs",
+        "tubebuddy"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "a22397d6-c24a-4be3-b9a2-35eb22611751",
+    "content": "AI Impact pada Broadcasting: AI dapat generate video dari teks (Runway, Pika), clone voice (ElevenLabs), auto-edit (Descript), generate script dan music. Tapi AI belum bisa menggantikan storytelling human, on-camera presence, dan creative direction. AI mempercepat production pipeline 30-50%. Skill shift: dari teknisi editing ke content strategist dan creative director. Future-proof: on-camera performance, live interaction, community building.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "ai_impact",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "ai",
+        "runway",
+        "elevenlabs",
+        "storytelling",
+        "creative_direction"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "776c5d90-3f08-4477-8955-6f5d31e11d62",
+    "content": "Tren Broadcasting 2025-2026: Short-Form Video Dominance (TikTok, Reels, Shorts), Live Streaming Commerce, Podcast Renaissance, AI-Generated Content, Virtual Production (LED volume studio), Vertical Video, Interactive Content, Multi-Platform Distribution, Creator Economy ($250+ miliar global), Niche Content, Authenticity Over Polish, Subscription-Based Content (Patreon, YouTube Membership).",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "trends",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "tren",
+        "2026",
+        "short_form",
+        "creator_economy",
+        "live_commerce",
+        "podcast"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "f2fd1d31-a52c-47a3-9785-23ed36a9c059",
+    "content": "Peluang karier Broadcasting: Entry (Video Editor Rp 4-6 juta, Content Creator Rp 3.5-6 juta, Production Assistant Rp 3-5 juta, Social Media Video Specialist Rp 4-6 juta). Menengah (Senior Video Editor Rp 7-12 juta, Content Strategist Rp 8-15 juta, Producer Rp 8-15 juta). Senior (Creative Producer Rp 15-30 juta, Production Director Rp 15-30 juta). Freelance: Rp 500rb-3 juta per video. Remote: medium potential. YouTuber/Streamer: variable, bisa Rp 1-100+ juta/bulan.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "career",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "gaji",
+        "karier",
+        "freelance",
+        "youtube",
+        "content_creator"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "b4eeb38e-d4e9-49f0-9438-1feed96dead2",
+    "content": "Concern nyata siswa Broadcasting: (1) Harus punya kamera mahal? DSLR 10 juta. (2) AI bisa buat video, videographer masih dibutuhkan? (3) Sukses broadcasting = jadi seleb? (4) Gimana caranya dapat subscriber? Upload 50 video, subscriber 100. (5) Konten apa yang viral? (6) Editing video lama, 1 menit butuh 3 jam. (7) Harus tampil di depan kamera? Malu. (8) Algoritma platform susah ditebak. (9) Copyright music dan footage. (10) Live streaming tekanan, takut di-bully live chat. (11) PKL di TV station masih relevan? (12) Bisa monetize dari mana selain AdSense?",
+    "metadata": {
+      "category": "concerns",
+      "subcategory": "psychology",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "anxiety",
+        "kamera_mahal",
+        "ai",
+        "subscriber",
+        "editing",
+        "copyright"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "7a039f1d-516c-49f0-b908-c18666580257",
+    "content": "Solusi kamera mahal untuk Broadcasting: Smartphone modern (iPhone, Samsung flagship) sudah cukup untuk konten quality. Invest in skill dulu, gear kemudian. Aksesoris murah: tripod Rp 50rb, ring light Rp 100rb, microphone lavalier Rp 150rb. Manfaatkan peralatan Tefa SMKN 6. CapCut (gratis) untuk editing mobile. Filmic Pro untuk mobile cinematography. Lighting natural (dekat jendela) gratis dan bagus. Kamera HP cukup untuk 90% konten creator pemula.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "solutions",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "kamera_mahal",
+        "smartphone",
+        "capcut",
+        "ring_light",
+        "budget"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "5ffb2c1d-79e8-4385-9085-688aceafd545",
+    "content": "Roadmap belajar Broadcasting: Semester 1-2 — Dasar broadcasting, teknik kamera, editing dasar, penulisan naskah. Semester 3 — Produksi radio, produksi TV, videografi, audio editing. Semester 4 — Content creation, live streaming, podcast, social media strategy. Semester 5 — PKL, portofolio video, sertifikasi Adobe, personal channel. Semester 6 — Ujian kompetensi, persiapan kerja. Peluang usaha: Production House, Content Creation Agency, Podcast Studio, Live Streaming Agency, Event Documentation Service, YouTube Channel, TikTok Agency/MCN.",
+    "metadata": {
+      "category": "roadmap",
+      "subcategory": "learning",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "roadmap",
+        "semester",
+        "belajar",
+        "broadcasting",
+        "video",
+        "youtube",
+        "usaha"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "631378a7-c595-41fc-bd69-7905f1755c60",
+    "content": "SUGGESTED PROMPTS untuk siswa Broadcasting:\n\n🔹 Anxiety & Mental Support:\n1. \"Kak, aku gak punya kamera DSLR, cuma HP. Bisa jadi content creator gak?\"\n2. \"AI bisa generate video sekarang, videographer masih dibutuhkan gak?\"\n3. \"Aku malu tampil di kamera, tapi suka editing. Bisa sukses gak?\"\n4. \"Upload 50 video, subscriber cuma 100. Gimana caranya growth?\"\n5. \"Editing 1 menit video butuh 3 jam. Normal gak? Caranya lebih cepat gimana?\"\n\n🔹 Career & Skill:\n6. \"Sukses di broadcasting harus jadi influencer dulu?\"\n7. \"PKL di TV station masih relevan gak, atau mending digital agency?\"\n8. \"Bisa monetize dari mana selain AdSense?\"\n9. \"Copyright music gimana? Bisa pake lagu pop gak?\"\n10. \"Live streaming tekanan banget, takut ngomong salah. Tipsnya gimana?\"\n\n🔹 Learning & Tools:\n11. \"CapCut cukup gak untuk editing profesional?\"\n12. \"Gimana caranya bikin konten yang viral di TikTok?\"\n13. \"Podcast masih worth it gak 2026?\"\n14. \"Equipment minimal untuk mulai YouTube apa aja?\"\n15. \"Color grading itu penting gak? Belajar dari mana?",
+    "metadata": {
+      "category": "prompts",
+      "subcategory": "suggested_user",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "suggested_prompts",
+        "anxiety",
+        "video",
+        "content_creator",
+        "career",
+        "tools"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "660ee6d6-f410-417d-b82a-9e2865fd6528",
+    "content": "SUGGESTED TOOLS untuk Broadcasting (Tiered by Budget):\n\n📱 HP ONLY (No Laptop):\n• CapCut (gratis, mobile video editing)\n• InShot (gratis, mobile editing)\n• Filmic Pro (mobile cinematography)\n• Canva Mobile (thumbnail design)\n• TikTok Creator Tools (analytics)\n• YouTube Studio (analytics & management)\n• Instagram Reels (native editing)\n• Voice Recorder (audio recording)\n\n💻 LAPTOP KENTANG (RAM 4-8GB):\n• CapCut Desktop (gratis, lightweight)\n• Audacity (gratis, audio editing)\n• OBS Studio (gratis, live streaming)\n• Streamlabs (gratis, streaming)\n• Canva (gratis, thumbnail & graphic)\n• DaVinci Resolve (gratis, video editing)\n• VLC (gratis, media player & converter)\n\n⚡ LAPTOP MENENGAH (RAM 8-16GB):\n• Adobe Premiere Pro (subscription)\n• Adobe Audition (audio editing)\n• After Effects (motion graphics)\n• Riverside.fm (podcast recording)\n• Descript (text-based editing)\n• ElevenLabs (AI voiceover)\n\n🚀 LAPTOP HIGH-END (RAM 16GB+, GPU):\n• DaVinci Resolve Studio (paid)\n• Final Cut Pro (Mac only)\n• Adobe Creative Suite full\n• vMix / Wirecast (live production)\n• Virtual Production tools\n\n🎓 LEARNING RESOURCES (Gratis):\n• YouTube: Peter McKinnon, Potato Jet\n• Podcast: Podcraft, The Podcast Host\n• Film Riot (filmmaking)\n• Every Frame a Painting (editing theory)\n• YouTube Creator Academy (official)",
+    "metadata": {
+      "category": "tools",
+      "subcategory": "suggested",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "tools",
+        "gratis",
+        "hp_only",
+        "capcut",
+        "obs",
+        "audacity",
+        "learning"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "a4d832c8-2f28-4b8c-ae16-5bbd6859d624",
+    "content": "BACKEND LEARNING FLOW untuk Broadcasting:\n\n🎯 GOAL DETECTION:\n- \"Mau jadi YouTuber\" → Content strategy + consistency\n- \"Mau jadi video editor\" → Technical editing skills\n- \"Takut AI ganti videographer\" → Storytelling + human connection\n- \"Gak punya kamera\" → Smartphone cinematography\n- \"Mau freelance\" → Portfolio + networking\n\n📋 STAGE 1: FOUNDATION (Semester 1-2)\nAI Action: Build storytelling sense + basic shooting\n→ Suggest: Shot composition, lighting basics, audio quality\n→ Tools: HP + CapCut (free)\n→ Milestone: 10 short videos (30-60 detik)\n→ Check-in: \"Sudah upload berapa video minggu ini?\"\n\n📋 STAGE 2: CORE SKILLS (Semester 3-4)\nAI Action: Guide platform & format selection\n→ YouTube: Long-form, SEO, thumbnail, consistency\n→ TikTok: Short-form, trends, hooks, viral mechanics\n→ Podcast: Audio quality, scripting, distribution\n→ Milestone: 1 channel with 20+ videos OR 1 podcast episode\n→ Check-in: \"Channelmu sudah ada berapa video? Views tertinggi berapa?\"\n\n📋 STAGE 3: SPECIALIZATION (Semester 5)\nAI Action: Niche & monetization strategy\n→ Options: YouTuber, Video Editor, Live Streamer, Podcast Producer, Wedding Videographer\n→ PKL prep: Production workflow, client brief understanding\n→ Milestone: First paid project OR monetization enabled\n→ Check-in: \"Sudah dapat project berbayar pertama?\"\n\n📋 STAGE 4: CAREER PREP (Semester 6)\nAI Action: Creator economy navigation\n→ Portfolio: Showreel (1-2 menit) + channel analytics\n→ Monetization: AdSense, sponsorship, membership, merchandise\n→ Job search: Production houses, agencies, corporate video\n→ Milestone: Sustainable income from content OR job offer\n→ Check-in: \"Penghasilan dari konten sudah berapa?\"\n\n🔄 CONTINUOUS:\n- Weekly content idea brainstorming\n- Monthly analytics review (views, retention, CTR)\n- Quarterly platform algorithm update\n- Trend jacking: \"Tren audio TikTok ini cocok untuk niche-mu\"\n\n⚠️ INTERVENTION TRIGGERS:\n- No upload for 2 weeks → \"Consistency > perfection\"\n- Views dropping → \"Analisis: thumbnail, title, atau hook?\"\n- Equipment envy → \"Story > gear. HP cukup untuk mulai\"\n- Burnout from content creation → \"Batch filming + scheduled posts",
+    "metadata": {
+      "category": "learning_flow",
+      "subcategory": "backend",
+      "jurusan": "Broadcasting",
+      "tags": [
+        "learning_flow",
+        "roadmap",
+        "stages",
+        "intervention",
+        "milestone",
+        "youtube",
+        "tiktok"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  }
+]
