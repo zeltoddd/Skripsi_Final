@@ -337,6 +337,9 @@ export default function ChatSessionPage() {
         extractedFilesData = results.filter(r => r !== null);
       }
 
+      let lastUpdate = Date.now();
+      let updateTimeout: any = null;
+
       const response = await sendMessageToNvidia(
         textToUse,
         history,
@@ -345,13 +348,27 @@ export default function ChatSessionPage() {
           setLoadingStep(null);
           if (chunk.content) accumulatedText += chunk.content;
           if (chunk.reasoning) accumulatedReasoning += chunk.reasoning;
-          setMessages(prev => prev.map(m =>
-            m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
-          ));
+          
+          const now = Date.now();
+          if (now - lastUpdate > 80) {
+            lastUpdate = now;
+            setMessages(prev => prev.map(m =>
+              m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
+            ));
+          } else {
+            if (updateTimeout) clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(() => {
+              setMessages(prev => prev.map(m =>
+                m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
+              ));
+            }, 80);
+          }
         },
         extractedFilesData.length > 0 ? extractedFilesData : undefined,
         authSession?.user?.name || undefined
       );
+
+      if (updateTimeout) clearTimeout(updateTimeout);
 
       const finalAiMsg = {
         ...initialAiMsg,
@@ -500,6 +517,9 @@ export default function ChatSessionPage() {
         extractedFilesData = results.filter(r => r !== null);
       }
 
+      let lastUpdate = Date.now();
+      let updateTimeout: any = null;
+
       const response = await sendMessageToNvidia(
         userPrompt,
         history,
@@ -508,12 +528,26 @@ export default function ChatSessionPage() {
           setLoadingStep(null);
           if (chunk.content) accumulatedText += chunk.content;
           if (chunk.reasoning) accumulatedReasoning += chunk.reasoning;
-          setMessages(prev => prev.map(m =>
-            m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
-          ));
+          
+          const now = Date.now();
+          if (now - lastUpdate > 80) {
+            lastUpdate = now;
+            setMessages(prev => prev.map(m =>
+              m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
+            ));
+          } else {
+            if (updateTimeout) clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(() => {
+              setMessages(prev => prev.map(m =>
+                m.id === aiMsgId ? { ...m, text: accumulatedText, reasoning: accumulatedReasoning } : m
+              ));
+            }, 80);
+          }
         },
         extractedFilesData.length > 0 ? extractedFilesData : undefined
       );
+
+      if (updateTimeout) clearTimeout(updateTimeout);
 
       const finalAiMsg = {
         ...initialAiMsg,
