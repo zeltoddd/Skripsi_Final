@@ -26,6 +26,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
 import { useChat } from '@/context/ChatContext';
+import { VokaraHorizontalLogo } from '@/components/brand/Logo';
 
 // No active nav items array (Settings and Theme Toggle rendered in footer)
 
@@ -223,10 +224,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             "transition-all duration-[220ms] ease-in-out overflow-hidden whitespace-nowrap flex items-center min-w-0 flex-1",
             isCollapsed ? "max-w-0 opacity-0 pointer-events-none" : "max-w-[150px] opacity-100 pr-2"
           )}>
-            <img
-              src="/vokara_horizontal.svg"
-              alt="VOKARA"
-              className="h-[20px] ml-2.5 w-auto shrink-0 dark:invert animate-in fade-in slide-in-from-left-2 duration-[220ms]"
+            <VokaraHorizontalLogo
+              className="h-[20px] ml-2.5 w-auto shrink-0 text-sidebar-foreground/90 animate-in fade-in slide-in-from-left-2 duration-[220ms]"
             />
           </div>
 

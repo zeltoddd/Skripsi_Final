@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import { ChatMessage, QuickAction } from '../../types';
+import { VokaraStackedLogo } from '../brand/Logo';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import {
@@ -523,7 +524,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
             "pt-4 mt-2 border-t border-border flex items-center justify-between transition-all duration-1000 ease-out",
             message.isStreaming ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
           )}>
-            <img src="/vokara-stacked.svg" alt="VOKARA" className="h-10  dark:invert opacity-70" />
+            <VokaraStackedLogo className="h-10 text-foreground opacity-70" />
 
             <div className="text-right">
               <p className="text-[10px] text-muted-foreground/80 font-medium leading-tight">

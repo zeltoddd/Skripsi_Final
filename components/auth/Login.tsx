@@ -12,6 +12,7 @@ import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { signIn } from "next-auth/react";
 import { SMK_MAJORS } from '@/constants/majors';
+import { VokaraStackedLogo } from '@/components/brand/Logo';
 
 
 
@@ -47,11 +48,7 @@ export default function Login() {
       <div className="w-full max-w-sm space-y-6">
         {/* Brand */}
         <div className="text-center space-y-3 flex flex-col items-center justify-center">
-          <img
-            src="/vokara-stacked.svg"
-            alt="VOKARA Logo"
-            className="w-52 h-auto dark:invert"
-          />
+          <VokaraStackedLogo className="w-52 h-auto text-foreground" />
           <p className="text-sm text-muted-foreground">
             Mulai bimbingan karirmu sekarang
           </p>

@@ -18,6 +18,7 @@ import { cn } from '@/lib/utils';
 import ChatMessageBubble from './MessageBubble';
 import { Sender } from '@/types';
 import { useChat } from '@/context/ChatContext';
+import { VokaraStackedLogo } from '@/components/brand/Logo';
 
 interface ChatInterfaceProps {
   messages: any[];
@@ -114,7 +115,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
           {props.messages.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-6 py-6 animate-in fade-in duration-700">
               <div className="animate-in fade-in zoom-in-95 duration-700 flex justify-center">
-                <img src="/vokara-stacked.svg" alt="VOKARA" className="h-[72px] sm:h-20 dark:invert opacity-100 transition-all duration-300" />
+                <VokaraStackedLogo className="h-[72px] sm:h-20 text-foreground opacity-100 transition-all duration-300" />
               </div>
               <p className="text-[13px] sm:text-sm text-foreground/80 text-center max-w-[280px] sm:max-w-[360px] leading-relaxed animate-in fade-in slide-in-from-bottom-4 delay-300 duration-700">
                 Pilih topik di bawah atau ketik langsung pertanyaanmu seputar karir, skill, dan persiapan kerja.
