@@ -7,7 +7,7 @@ import WelcomeScreen from '@/components/chat/WelcomeScreen';
 
 import { sendMessageToNvidia } from '@/services/nvidiaService';
 import { useChat } from '@/context/ChatContext';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { getSuggestedPromptsForSession, refreshSuggestedPrompts } from '@/lib/rag/suggestedPrompts';
 import { toast } from 'sonner';
 import { SMK_MAJORS } from '@/constants/majors';
@@ -67,7 +67,7 @@ export default function ChatSessionPage() {
   const effectiveMajor = isAuthenticated ? sessionMajor : userMajor;
   const effectiveKelas = isAuthenticated ? sessionKelas : userKelas;
 
-  const { currentSessionId, setCurrentSessionId, refreshSessions, sessions, saveGuestSession } = useChat();
+  const { currentSessionId, setCurrentSessionId, refreshSessions, sessions, saveGuestSession, selectedMode } = useChat();
   const params = useParams();
   const router = useRouter();
   const sessionIdFromUrl = params.sessionId as string;
@@ -411,7 +411,8 @@ export default function ChatSessionPage() {
         },
         extractedFilesData.length > 0 ? extractedFilesData : undefined,
         authSession?.user?.name || undefined,
-        effectiveKelas || undefined
+        effectiveKelas || undefined,
+        selectedMode
       );
 
       streamFinished = true;
@@ -621,7 +622,8 @@ export default function ChatSessionPage() {
         },
         extractedFilesData.length > 0 ? extractedFilesData : undefined,
         authSession?.user?.name || undefined,
-        effectiveKelas || undefined
+        effectiveKelas || undefined,
+        selectedMode
       );
 
       streamFinished = true;

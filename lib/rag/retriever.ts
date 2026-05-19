@@ -1,6 +1,6 @@
 // ============================================================
 // retriever.ts
-// Core RAG retrieval engine for VEKORA (OPTIMIZED VERSION 2.0 - SEGMENTED & CLASSIFIED)
+// Core RAG retrieval engine for VEKORA (OPTIMIZED VERSION 3.0 - MULTI-MODEL EMBEDDINGS)
 // ============================================================
 
 import { getCareerPathContext, getScholarshipContext, getDUDIContext, getCourseContext } from '@/services/RAG_SETUP';
@@ -13,15 +13,15 @@ import { getFAQContext } from './faq';
 import { getToolsContext } from './tools';
 import { getPKLContext } from './pkl';
 
-// Static segment imports - prevents "fs" Client-Side Webpack compile issues and avoids Dynamic runtime require overhead!
-import generalSegment from '@/data/rag/segments/general.json';
-import rplSegment from '@/data/rag/segments/rpl.json';
-import dkvSegment from '@/data/rag/segments/dkv.json';
-import broadcastingSegment from '@/data/rag/segments/broadcasting.json';
-import pemasaranSegment from '@/data/rag/segments/pemasaran.json';
-import aklSegment from '@/data/rag/segments/akl.json';
-import mplbSegment from '@/data/rag/segments/mplb.json';
-import ulpSegment from '@/data/rag/segments/ulp.json';
+// Static segment imports - loaded with pre-embedded vectors for sub-1ms local similarity computation!
+import generalSegment from '@/data/rag/segments/general.embedded.json';
+import rplSegment from '@/data/rag/segments/rpl.embedded.json';
+import dkvSegment from '@/data/rag/segments/dkv.embedded.json';
+import broadcastingSegment from '@/data/rag/segments/broadcasting.embedded.json';
+import pemasaranSegment from '@/data/rag/segments/pemasaran.embedded.json';
+import aklSegment from '@/data/rag/segments/akl.embedded.json';
+import mplbSegment from '@/data/rag/segments/mplb.embedded.json';
+import ulpSegment from '@/data/rag/segments/ulp.embedded.json';
 
 const SEGMENTS_MAP: Record<string, any[]> = {
   general: generalSegment,
@@ -112,10 +112,88 @@ export interface RetrievalOptions {
 }
 
 /**
+ * Standard vector cosine similarity calculation
+ */
+function cosineSimilarity(vecA: number[], vecB: number[]): number {
+  if (vecA.length !== vecB.length) return 0.0;
+  let dotProduct = 0.0;
+  let normA = 0.0;
+  let normB = 0.0;
+  for (let i = 0; i < vecA.length; i++) {
+    dotProduct += vecA[i] * vecB[i];
+    normA += vecA[i] * vecA[i];
+    normB += vecB[i] * vecB[i];
+  }
+  if (normA === 0.0 || normB === 0.0) return 0.0;
+  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+/**
+ * Request Query Embedding from NVIDIA NIM (llama-nemotron-embed-1b-v2) securely from either Server or Browser Client
+ */
+async function getQueryEmbedding(query: string): Promise<number[] | null> {
+  const isBrowser = typeof window !== 'undefined';
+
+  try {
+    let response: Response;
+
+    if (isBrowser) {
+      // Browser Client Context: Call proxy route to bypass CORS block
+      response = await fetch('/api/chat/nvidia/embed', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          input: [query],
+        }),
+        signal: AbortSignal.timeout(15000),
+      });
+    } else {
+      // Server-Side Edge Context: Call API directly using key to avoid internal HTTP hops
+      const apiKey = process.env.NEXT_PUBLIC_NVIDIA_API_KEY || (process.env as any).VITE_NVIDIA_API_KEY || '';
+      if (!apiKey || apiKey === 'dummy_key') {
+        console.warn('[VOKARA RAG] NVIDIA API Key is missing. Falling back to keyword search.');
+        return null;
+      }
+
+      response = await fetch('https://integrate.api.nvidia.com/v1/embeddings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          input: [query],
+          model: 'nvidia/llama-nemotron-embed-1b-v2',
+          input_type: 'query',
+        }),
+        signal: AbortSignal.timeout(15000),
+      });
+    }
+
+    if (!response.ok) {
+      console.error(`[VOKARA RAG] Embed API returned code ${response.status}. Falling back to TF-IDF.`);
+      return null;
+    }
+
+    const data = await response.json();
+    if (data.data && data.data[0] && data.data[0].embedding) {
+      return data.data[0].embedding;
+    }
+  } catch (error: any) {
+    console.error(`[VOKARA RAG] Failed to get query embedding (${error.message}). Falling back to TF-IDF.`);
+  }
+  return null;
+}
+
+
+
+/**
  * Main retrieval function
  * Returns formatted context string ready for injection into system prompt
  */
-export function retrieveContext(opts: RetrievalOptions): string {
+export async function retrieveContext(opts: RetrievalOptions): Promise<string> {
   const { jurusan, intents, emotionDetected = false, maxTokens = 800, query, kelas } = opts;
 
   // 1. Determine target categories from intents
@@ -142,6 +220,15 @@ export function retrieveContext(opts: RetrievalOptions): string {
 
   // Get only segmented data instead of searching the complete massive dataset!
   const datasetSegment = getSegmentedData(jurusan);
+
+  // Fetch embedding for the user's query asynchronously
+  const t_embed_start = performance.now();
+  const queryVector = query ? await getQueryEmbedding(query) : null;
+  const t_embed_end = performance.now();
+  
+  if (queryVector) {
+    console.log(`[VOKARA RAG] Generated query vector in ${(t_embed_end - t_embed_start).toFixed(1)}ms using llama-nemotron-embed-1b-v2.`);
+  }
 
   for (const category of targetCategories) {
     let content = '';
@@ -179,16 +266,16 @@ export function retrieveContext(opts: RetrievalOptions): string {
       case 'faq':
         content = getFAQContext(jurusan);
         break;
-       case 'tools':
-         content = getToolsContext(jurusan);
-         break;
-       case 'pkl':
-         content = getPKLContext(jurusan);
-         break;
+      case 'tools':
+        content = getToolsContext(jurusan);
+        break;
+      case 'pkl':
+        content = getPKLContext(jurusan);
+        break;
     }
 
     // Fetch complementary chunks from the segmented dataset
-    let scoredChunks = datasetSegment.filter((chunk: any) => {
+    const matchedChunks = datasetSegment.filter((chunk: any) => {
       // Map intents to dataset categories appropriately
       let matchCat = chunk.metadata.category === category;
       if (category === 'scholarships') matchCat = matchCat || chunk.metadata.category === 'financial';
@@ -204,62 +291,92 @@ export function retrieveContext(opts: RetrievalOptions): string {
       return chunkMajor === 'general' || chunkMajor === reqMajor;
     });
 
-    // Smart weighted TF-IDF keyword-matching score
-    const searchTerms = query
-      ? query
-          .toLowerCase()
-          .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
-          .split(/\s+/)
-          // Exclude stopwords and extremely short words
-          .filter(word => word.length > 2 && !INDONESIAN_STOPWORDS.has(word))
-      : [];
-
     let finalChunks: string[] = [];
 
-    if (query && searchTerms.length > 0) {
-      finalChunks = scoredChunks
+    // VECTOR SEARCH PIPELINE (Primary)
+    if (queryVector && matchedChunks.length > 0 && matchedChunks.every(c => c.vector)) {
+      finalChunks = matchedChunks
         .map((chunk: any) => {
-          let score = 0;
-          const text = chunk.content.toLowerCase();
-          
-          searchTerms.forEach(term => {
-            // Count frequency of matches
-            const regex = new RegExp(term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g');
-            const matches = text.match(regex);
-            
-            if (matches) {
-              const frequency = matches.length;
-              const weight = HIGH_VALUE_WEIGHTS[term] || 1.0;
-              score += frequency * weight;
-            }
-          });
+          let score = cosineSimilarity(queryVector, chunk.vector);
 
-          // GRADE-LEVEL SEMANTIC BOOST:
-          // Boost scored chunks that explicitly target the user's specific grade level
+          // GRADE-LEVEL BOOST logic applied to semantic score
           if (kelas) {
             const k = kelas.toUpperCase();
+            const text = chunk.content.toLowerCase();
+            let matchesGrade = false;
+
             if (k === 'X') {
-              const matchX = text.match(/(kelas\s*x|kelas\s*10|semester\s*1|semester\s*2|dasar|pengenalan)/i);
-              if (matchX) score += 2.0; // Boost foundational topics for grade X
+              matchesGrade = !!text.match(/(kelas\s*x|kelas\s*10|semester\s*1|semester\s*2|dasar|pengenalan)/i);
             } else if (k === 'XI') {
-              const matchXI = text.match(/(kelas\s*xi|kelas\s*11|semester\s*3|semester\s*4|pkl|magang|sertifikasi)/i);
-              if (matchXI) score += 2.0; // Boost internship/PKL topics for grade XI
+              matchesGrade = !!text.match(/(kelas\s*xi|kelas\s*11|semester\s*3|semester\s*4|pkl|magang|sertifikasi)/i);
             } else if (k === 'XII') {
-              const matchXII = text.match(/(kelas\s*xii|kelas\s*12|semester\s*5|semester\s*6|kerja|kuliah|portofolio|cv|interview|loker|beasiswa|kip)/i);
-              if (matchXII) score += 2.0; // Boost job/college prep for grade XII
+              matchesGrade = !!text.match(/(kelas\s*xii|kelas\s*12|semester\s*5|semester\s*6|kerja|kuliah|portofolio|cv|interview|loker|beasiswa|kip)/i);
             } else if (k === 'ALUMNI') {
-              const matchAlumni = text.match(/(alumni|lulus|kerja|kuliah|cv|interview|loker)/i);
-              if (matchAlumni) score += 2.0; // Boost graduation/career topics for Alumni
+              matchesGrade = !!text.match(/(alumni|lulus|kerja|kuliah|cv|interview|loker)/i);
+            }
+
+            if (matchesGrade) {
+              score += 0.15; // Safe semantic additive boost for grade personalization
             }
           }
-          
+
           return { content: chunk.content, score };
         })
-        .filter((item: any) => item.score > 0) // only keep if at least 1 keyword matches
         .sort((a: any, b: any) => b.score - a.score)
         .map((item: any) => item.content);
+    }
+    // TF-IDF KEYWORD SEARCH PIPELINE (Graceful Fallback)
+    else if (query && matchedChunks.length > 0) {
+      const searchTerms = query
+        .toLowerCase()
+        .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
+        .split(/\s+/)
+        .filter(word => word.length > 2 && !INDONESIAN_STOPWORDS.has(word));
+
+      if (searchTerms.length > 0) {
+        finalChunks = matchedChunks
+          .map((chunk: any) => {
+            let score = 0;
+            const text = chunk.content.toLowerCase();
+            
+            searchTerms.forEach(term => {
+              const regex = new RegExp(term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g');
+              const matches = text.match(regex);
+              
+              if (matches) {
+                const frequency = matches.length;
+                const weight = HIGH_VALUE_WEIGHTS[term] || 1.0;
+                score += frequency * weight;
+              }
+            });
+
+            if (kelas) {
+              const k = kelas.toUpperCase();
+              if (k === 'X') {
+                const matchX = text.match(/(kelas\s*x|kelas\s*10|semester\s*1|semester\s*2|dasar|pengenalan)/i);
+                if (matchX) score += 2.0;
+              } else if (k === 'XI') {
+                const matchXI = text.match(/(kelas\s*xi|kelas\s*11|semester\s*3|semester\s*4|pkl|magang|sertifikasi)/i);
+                if (matchXI) score += 2.0;
+              } else if (k === 'XII') {
+                const matchXII = text.match(/(kelas\s*xii|kelas\s*12|semester\s*5|semester\s*6|kerja|kuliah|portofolio|cv|interview|loker|beasiswa|kip)/i);
+                if (matchXII) score += 2.0;
+              } else if (k === 'ALUMNI') {
+                const matchAlumni = text.match(/(alumni|lulus|kerja|kuliah|cv|interview|loker)/i);
+                if (matchAlumni) score += 2.0;
+              }
+            }
+            
+            return { content: chunk.content, score };
+          })
+          .filter((item: any) => item.score > 0)
+          .sort((a: any, b: any) => b.score - a.score)
+          .map((item: any) => item.content);
+      } else {
+        finalChunks = matchedChunks.map((chunk: any) => chunk.content);
+      }
     } else {
-      finalChunks = scoredChunks.map((chunk: any) => chunk.content);
+      finalChunks = matchedChunks.map((chunk: any) => chunk.content);
     }
 
     // Limit to top 2 chunks maximum per category to prevent token inflation

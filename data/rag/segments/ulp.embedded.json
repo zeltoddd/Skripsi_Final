@@ -1,0 +1,185 @@
+[
+  {
+    "id": "94b3822f-65b6-4c9d-bd0f-2a26aeeb4a3a",
+    "content": "ULP (Usaha Layanan Pariwisata) mempersiapkan siswa untuk industri hospitality. Mata pelajaran: Dasar Pariwisata, Kepariwisataan Indonesia, Pengetahuan Hotel, Pengetahuan Restoran/F&B, Travel Agency Operations, Tour Guiding, Event Management, Marketing Pariwisata, Bahasa Asing (Inggris, Mandarin, Jepang), Etika Profesionalisme Pariwisata, Kewirausahaan Pariwisata, Manajemen Atraksi Wisata, Sustainable Tourism.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "curriculum",
+      "jurusan": "ULP",
+      "tags": [
+        "ulp",
+        "pariwisata",
+        "hotel",
+        "restoran",
+        "tour_guide",
+        "event"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "12add7d2-651f-4e25-9ae5-e5e1533133ba",
+    "content": "Tools industri ULP 2026: Hotel PMS (Opera, Cloudbeds, Mews), OTA (Booking.com, Agoda, Traveloka, Tiket.com), Channel Manager (SiteMinder, Cloudbeds), Restaurant POS (Toast, Square, Moka POS, Pawoon), Reservation (Resy, OpenTable), Tour Software (Tourplan, Rezdy, TrekkSoft), Event Management (Eventbrite, Whova, Cvent), Social Media (Instagram, TikTok untuk promosi wisata), Google My Business/Google Travel, TripAdvisor, Canva/Adobe untuk promotional material, AI Chatbot untuk layanan pelanggan, Revenue Management Systems.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "tools",
+      "jurusan": "ULP",
+      "tags": [
+        "pms",
+        "booking_com",
+        "traveloka",
+        "eventbrite",
+        "tripadvisor",
+        "ai_chatbot"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "b5cedfd5-7a71-4a6b-a94e-07d9c715f4e5",
+    "content": "AI Impact pada ULP: AI membantu personalisasi itinerary, chatbot reservasi 24/7, revenue management dan dynamic pricing, sentiment analysis dari review, virtual tour dan augmented reality, translation real-time untuk turis asing. Skill shift: dari 'melayani manual' ke 'mengelola AI untuk pengalaman personal'. Future-proof: human touch dan cultural knowledge tidak bisa digantikan AI. Tren: Experiential Tourism, Digital Nomad Tourism, Wellness Tourism, Culinary Tourism, Cultural Heritage Tourism, Bleisure Travel, Virtual Tourism, Personalized Travel (AI itinerary), Social Media Tourism, Micro-Tourism, Adventure Tourism.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "ai_impact",
+      "jurusan": "ULP",
+      "tags": [
+        "ai",
+        "chatbot",
+        "personalization",
+        "virtual_tour",
+        "wellness",
+        "culinary"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "cc3d71e7-2b6c-4dbb-a8a2-58d1a6ad90f7",
+    "content": "Peluang karier ULP: Entry (Front Office Rp 3-4.5 juta + service charge, F&B Service Rp 3-4 juta + tips, Reservation Agent Rp 3-4.5 juta, Travel Consultant Rp 3-5 juta + komisi). Menengah (Front Office Supervisor Rp 5-8 juta, Event Coordinator Rp 5-10 juta, Tour Manager Rp 6-12 juta). Senior (Hotel Manager Rp 15-30 juta, General Manager Resort Rp 20-50 juta). Freelance: Private Tour Guide Rp 500rb-2 juta per tour, Travel Planner Rp 300rb-1 juta per itinerary, Event Organizer Rp 2-10 juta per event. Remote: medium potential.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "career",
+      "jurusan": "ULP",
+      "tags": [
+        "gaji",
+        "karier",
+        "freelance",
+        "hotel",
+        "tour_guide",
+        "event"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "86d5b86a-0c1d-4ccf-bbbb-69e5bf4a7523",
+    "content": "Concern nyata siswa ULP: (1) Pariwisata gak stabil? Seasonality dan pandemi trauma. (2) Harus jago bahasa asing? Inggris, Mandarin, Jepang. (3) Kerja di hotel shift? Lembur terus? (4) Gaji hospitality kecil? UMR? (5) Surakarta cukup gak untuk karier pariwisata? Harus pindah ke Bali/Jakarta? (6) PKL di hotel ngapain? Cuma bersihin kamar? (7) Tour guide harus jago public speaking? Introvert? (8) Event organizer stressful? (9) Bisa kerja remote gak di pariwisata? (10) Sustainable tourism itu hype doang?",
+    "metadata": {
+      "category": "concerns",
+      "subcategory": "psychology",
+      "jurusan": "ULP",
+      "tags": [
+        "anxiety",
+        "stabil",
+        "bahasa",
+        "shift",
+        "gaji",
+        "pkl",
+        "public_speaking"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "4feaf970-434f-44d0-8907-a69668d10a63",
+    "content": "Roadmap belajar ULP: Semester 1-2 — Dasar pariwisata, pengetahuan hotel & restoran, bahasa Inggris. Semester 3 — Travel agency, tour guiding, event management, bahasa asing lanjut. Semester 4 — Marketing pariwisata, sustainable tourism, kewirausahaan. Semester 5 — PKL di hotel/restoran/travel agency, sertifikasi, portofolio. Semester 6 — Ujian kompetensi, persiapan kerja. Peluang usaha: Homestay/Guesthouse, Tour and Travel Agency, Event Organizer, Food Tour, Cultural Experience Provider (batik class, cooking class), Souvenir Shop, Car Rental/Tour Guide Service, Wellness Retreat.",
+    "metadata": {
+      "category": "roadmap",
+      "subcategory": "learning",
+      "jurusan": "ULP",
+      "tags": [
+        "roadmap",
+        "semester",
+        "belajar",
+        "pariwisata",
+        "hotel",
+        "tour",
+        "usaha"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "a85d0f81-97f5-4072-9a93-00cd7b60c6da",
+    "content": "SUGGESTED PROMPTS untuk siswa ULP:\n\n🔹 Anxiety & Mental Support:\n1. \"Kak, pariwisata gak stabil? Pandemi kemarin hancur, takut kejadian lagi.\"\n2. \"Harus jago bahasa asing? Inggris aku pas-pasan, bisa kerja di hotel bintang 5 gak?\"\n3. \"Kerja di hotel shift terus, lembur, gak ada waktu pribadi?\"\n4. \"Gaji hospitality kecil, UMR doang? Bisa survive gak?\"\n5. \"Surakarta cukup gak untuk karier pariwisata? Harus pindah ke Bali?\"\n\n🔹 Career & Skill:\n6. \"Tour guide harus jago public speaking? Aku introvert.\"\n7. \"Event organizer itu stressful? Takut gak handle pressure.\"\n8. \"Bisa kerja remote gak di pariwisata? Teman di RPL bisa WFH.\"\n9. \"Sustainable tourism itu hype doang atau beneran diterapkan?\"\n10. \"PKL di hotel ngapain? Cuma disuruh bersihin kamar?\"\n\n🔹 Learning & Tools:\n11. \"PMS (Property Management System) itu apa? Contohnya?\"\n12. \"Booking.com vs Traveloka, bedanya buat hotel?\"\n13. \"AI chatbot untuk hotel itu gimana? Ngegantiin front office?\"\n14. \"Sertifikasi AHLEI itu apa? Penting gak?\"\n15. \"Culinary tourism sama food tour, bedanya apa?",
+    "metadata": {
+      "category": "prompts",
+      "subcategory": "suggested_user",
+      "jurusan": "ULP",
+      "tags": [
+        "suggested_prompts",
+        "anxiety",
+        "pariwisata",
+        "hotel",
+        "career",
+        "tools"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "26ef67cb-bc86-4b20-91bd-f17bd3fda32a",
+    "content": "SUGGESTED TOOLS untuk ULP (Tiered by Budget):\n\n💰 GRATIS / FREEMIUM:\n• Google My Business (gratis, local SEO)\n• Google Travel (gratis, listing)\n• TripAdvisor (gratis, listing & reviews)\n• Canva (gratis, promotional material)\n• Instagram / TikTok (gratis, social media marketing)\n• WhatsApp Business (gratis, customer service)\n• Google Translate (gratis, communication)\n• Eventbrite (freemium, event management)\n• Google Forms (gratis, feedback collection)\n\n💵 BERBAYAR / SUBSCRIPTION:\n• Opera PMS (hotel property management)\n• Cloudbeds (cloud PMS)\n• SiteMinder (channel manager)\n• Booking.com extranet\n• Agoda extranet\n• Traveloka extranet\n• Mews (modern PMS)\n• Toast / Moka POS (restaurant POS)\n• OpenTable (reservation)\n\n📱 MOBILE:\n• Booking.com host app\n• Airbnb host app\n• Google Maps (navigation)\n• TripAdvisor app\n• Instagram (promosi)\n• Canva mobile (quick design)\n\n🎓 LEARNING RESOURCES (Gratis):\n• AHLEI online courses\n• Coursera: Hospitality Management\n• edX: Tourism courses\n• YouTube: Hospitality courses\n• Google Digital Garage (marketing)\n• Podcast: Hospitality Daily, No Vacancy",
+    "metadata": {
+      "category": "tools",
+      "subcategory": "suggested",
+      "jurusan": "ULP",
+      "tags": [
+        "tools",
+        "gratis",
+        "google_my_business",
+        "canva",
+        "booking",
+        "eventbrite",
+        "learning"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "0d86cc86-2b83-4a50-96bc-a48cc04b0a1e",
+    "content": "BACKEND LEARNING FLOW untuk ULP:\n\n🎯 GOAL DETECTION:\n- \"Mau kerja di hotel\" → Hospitality operations path\n- \"Takut pariwisata gak stabil\" → Diversification strategy\n- \"Mau jadi tour guide\" → Cultural expertise + language\n- \"Mau buka usaha\" → Entrepreneurship path\n- \"Mau kerja remote\" → Travel planning + digital\n\n📋 STAGE 1: FOUNDATION (Semester 1-2)\nAI Action: Build hospitality mindset + service basics\n→ Suggest: Etika pelayanan, komunikasi, grooming, bahasa Inggris dasar\n→ Tools: Google Translate, hospitality etiquette videos\n→ Milestone: Role-play 5 service scenarios\n→ Check-in: \"Sudah latihan greeting tamu dalam bahasa Inggris?\"\n\n📋 STAGE 2: CORE SKILLS (Semester 3-4)\nAI Action: Operational skills + destination knowledge\n→ Hotel: Front office, housekeeping, F&B basics\n→ Tourism: Surakarta destinations (Keraton, museums, culinary)\n→ Event: Planning, coordination, vendor management\n→ Milestone: Design 1 tour package for Solo\n→ Check-in: \"Sudah hafal 10 destinasi wisata Solo?\"\n\n📋 STAGE 3: SPECIALIZATION (Semester 5)\nAI Action: Career path selection\n→ Options: Front Office, F&B, Tour Guide, Event Coordinator, Travel Consultant\n→ PKL prep: Hotel/restaurant/travel agency placement\n→ Certification: AHLEI, language proficiency (TOEFL/HSK/JLPT)\n→ Milestone: Complete PKL with positive evaluation\n→ Check-in: \"PKL sudah di mana? Pengalaman terbaik apa?\"\n\n📋 STAGE 4: CAREER PREP (Semester 6)\nAI Action: Industry entry\n→ Portfolio: Tour packages, event plans, service SOPs\n→ Job search: Hotels, restaurants, travel agencies, event companies\n→ Entrepreneurship: Homestay/tour agency business plan\n→ Milestone: First hospitality job OR business registration\n→ Check-in: \"Sudah siap untuk dunia kerja?\"\n\n🔄 CONTINUOUS:\n- Weekly: Language practice (English + 1 foreign language)\n- Monthly: Destination update (new attractions, events)\n- Quarterly: Industry trend (wellness tourism, digital nomad)\n- Cultural: \"Hari ini kita belajar sejarah Keraton...\"\n\n⚠️ INTERVENTION TRIGGERS:\n- Seasonality worry → \"Skill hospitality transferable ke event/F&B\"\n- Language barrier → \"Inggris conversational cukup, yang lain bonus\"\n- Shift work concern → \"Shift = fleksibel, bukan burden\"\n- Low salary perception → \"Tips + service charge + growth potential",
+    "metadata": {
+      "category": "learning_flow",
+      "subcategory": "backend",
+      "jurusan": "ULP",
+      "tags": [
+        "learning_flow",
+        "roadmap",
+        "stages",
+        "intervention",
+        "milestone",
+        "hospitality"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  }
+]

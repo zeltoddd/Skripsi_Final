@@ -217,7 +217,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       >
         {/* Sidebar Header - Toggle Button */}
         <div className={cn(
-          "h-16 flex items-center border-b border-sidebar-border shrink-0 transition-all duration-[220ms] ease-in-out",
+          "h-16 flex items-center border-b border-sidebar-border shrink-0 transition-all duration-[220ms] ease-in-out pt-[env(safe-area-inset-top)] h-[calc(4rem+env(safe-area-inset-top))] lg:h-16 lg:pt-0",
           isCollapsed ? "justify-center px-3" : "justify-between px-3.5"
         )}>
           <div className={cn(
@@ -394,7 +394,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </nav>
 
         {/* Sidebar Footer — User Profile, Settings & Dark Mode */}
-        <div className="border-t border-sidebar-border p-3 shrink-0 flex flex-col transition-all duration-[220ms] ease-in-out overflow-hidden w-full">
+        <div className="border-t border-sidebar-border p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] lg:pb-3 shrink-0 flex flex-col transition-all duration-[220ms] ease-in-out overflow-hidden w-full">
           {/* Actions for COLLAPSED state (Vertical ABOVE avatar) */}
           <div className={cn(
             "flex flex-col gap-2 transition-all duration-[220ms] ease-in-out overflow-hidden whitespace-nowrap w-full items-center",
@@ -541,8 +541,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top Header */}
-        <header className="h-16 border-b border-border shrink-0 bg-background/80 backdrop-blur-md z-30">
-          <div className="max-w-2xl mx-auto w-full h-full flex items-center justify-between px-4 relative">
+        <header className="h-[calc(4rem+env(safe-area-inset-top))] border-b border-border shrink-0 bg-background/80 backdrop-blur-md z-30">
+          <div className="max-w-2xl mx-auto w-full h-full flex items-center justify-between px-4 pt-[env(safe-area-inset-top)] relative">
 
             {/* Left Section: Unified Sidebar Trigger, Separator & Truncated Title */}
             <div className="flex items-center gap-2 min-w-0 flex-1">

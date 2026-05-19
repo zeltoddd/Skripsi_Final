@@ -1,0 +1,205 @@
+[
+  {
+    "id": "bb1de693-689f-40e1-b6bb-756210e07bae",
+    "content": "MPLB (Manajemen Perkantoran dan Layanan Bisnis, dulu OTKP) mempersiapkan siswa menjadi tenaga administrasi profesional. Mata pelajaran: Administrasi Umum, Korespondensi Bahasa Indonesia & Inggris, Teknologi Perkantoran (Microsoft Office), Manajemen Arsip Digital, Penanganan Telepon & Tamu, Pengelolaan Rapat & Perjalanan Dinas, Manajemen Kepegawaian Dasar, Ekonomi Bisnis, Kewirausahaan, Public Relations Dasar, Manajemen Waktu & Produktivitas.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "curriculum",
+      "jurusan": "MPLB",
+      "tags": [
+        "mplb",
+        "otkp",
+        "administrasi",
+        "perkantoran",
+        "korespondensi"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "a3ede83e-f29b-42df-b3b6-9fe509f08303",
+    "content": "Tools industri MPLB 2026: Microsoft Office 365 (Word, Excel, PowerPoint, Outlook, Teams), Google Workspace (Docs, Sheets, Slides, Calendar, Meet), Project Management (Notion AI, ClickUp, Trello, Asana), Communication (Slack, Discord, Zoom, Google Meet), Design (Canva), PDF (Adobe Acrobat Pro), Digital Signature (Docusign), Scheduling (Calendly, Google Calendar), Automation (Zapier, Make.com), Cloud Storage (Dropbox, Google Drive, OneDrive), AI Assistant (Microsoft 365 Copilot, ChatGPT, Claude), HRM (SAP SuccessFactors, BambooHR).",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "tools",
+      "jurusan": "MPLB",
+      "tags": [
+        "office365",
+        "google_workspace",
+        "notion",
+        "zapier",
+        "copilot",
+        "canva"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "46169ff3-ca20-4e52-8f4f-7f6420c07e8c",
+    "content": "AI Impact pada MPLB: AI mengotomatisasi pengetikan, penyusunan surat, scheduling, dan data entry. Tapi AI butuh human untuk manajemen alur kerja asinkron, administrasi pangkalan data, dan koordinasi proyek jarak jauh. Skill shift: dari 'pengetik' ke 'office manager & workflow optimizer'. Future-proof: mengelola AI tools dan memastikan akurasi output AI. Tren: Digital Office (paperless), AI Administrative Assistant, Remote Office Management, Workflow Automation, Virtual Collaboration, Data-Driven Administration, Cybersecurity Awareness, Employee Experience, Sustainability Office, Hybrid Work Support.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "ai_impact",
+      "jurusan": "MPLB",
+      "tags": [
+        "ai",
+        "automation",
+        "workflow",
+        "remote",
+        "hybrid",
+        "paperless"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "bf0fb515-0dfb-4e92-877d-7eeaa9f32120",
+    "content": "Peluang karier MPLB: Entry (Administrative Assistant Rp 3-4.5 juta, Receptionist Rp 3-4 juta, Data Entry Rp 3-4.5 juta, Customer Service Rp 3-4.5 juta). Menengah (Office Manager Rp 6-10 juta, Executive Assistant Rp 7-12 juta, HR Coordinator Rp 6-10 juta). Senior (Operations Manager Rp 12-20 juta, Chief of Staff Rp 15-30 juta). Freelance: Virtual Assistant $5-25/jam (Rp 75rb-375rb/jam), Freelance Admin Rp 2-5 juta/bulan. Remote: high potential untuk Virtual Assistant dan Remote Admin.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "career",
+      "jurusan": "MPLB",
+      "tags": [
+        "gaji",
+        "karier",
+        "freelance",
+        "remote",
+        "virtual_assistant",
+        "executive_assistant"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "c7d2adb0-7fec-445e-a381-df57e82d101e",
+    "content": "Concern nyata siswa MPLB: (1) AI bisa ganti admin kantor? ChatGPT + Zapier. (2) Cuma jadi sekretaris doang? Stigma. (3) Gaji kecil dan gak naik-naik? Stagnan. (4) Harus jago bahasa Inggris? (5) Digitalisasi kantor bikin admin gak dibutuhkan? (6) PKL cuma jadi office boy? Fotocopy dan antar dokumen. (7) Skill MPLB bisa dipake di mana aja? Terlalu general? (8) Harus jadi virtual assistant aja? Dari mana cari klien?",
+    "metadata": {
+      "category": "concerns",
+      "subcategory": "psychology",
+      "jurusan": "MPLB",
+      "tags": [
+        "anxiety",
+        "ai",
+        "sekretaris",
+        "gaji",
+        "inggris",
+        "pkl",
+        "va"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "fc4ac434-a47e-4096-b62d-adfeffbc2c65",
+    "content": "FAQ Ketakutan Relasi Sosial PKL: 'Gimana caranya bertahan di tempat magang yang isinya senior galak semua? Tugasku tiap hari cuma disuruh beli kopi sama fotokopi, gak diajarin skill sesuai jurusan MPLB.' Respon: Terjemahkan studi kasus dari podcast PKL SMKN 6. AI mengadopsi prosedur Resolusi Konflik: skrip negosiasi linguistik santun khas pekerja budaya Jawa, menuntun berinisiatif menagih beban tugas spesifik dari mentor saat suasana cair, mengubah pola pikir bahwa manajemen mikro-sosial kantor sama vitalnya dengan keterampilan teknis.",
+    "metadata": {
+      "category": "faq",
+      "subcategory": "pkl_conflict",
+      "jurusan": "MPLB",
+      "tags": [
+        "faq",
+        "pkl",
+        "senior",
+        "fotocopy",
+        "konflik",
+        "negosiasi",
+        "budaya_jawa"
+      ],
+      "priority": "high",
+      "source": "pdf",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "309f0288-9aa8-4202-875b-2a2386365ff4",
+    "content": "Roadmap belajar MPLB: Semester 1-2 — Korespondensi, administrasi umum, teknologi perkantoran dasar. Semester 3 — Manajemen arsip, manajemen rapat, korespondensi bisnis lanjut. Semester 4 — Teknologi perkantoran lanjut, kepegawaian, public relations. Semester 5 — PKL, sertifikasi MOS, portofolio administrasi digital. Semester 6 — Ujian kompetensi, persiapan kerja. Peluang usaha: Jasa Virtual Assistant, Setup Google Workspace/Office 365, Arsip digital perusahaan, Customer service outsourcing, Penyusunan SOP, Meeting coordination.",
+    "metadata": {
+      "category": "roadmap",
+      "subcategory": "learning",
+      "jurusan": "MPLB",
+      "tags": [
+        "roadmap",
+        "semester",
+        "belajar",
+        "administrasi",
+        "mos",
+        "va",
+        "usaha"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "49da6bbb-e27b-41ab-b5bc-1c6419b325b3",
+    "content": "SUGGESTED PROMPTS untuk siswa MPLB:\n\n🔹 Anxiety & Mental Support:\n1. \"Kak, AI kayak ChatGPT bisa ngetik surat dan atur jadwal, admin masih dibutuhkan gak?\"\n2. \"Cuma jadi sekretaris doang? Pekerjaan gak prestisius.\"\n3. \"Gaji admin kecil dan gak naik-naik. Karier mentok di supervisor?\"\n4. \"Harus jago bahasa Inggris? Kalau pas-pasan bisa kerja di kantor gak?\"\n5. \"Digitalisasi kantor bikin admin manual gak dibutuhkan? Jurusan ini outdated?\"\n\n🔹 Career & Skill:\n6. \"Virtual Assistant itu kerjanya gimana? Dari mana cari klien?\"\n7. \"Skill admin bisa dipake di mana aja? Terlalu general?\"\n8. \"Excel harus jago sampai mana? Pivot table wajib?\"\n9. \"PKL cuma jadi office boy? Caranya dapat pengalaman meaningful gimana?\"\n10. \"Remote Executive Assistant itu gimana? Bisa kerja dari rumah?\"\n\n🔹 Learning & Tools:\n11. \"Microsoft 365 Copilot itu gimana? Bantu admin gak?\"\n12. \"Zapier dan Make.com itu apa? Automation untuk admin?\"\n13. \"Notion AI vs Trello, mana yang lebih baik untuk manajemen?\"\n14. \"Google Workspace vs Microsoft 365, mana yang dipelajari?\"\n15. \"Sertifikasi MOS itu penting gak? Worth it?",
+    "metadata": {
+      "category": "prompts",
+      "subcategory": "suggested_user",
+      "jurusan": "MPLB",
+      "tags": [
+        "suggested_prompts",
+        "anxiety",
+        "admin",
+        "va",
+        "career",
+        "tools"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "3dc138d8-7689-40e3-8306-d7c0eae913dc",
+    "content": "SUGGESTED TOOLS untuk MPLB (Tiered by Budget):\n\n💰 GRATIS / FREEMIUM:\n• Google Workspace (gratis, Docs/Sheets/Slides/Calendar/Meet)\n• Microsoft Office Online (gratis, limited)\n• LibreOffice (gratis, Office suite)\n• Notion (gratis, project management)\n• Trello (gratis, kanban)\n• Google Calendar (gratis, scheduling)\n• Calendly (freemium, appointment)\n• Zoom (freemium, meetings)\n• Google Meet (gratis, meetings)\n• Canva (gratis, document design)\n• ChatGPT (gratis, drafting assistant)\n\n💵 BERBAYAR / SUBSCRIPTION:\n• Microsoft 365 (full Office + Copilot)\n• Notion AI (AI-powered workspace)\n• Asana (project management)\n• Monday.com (workflow)\n• ClickUp (all-in-one workspace)\n• Slack (team communication)\n• Docusign (digital signature)\n• Adobe Acrobat Pro (PDF)\n\n📱 MOBILE:\n• Microsoft Office mobile\n• Google Workspace mobile\n• Notion mobile\n• Trello mobile\n• Zoom mobile\n\n🎓 LEARNING RESOURCES (Gratis):\n• Microsoft Learn (gratis, Office training)\n• Google Workspace Learning Center\n• Coursera: Administrative Skills\n• LinkedIn Learning (free trial)\n• YouTube: Office tutorials\n• TypingClub (gratis, typing speed)",
+    "metadata": {
+      "category": "tools",
+      "subcategory": "suggested",
+      "jurusan": "MPLB",
+      "tags": [
+        "tools",
+        "gratis",
+        "google_workspace",
+        "office",
+        "notion",
+        "trello",
+        "learning"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "e0421223-0995-45c7-8482-04277f7b475a",
+    "content": "BACKEND LEARNING FLOW untuk MPLB:\n\n🎯 GOAL DETECTION:\n- \"Mau jadi admin kantor\" → Traditional office path\n- \"Takut AI ganti admin\" → Workflow automation + management\n- \"Mau jadi Virtual Assistant\" → Remote work specialization\n- \"Mau kerja di perusahaan besar\" → Corporate admin path\n- \"Mau freelance\" → VA agency path\n\n📋 STAGE 1: FOUNDATION (Semester 1-2)\nAI Action: Build organizational skills + software basics\n→ Suggest: Korespondensi, filing, scheduling, email etiquette\n→ Tools: Google Workspace, Microsoft Office Online\n→ Milestone: Handle mock office tasks (schedule meeting, draft letter)\n→ Check-in: \"Sudah bisa bikin surat bisnis yang proper?\"\n\n📋 STAGE 2: CORE SKILLS (Semester 3-4)\nAI Action: Advanced admin + automation\n→ Advanced: Excel (pivot, vlookup), Google Sheets automation\n→ Project Management: Notion, Trello, Asana\n→ Communication: Professional email, meeting minutes\n→ Milestone: Organize 1 mock event (agenda, invitation, minutes)\n→ Check-in: \"Sudah bisa manage project dari A-Z?\"\n\n📋 STAGE 3: SPECIALIZATION (Semester 5)\nAI Action: Career path selection\n→ Options: Administrative Assistant, Executive Assistant, HR Admin, Virtual Assistant, Office Manager\n→ PKL prep: Real office environment, multitasking simulation\n→ Certification: MOS (Microsoft Office Specialist)\n→ Milestone: MOS certification OR 1 VA client\n→ Check-in: \"Sudah daftar MOS?\"\n\n📋 STAGE 4: CAREER PREP (Semester 6)\nAI Action: Workplace-ready assessment\n→ Portfolio: Sample documents (letters, reports, schedules)\n→ Job search: Corporates, hospitals, hotels, government\n→ Freelance: Upwork/Fiverr VA profile setup\n→ Milestone: First admin job OR 2 VA clients\n→ Check-in: \"Sudah apply ke berapa tempat?\"\n\n🔄 CONTINUOUS:\n- Weekly: Office scenario simulation\n- Monthly: New tool exploration (\"Tool baru ini berguna...\")\n- Quarterly: Soft skill assessment (communication, time management)\n- Trend: \"Admin masa depan: ini skill yang harus dikuasai\"\n\n⚠️ INTERVENTION TRIGGERS:\n- \"Cuma admin\" stigma → \"Admin = backbone of organization\"\n- Tech overwhelm → \"Satu tool per minggu, pelan-pelan\"\n- English anxiety → \"Conversational English cukup, bisa belajar\"\n- Invisibility feeling → \"Admin yang baik = invisible hero",
+    "metadata": {
+      "category": "learning_flow",
+      "subcategory": "backend",
+      "jurusan": "MPLB",
+      "tags": [
+        "learning_flow",
+        "roadmap",
+        "stages",
+        "intervention",
+        "milestone",
+        "va"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  }
+]

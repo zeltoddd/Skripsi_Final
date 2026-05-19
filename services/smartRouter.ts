@@ -43,7 +43,8 @@ export type RagKey = 'scholarships' | 'dudi' | 'career_paths' | 'courses' | 'tre
 // ============================================================
 
 const MODELS = {
-  flash: 'meta/llama-3.1-8b-instruct',   // main — warm-cached, ultra-fast & high quality
+  llama: 'meta/llama-3.1-8b-instruct',   // main — warm-cached, ultra-fast & high quality
+  gemma: 'google/gemma-3n-e4b-it',        // Google Gemma 3 4B Instruct — extremely fast & lightweight
 } as const
 
 // ============================================================
@@ -52,8 +53,8 @@ const MODELS = {
 // ============================================================
 
 const TOKEN_BUDGET: Record<QueryTier, { maxTokens: number; historyLimit: number }> = {
-  QUICK: { maxTokens: 1024, historyLimit: 2 },
-  STANDARD: { maxTokens: 2048, historyLimit: 6 },
+  QUICK: { maxTokens: 2048, historyLimit: 2 },
+  STANDARD: { maxTokens: 3072, historyLimit: 6 },
   DEEP: { maxTokens: 4096, historyLimit: 10 },
 }
 
@@ -160,24 +161,54 @@ function selectRagKeys(intents: QueryIntent[]): RagKey[] {
 export function route(
   message: string,
   hasFile: boolean = false,
+  selectedMode: 'fast' | 'adaptive' | 'deep' = 'adaptive',
 ): RouteDecision {
   const intents = detectIntents(message)
-  const tier = classifyTier(intents, message, hasFile)
-  const budget = TOKEN_BUDGET[tier]
+  
+  let tier: QueryTier = 'STANDARD'
+  let model: string = MODELS.llama
+  let maxTokens = 2048
+  let temperature = 0.4
+  let historyLimit = 6
+  let fetchMetadataBg = false
 
-  const fetchMetadataBg =
-    tier !== 'QUICK' &&
-    (intents.includes('trend_data') ||
-      message.toLowerCase().includes('video') ||
-      message.toLowerCase().includes('youtube'))
+  if (selectedMode === 'fast') {
+    tier = 'QUICK'
+    model = MODELS.gemma
+    maxTokens = 1024
+    temperature = 0.5
+    historyLimit = 3
+    fetchMetadataBg = false
+  } else if (selectedMode === 'deep') {
+    tier = 'DEEP'
+    // Deep mode utilizes the StepFun 3.5 Flash model for high-performance reasoning and agentic tasks
+    model = 'stepfun-ai/step-3.5-flash'
+    maxTokens = 4096
+    temperature = 0.6
+    historyLimit = 10
+    fetchMetadataBg = true
+  } else {
+    // Adaptive mode (default smart router tier classification)
+    tier = classifyTier(intents, message, hasFile)
+    const budget = TOKEN_BUDGET[tier]
+    model = MODELS.llama
+    maxTokens = budget.maxTokens
+    temperature = TEMPERATURE[tier]
+    historyLimit = budget.historyLimit
+    fetchMetadataBg =
+      tier !== 'QUICK' &&
+      (intents.includes('trend_data') ||
+        message.toLowerCase().includes('video') ||
+        message.toLowerCase().includes('youtube'))
+  }
 
   return {
     tier,
     intents,
-    model: MODELS.flash,
-    maxTokens: budget.maxTokens,
-    temperature: TEMPERATURE[tier],
-    historyLimit: budget.historyLimit,
+    model,
+    maxTokens,
+    temperature,
+    historyLimit,
     ragKeys: selectRagKeys(intents),
     fetchMetadataBg,
   }
@@ -193,9 +224,8 @@ export function pruneHistory(
 ): typeof history {
   if (history.length <= limit) return history;
 
-  // Ensure we keep at least 6 recent messages to preserve context continuity
-  const MIN_RECENT = 6;
-  const keepFromEnd = Math.max(limit - 1, MIN_RECENT);
+  // If the limit is small (e.g., 3 or less in Fast mode), respect it strictly to prevent context contamination
+  const keepFromEnd = limit <= 3 ? limit : Math.max(limit - 1, 6);
 
   const first = history[0];
   const recent = history.slice(-keepFromEnd);

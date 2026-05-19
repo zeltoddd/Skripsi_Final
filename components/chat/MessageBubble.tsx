@@ -66,7 +66,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
   const handleCopy = () => {
     const cleanTextToCopy = message.text
       .replace(/<[^>]*>/g, '')
-      .replace(/(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*.*?(?:\]|$)/gmi, '')
+      .replace(/(?:-|\*|\d+\.)*\s*\[?\*?OPS[I:]+\*?\]?\s*:?\s*.*?(?:\]|$)/gmi, '')
       .replace(/(?:\n|\s)*\[OPS[I:]*.*?$/gi, '')
       .replace(/(?:\n|^)\s*(?:[-*_]\s*){3,}\s*$/g, '')
       .trim();
@@ -86,7 +86,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
 
     const cleanText = message.text
       .replace(/<[^>]*>/g, '')
-      .replace(/(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*.*?(?:\]|$)/gmi, '') // Strip out raw UI tags
+      .replace(/(?:-|\*|\d+\.)*\s*\[?\*?OPS[I:]+\*?\]?\s*:?\s*.*?(?:\]|$)/gmi, '') // Strip out raw UI tags
       .replace(/(?:\n|\s)*\[OPS[I:]*.*?$/gi, '')
       .replace(/(?:\n|^)\s*(?:[-*_]\s*){3,}\s*$/g, '') // Remove trailing HRs more aggressively
       .replace(/```card/gi, '')   // Remove the opening ```card
@@ -333,6 +333,10 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
               remarkPlugins={[remarkGfm, remarkBreaks]}
               components={{
                 p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
+                h1: ({ children }) => <h1 className="text-xl font-bold text-foreground mt-6 mb-3 first:mt-0 leading-tight">{children}</h1>,
+                h2: ({ children }) => <h2 className="text-lg font-bold text-foreground mt-5 mb-3.5 first:mt-0 leading-tight">{children}</h2>,
+                h3: ({ children }) => <h3 className="text-[16px] font-bold text-foreground mt-4 mb-2.5 first:mt-0 leading-snug">{children}</h3>,
+                h4: ({ children }) => <h4 className="text-[15px] font-bold text-foreground mt-3 mb-2 first:mt-0 leading-snug">{children}</h4>,
                 pre: ({ children }: any) => {
                   // extract language from the child <code> element
                   const childProps = children?.props || {};
@@ -410,7 +414,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
               }}
             >{message.text
               .replace(/<[^>]*>/g, '')
-              .replace(/(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*.*?(?:\]|$)/gmi, '')
+              .replace(/(?:-|\*|\d+\.)*\s*\[?\*?OPS[I:]+\*?\]?\s*:?\s*.*?(?:\]|$)/gmi, '')
               .replace(/(?:\n|\s)*\[OPS[I:]*.*?$/gi, '')
               .replace(/(?:\n|^)\s*(?:[-*_]\s*){3,}\s*$/g, '')
               .trim()}</ReactMarkdown>

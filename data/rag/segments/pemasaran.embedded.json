@@ -1,0 +1,223 @@
+[
+  {
+    "id": "b1cc7416-d4de-4cac-bc2d-aac08d7f7651",
+    "content": "Pemasaran mempersiapkan siswa untuk riset pasar, perencanaan pemasaran, penjualan, promosi, dan distribusi. Fokus pada digital marketing, social media marketing, dan e-commerce. Mata pelajaran: Dasar Pemasaran, Riset Pasar, Perilaku Konsumen, Produk & Harga, Distribusi & Penjualan, Promosi & Advertising, Digital Marketing, Social Media Marketing, E-Commerce, Content Marketing, Branding, CRM, SEO, SEM, Kewirausahaan.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "curriculum",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "pemasaran",
+        "digital_marketing",
+        "ecommerce",
+        "seo",
+        "social_media"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "8457fdb0-7f84-44b9-b3da-dce46a83da70",
+    "content": "Tools industri Pemasaran 2026: Analytics (Google Analytics 4, Google Tag Manager), Ads (Meta Business Suite, TikTok Ads Manager, Google Ads), E-Commerce (Shopify, WooCommerce, Tokopedia, Shopee, TikTok Shop), Email (Mailchimp, ConvertKit, Kajabi), CRM (HubSpot, Salesforce), Social Media Management (Hootsuite, Buffer, Sprout Social), SEO (SEMrush, Ahrefs, Ubersuggest), AI Copywriting (ChatGPT, Jasper, Copy.ai), AI Visual (Midjourney, DALL-E, Leonardo), Trends (Google Trends, AnswerThePublic), Behavior Analytics (Hotjar, Crazy Egg), Project Management (Notion, Airtable).",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "tools",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "ga4",
+        "meta_ads",
+        "tiktok_shop",
+        "hubspot",
+        "semrush",
+        "chatgpt"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "6fdba66f-fcf1-4920-b28d-073cf8462db0",
+    "content": "AI Impact pada Pemasaran: AI adalah TOOL untuk marketer, bukan pengganti. AI membantu copywriting, content generation, personalisasi campaign, predictive analytics, chatbot 24/7, A/B testing otomatis, visual asset generation. Skill shift: dari 'membuat konten manual' ke 'mengarahkan AI untuk konten relevan'. Future-proof: strategic thinking dan human insight tidak bisa digantikan AI. Tren: AI-Powered Personalization, Short-Form Video Dominance, Social Commerce, Micro/Nano Influencer, Conversational Marketing, Live Streaming Commerce, Privacy-First Marketing, AR Marketing, Sustainability Marketing, Community-Led Growth, Zero-Party Data.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "ai_impact",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "ai",
+        "personalization",
+        "short_form",
+        "social_commerce",
+        "influencer",
+        "privacy"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "71c85afe-5f38-4364-b3e2-f7fd60561547",
+    "content": "Peluang karier Pemasaran: Entry (Digital Marketing Specialist Rp 4-6 juta, Social Media Manager Rp 3.5-5 juta, Content Creator Rp 3.5-6 juta, SEO/SEM Specialist Rp 4-6 juta). Menengah (Digital Marketing Manager Rp 8-15 juta, Brand Manager Rp 10-20 juta, Performance Marketing Lead Rp 8-15 juta). Senior (Marketing Director Rp 20-40 juta, CMO Rp 30-80 juta). Freelance: Social Media Manager Rp 3-10 juta/bulan per brand, Affiliate Marketer variable (Rp 1-50 juta/bulan). Remote: high potential.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "career",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "gaji",
+        "karier",
+        "freelance",
+        "remote",
+        "affiliate",
+        "content_creator"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "2070f99c-5ee4-4fb6-a64a-d932bf924d07",
+    "content": "Concern nyata siswa Pemasaran: (1) Jurusan pemasaran terlalu umum? Semua orang bisa marketing tanpa sekolah. (2) Content creator harus extrovert? Aku introvert. (3) Algoritma sosmed selalu berubah, takut skill cepat outdated. (4) Budget iklan dari mana? Mau praktik tapi gak punya duit. (5) Gimana bedain hype vs real skill? NFT marketing vs fundamental. (6) Client UMKM gak mau bayar mahal. (7) Harus punya followers banyak dulu? (8) Marketing pake AI itu curang gak? Etika content. (9) TikTok Shop masih worth it 2026? Oversaturated? (10) Copywriting vs content creation, pilih mana?",
+    "metadata": {
+      "category": "concerns",
+      "subcategory": "psychology",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "anxiety",
+        "introvert",
+        "algoritma",
+        "budget",
+        "ai_etika",
+        "tiktok_shop"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "7862da07-656d-41b2-a910-2e0b4c936cab",
+    "content": "Solusi introvert di Pemasaran: Spesialisasi paling bernilai di era modern justru diisi introvert: Spesialis Pemasaran Automation, Manajemen Siklus CRM, Data Analyst Marketing — fokus ke dasbor komputer, bukan interaksi sosial lapangan. Introvert punya keunggulan: deep thinking, research, analytics, strategic planning. Bisa juga jadi copywriter, SEO specialist, email marketing strategist, atau affiliate marketer — semua bisa kerja dari belakang layar. Tidak semua marketing harus tampil di depan umum.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "solutions",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "introvert",
+        "automation",
+        "crm",
+        "copywriting",
+        "seo",
+        "remote"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "86c4a359-09ae-4ea3-ba9f-9fa637fb4e86",
+    "content": "FAQ Keraguan Penetrasi Sektoral Berbasis Personalitas: 'Anak introvert yang susah bergaul kayak aku cocok gak sih masuk jurusan Pemasaran, atau nanti susah cari kerjanya?' Respon: Dekonstruksi mitos pemasaran lapangan. Data preskriptif: jenjang karier paling bernilai di masa modern — Spesialis Pemasaran Automation dan Manajemen Siklus CRM — justru diisi oleh sosok penganalisis data di balik layar, bukan pelobi interaksi sosial. Menekankan pengelolaan basis data rasional di atas teknik persuasi face-to-face.",
+    "metadata": {
+      "category": "faq",
+      "subcategory": "personality",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "faq",
+        "introvert",
+        "pemasaran",
+        "automation",
+        "crm",
+        "analisis_data"
+      ],
+      "priority": "high",
+      "source": "pdf",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "dacc7c4f-15c5-4752-bf1d-c3d031355249",
+    "content": "Roadmap belajar Pemasaran: Semester 1-2 — Dasar pemasaran, perilaku konsumen, riset pasar. Semester 3 — Digital marketing, social media, content creation. Semester 4 — E-commerce, SEO/SEM, email marketing, CRM. Semester 5 — PKL, sertifikasi Google/Meta, portofolio campaign. Semester 6 — Ujian kompetensi, persiapan kerja atau wirausaha. Peluang usaha: Digital Marketing Agency, Social Media Management Agency, E-commerce Store, Content Creation Agency, Influencer Marketing Agency, Affiliate Marketing Business.",
+    "metadata": {
+      "category": "roadmap",
+      "subcategory": "learning",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "roadmap",
+        "semester",
+        "belajar",
+        "digital_marketing",
+        "seo",
+        "ecommerce",
+        "usaha"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "92f722ad-32c2-40e4-8daf-6d3bf2de9aea",
+    "content": "SUGGESTED PROMPTS untuk siswa Pemasaran:\n\n🔹 Anxiety & Mental Support:\n1. \"Kak, aku introvert, cocok gak sih masuk jurusan Pemasaran?\"\n2. \"Jurusan pemasaran terlalu umum, semua orang bisa marketing tanpa sekolah.\"\n3. \"TikTok Shop masih worth it 2026? Banyak yang bilang oversaturated.\"\n4. \"Budget iklan dari mana? Mau praktik Meta Ads tapi gak punya duit.\"\n5. \"Client UMKM gak mau bayar mahal. Gimana caranya dapat klien yang layak?\"\n\n🔹 Career & Skill:\n6. \"Copywriting vs Content Creation, pilih mana?\"\n7. \"Affiliate marketing masih works? Caranya gimana?\"\n8. \"Gimana bedain tren hype vs skill fundamental?\"\n9. \"Harus punya followers banyak dulu untuk dihire?\"\n10. \"Marketing pake AI itu curang gak? Etikanya gimana?\"\n\n🔹 Learning & Tools:\n11. \"Google Analytics 4 vs Universal Analytics, bedanya apa?\"\n12. \"SEO itu susah gak? Belajar dari mana?\"\n13. \"Email marketing masih relevan gak di era TikTok?\"\n14. \"Gimana caranya bikin sales funnel yang convert?\"\n15. \"Influencer marketing micro vs nano, bedanya apa?",
+    "metadata": {
+      "category": "prompts",
+      "subcategory": "suggested_user",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "suggested_prompts",
+        "anxiety",
+        "introvert",
+        "marketing",
+        "career",
+        "tools"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "ab7ceeb4-1096-4eb4-8e3d-1b55753ca236",
+    "content": "SUGGESTED TOOLS untuk Pemasaran (Tiered by Budget):\n\n💰 GRATIS / FREEMIUM:\n• Google Analytics 4 (gratis, website analytics)\n• Google Search Console (gratis, SEO)\n• Google Trends (gratis, trend research)\n• Meta Business Suite (gratis, Facebook/Instagram management)\n• Canva (gratis, design)\n• CapCut (gratis, video)\n• Mailchimp (freemium, email marketing)\n• Buffer (freemium, social scheduling)\n• Notion (gratis, content planning)\n• AnswerThePublic (freemium, keyword research)\n• Ubersuggest (freemium, SEO)\n• ChatGPT (gratis, copywriting assistant)\n\n💵 BERBAYAR / SUBSCRIPTION:\n• SEMrush / Ahrefs (SEO premium)\n• HubSpot CRM (freemium, CRM)\n• Hootsuite (social media management)\n• Sprout Social (social analytics)\n• ConvertKit (email marketing)\n• Jasper / Copy.ai (AI copywriting)\n• Meta Ads Manager (pay-per-click)\n• TikTok Ads Manager (pay-per-click)\n\n📱 MOBILE MARKETING:\n• TikTok Shop Seller Center\n• Shopee Seller Centre\n• Tokopedia Seller\n• Instagram Shopping\n• WhatsApp Business\n• Telegram Channel\n\n🎓 LEARNING RESOURCES (Gratis):\n• Google Digital Garage (gratis certification)\n• Meta Blueprint (gratis certification)\n• HubSpot Academy (gratis certification)\n• TikTok Shop University\n• YouTube: Neil Patel, Gary Vee\n• Podcast: Marketing School, The Advanced Show",
+    "metadata": {
+      "category": "tools",
+      "subcategory": "suggested",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "tools",
+        "gratis",
+        "google_analytics",
+        "canva",
+        "hubspot",
+        "seo",
+        "learning"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "072518b9-4600-4007-906e-59f503c64b61",
+    "content": "BACKEND LEARNING FLOW untuk Pemasaran:\n\n🎯 GOAL DETECTION:\n- \"Mau jadi digital marketer\" → Technical + analytical\n- \"Introvert, cocok gak?\" → Behind-the-scenes roles\n- \"Takut AI ganti marketer\" → Strategy + human insight pivot\n- \"Mau jadi content creator\" → Personal branding focus\n- \"Mau freelance\" → Niche specialization\n\n📋 STAGE 1: FOUNDATION (Semester 1-2)\nAI Action: Build marketing mindset + basic tools\n→ Suggest: Consumer psychology, copywriting basics, Canva design\n→ Tools: Canva, Google Trends, Meta Business Suite (free)\n→ Milestone: 5 social media posts with engagement analysis\n→ Check-in: \"Sudah analisis kenapa post A lebih viral dari post B?\"\n\n📋 STAGE 2: CORE SKILLS (Semester 3-4)\nAI Action: Guide channel specialization\n→ Social Media: Content calendar, community management, analytics\n→ SEO/SEM: Keyword research, on-page SEO, Google Ads basics\n→ E-commerce: Marketplace optimization, TikTok Shop, conversion\n→ Email: List building, automation sequences, A/B testing\n→ Milestone: Managed 1 brand social media for 1 month\n→ Check-in: \"Sudah handle akun brand belum?\"\n\n📋 STAGE 3: SPECIALIZATION (Semester 5)\nAI Action: Niche & certification path\n→ Options: Social Media Manager, SEO Specialist, E-commerce Manager, Performance Marketer, Content Strategist\n→ PKL prep: Campaign proposal, ROI calculation, client pitch\n→ Milestone: 1 complete campaign (strategy → execution → report)\n→ Check-in: \"Sudah bikin campaign lengkap dengan metrik?\"\n\n📋 STAGE 4: CAREER PREP (Semester 6)\nAI Action: Market-ready assessment\n→ Portfolio: Case studies with before/after metrics\n→ Certifications: Google Analytics, Meta Blueprint, HubSpot\n→ Job search: Agencies, brands, e-commerce companies, freelance\n→ Milestone: First marketing job OR 3 retainer clients\n→ Check-in: \"Sudah dapat berapa klien?\"\n\n🔄 CONTINUOUS:\n- Weekly trend analysis (\"Tren TikTok minggu ini...\")\n- Monthly campaign performance review\n- Quarterly platform update (algorithm changes)\n- Competitor analysis: \"Brand X baru launch campaign, kita analisis\"\n\n⚠️ INTERVENTION TRIGGERS:\n- No content created for 1 week → \"Ayo bikin 1 post hari ini!\"\n- Budget constraint for ads → Organic growth strategies\n- Client rejection → \"Setiap 'no' mendekatkan ke 'yes' yang tepat\"\n- Comparison with big brands → \"UMKM punya keunggulan: authentic",
+    "metadata": {
+      "category": "learning_flow",
+      "subcategory": "backend",
+      "jurusan": "Pemasaran",
+      "tags": [
+        "learning_flow",
+        "roadmap",
+        "stages",
+        "intervention",
+        "milestone",
+        "campaign"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  }
+]

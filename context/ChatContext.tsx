@@ -35,6 +35,8 @@ interface ChatContextType {
   clearGuestSessions?: () => void;
   hasGuestSessions: boolean;
   mergeGuestSessions: () => Promise<void>;
+  selectedMode: 'fast' | 'adaptive' | 'deep';
+  setSelectedMode: (mode: 'fast' | 'adaptive' | 'deep') => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -45,6 +47,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [sessions, setSessions] = useState<ChatSession[]>([]);
   const [currentSessionId, setCurrentSessionIdState] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedMode, setSelectedModeState] = useState<'fast' | 'adaptive' | 'deep'>('adaptive');
 
   // Custom setter that also saves to localStorage
   const setCurrentSessionId = useCallback((id: string | null) => {
@@ -56,11 +59,20 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const setSelectedMode = useCallback((mode: 'fast' | 'adaptive' | 'deep') => {
+    setSelectedModeState(mode);
+    localStorage.setItem('vokara_selected_mode', mode);
+  }, []);
+
   // Load from localStorage on mount
   useEffect(() => {
     const savedId = localStorage.getItem('vokara_last_session_id');
     if (savedId) {
       setCurrentSessionIdState(savedId);
+    }
+    const savedMode = localStorage.getItem('vokara_selected_mode');
+    if (savedMode && (savedMode === 'fast' || savedMode === 'adaptive' || savedMode === 'deep')) {
+      setSelectedModeState(savedMode as any);
     }
   }, []);
 
@@ -174,7 +186,9 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       saveGuestSession,
       clearGuestSessions,
       hasGuestSessions: guestSessions.length > 0,
-      mergeGuestSessions
+      mergeGuestSessions,
+      selectedMode,
+      setSelectedMode
     }}>
       {children}
     </ChatContext.Provider>

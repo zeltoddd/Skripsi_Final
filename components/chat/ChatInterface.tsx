@@ -12,13 +12,25 @@ import {
   Plus,
   X,
   PanelLeft,
-  ChevronDown
+  ChevronDown,
+  Zap,
+  Compass,
+  BookOpen,
+  Check
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ChatMessageBubble from './MessageBubble';
 import { Sender } from '@/types';
 import { useChat } from '@/context/ChatContext';
 import { VokaraStackedLogo } from '@/components/brand/Logo';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
 
 interface ChatInterfaceProps {
   messages: any[];
@@ -44,7 +56,7 @@ interface ChatInterfaceProps {
 }
 
 export default function ChatInterface(props: ChatInterfaceProps) {
-  const { sessions, currentSessionId, createNewChat } = useChat();
+  const { sessions, currentSessionId, createNewChat, selectedMode, setSelectedMode } = useChat();
 
   // Get current session title
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -60,7 +72,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
     if (!container) return;
 
     const distanceToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
-    
+
     // If user is within 100px of bottom, keep auto-scrolling. Otherwise, lock scroll position to let user read history.
     shouldAutoScrollRef.current = distanceToBottom < 100;
   };
@@ -115,9 +127,9 @@ export default function ChatInterface(props: ChatInterfaceProps) {
     <div className="flex-1 flex flex-col min-h-0 bg-background overflow-hidden relative">
 
       {/* ─── Messages Area ─── */}
-      <div 
-        ref={scrollContainerRef} 
-        onScroll={handleScroll} 
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
         className="flex-1 overflow-y-auto px-4 scrollbar-hide"
       >
         <div className="max-w-2xl mx-auto w-full min-h-full flex flex-col space-y-6 pt-6 pb-6">
@@ -249,12 +261,72 @@ export default function ChatInterface(props: ChatInterfaceProps) {
               </div>
 
               <div className="flex items-center gap-3">
-                {/* Model indicator */}
-                <div className="flex items-center gap-1 text-[10px] text-foreground/50 font-bold tracking-tight cursor-pointer hover:text-foreground/80 transition-colors uppercase">
-                  <span>VOKARA</span>
-                  <span className="font-normal normal-case">Adaptive</span>
-                  <ChevronDown className="h-2.5 w-2.5 opacity-70" />
-                </div>
+                {/* Model selector dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <div className="flex items-center gap-1 text-[10px] text-foreground/70 font-bold tracking-tight cursor-pointer hover:text-foreground/80 transition-colors uppercase select-none group">
+                      <span>VOKARA</span>
+                      <span className="font-semibold normal-case text-foreground/50 pl-0.5">
+                        {selectedMode === 'fast' && 'Cepat'}
+                        {selectedMode === 'adaptive' && 'Adaptif'}
+                        {selectedMode === 'deep' && 'Mendalam'}
+                      </span>
+                      <ChevronDown className="h-2.5 w-2.5 opacity-70 group-data-[state=open]:rotate-180 transition-transform duration-200" />
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="end"
+                    className="w-56 mt-2 mb-2 rounded-2xl p-2 bg-background dark:bg-[#111111] border-0 border-foreground/10 shadow-sm animate-in fade-in zoom-in-95 duration-200 z-50"
+                  >
+                    <DropdownMenuItem
+                      onClick={() => setSelectedMode('fast')}
+                      className={cn(
+                        "flex items-center justify-between px-3 py-3 mb-2 cursor-pointer rounded-xl transition-all duration-200 ease-out group",
+                        selectedMode === 'fast'
+                          ? "bg-foreground/5 dark:bg-white/5 text-foreground font-semibold"
+                          : "hover:bg-muted/50 focus:bg-muted/50 text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Zap className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-sm font-medium">Mode Cepat</span>
+                      </div>
+                      {selectedMode === 'fast' && <Check className="h-4 w-4 text-foreground animate-in fade-in zoom-in-75 duration-200" />}
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                      onClick={() => setSelectedMode('adaptive')}
+                      className={cn(
+                        "flex items-center justify-between px-3 py-3 cursor-pointer rounded-xl transition-all duration-200 ease-out group",
+                        selectedMode === 'adaptive'
+                          ? "bg-foreground/5 dark:bg-white/5 text-foreground font-semibold"
+                          : "hover:bg-muted/50 focus:bg-muted/50 text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Compass className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-sm font-medium">Mode Adaptif</span>
+                      </div>
+                      {selectedMode === 'adaptive' && <Check className="h-4 w-4 text-foreground animate-in fade-in zoom-in-75 duration-200" />}
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                      onClick={() => setSelectedMode('deep')}
+                      className={cn(
+                        "flex items-center justify-between px-3 py-3 mt-2 cursor-pointer rounded-xl transition-all duration-200 ease-out group",
+                        selectedMode === 'deep'
+                          ? "bg-foreground/5 dark:bg-white/5 text-foreground font-semibold"
+                          : "hover:bg-muted/50 focus:bg-muted/50 text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <BookOpen className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-sm font-medium">Mode Mendalam</span>
+                      </div>
+                      {selectedMode === 'deep' && <Check className="h-4 w-4 text-foreground animate-in fade-in zoom-in-75 duration-200" />}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
                 <Button
                   onClick={props.onSendMessage}

@@ -1,0 +1,282 @@
+[
+  {
+    "id": "644896dc-1b3a-4756-be97-ebaaf6ab9fa9",
+    "content": "PPLG (Pengembangan Perangkat Lunak dan Gim) adalah program unggulan SMKN 6 Surakarta. Jurusan ini mempersiapkan siswa menjadi programmer, developer, dan software engineer. Mata pelajaran: Algoritma, Pemrograman Berorientasi Objek (OOP), Struktur Data, Database (SQL/NoSQL), Web Development (Frontend & Backend), Mobile App Development, Software Engineering Principles, UI/UX for Developers, API Development, Version Control (Git), Software Testing, Deployment/DevOps Dasar, dan Cybersecurity Dasar.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "curriculum",
+      "jurusan": "RPL",
+      "tags": [
+        "pplg",
+        "rpl",
+        "programming",
+        "kurikulum",
+        "software"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "738a2512-b5ce-4004-9a8f-10e0b1d1b891",
+    "content": "Tools industri wajib PPLG/RPL 2026: Code Editor (VS Code, JetBrains, Cursor AI), Version Control (Git, GitHub, GitLab), Frontend (HTML, CSS, JavaScript, React, Vue, Angular, Tailwind CSS), Backend (Node.js, Python Django/Flask, PHP Laravel, Java Spring Boot), Mobile (Flutter, React Native, Kotlin, Swift), Database (MySQL, PostgreSQL, MongoDB, Firebase, Supabase), Cloud (AWS, Google Cloud, Vercel, Netlify), DevOps (Docker, Kubernetes, GitHub Actions), AI Coding (GitHub Copilot, ChatGPT, Claude, Tabnine).",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "tools",
+      "jurusan": "RPL",
+      "tags": [
+        "vscode",
+        "github",
+        "react",
+        "node",
+        "flutter",
+        "docker",
+        "copilot",
+        "cursor"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "factual"
+    }
+  },
+  {
+    "id": "128ac4d6-3f5d-4ffe-aead-fa4fab0a6e94",
+    "content": "AI Impact pada PPLG/RPL: AI coding assistant (GitHub Copilot, Cursor) dapat menulis kode dan debug, tetapi menghasilkan kode yang 'works' tapi tidak selalu 'optimal' atau 'secure'. Human oversight tetap krusial. Skill shift: dari 'menulis kode dari nol' ke 'prompt engineering + code review + system design'. Future-proof: system architecture, security, performance optimization, dan business understanding. AI mempercepat development 30-50%.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "ai_impact",
+      "jurusan": "RPL",
+      "tags": [
+        "ai",
+        "copilot",
+        "coding",
+        "future_proof",
+        "system_design"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "bfe5ce06-9698-447a-a90d-54ceafe4a5a1",
+    "content": "Tren industri RPL 2025-2026: AI-Native Development, Low-Code/No-Code (Bubble, Webflow), Full-Stack JavaScript dominance, Cloud-Native Development, Microservices Architecture, Serverless Computing (AWS Lambda), Edge Computing, WebAssembly (WASM), Progressive Web Apps (PWA), API-First Development, DevSecOps, Blockchain Development, IoT Development, AR/VR Development.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "trends",
+      "jurusan": "RPL",
+      "tags": [
+        "tren",
+        "2026",
+        "cloud_native",
+        "microservices",
+        "serverless",
+        "webassembly"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "trend"
+    }
+  },
+  {
+    "id": "05d43888-cc06-4604-9bd0-0250874c7ac6",
+    "content": "Peluang karier PPLG/RPL: Entry-level (Junior Web Developer Rp 5-8 juta, Junior Mobile Developer Rp 5-8 juta, Frontend/Backend Developer Rp 6-9 juta). Menengah (Senior Developer Rp 10-18 juta, Tech Lead Rp 15-25 juta, DevOps Engineer Rp 12-20 juta). Senior (Engineering Manager Rp 20-40 juta, CTO Rp 30-100+ juta). Freelance: $20-100/jam (Upwork, Toptal). Remote: sangat tinggi potential.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "career",
+      "jurusan": "RPL",
+      "tags": [
+        "gaji",
+        "karier",
+        "freelance",
+        "remote",
+        "entry_level"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "18439a7a-4d4e-4d41-b3f5-0c82e979f470",
+    "content": "Sertifikasi RPL: AWS Certified Developer/Cloud Practitioner, Google Cloud Professional Developer, Microsoft Azure Developer, Oracle Certified Professional (Java), Meta Frontend Developer Certificate (Coursera), MongoDB Certified Developer, Docker Certified Associate, Kubernetes Certification (CKA/CKAD), CompTIA Security+. Portofolio ideal: Full-stack web app, mobile app di Play Store/App Store, open source contribution (500+ stars GitHub), REST API dengan dokumentasi, personal website, clone aplikasi populer.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "certification",
+      "jurusan": "RPL",
+      "tags": [
+        "sertifikasi",
+        "aws",
+        "google_cloud",
+        "docker",
+        "kubernetes",
+        "portofolio"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "178932ae-c559-442d-9443-24a22b987ed2",
+    "content": "Niche karier spesial PPLG: AI/ML Engineer, Blockchain Developer, Game Developer (Unity/Unreal), Embedded Systems Developer (IoT), Cybersecurity Engineer, Site Reliability Engineer (SRE), Developer Advocate, Technical Product Manager, Data Engineer, AR/VR Developer, Quant Developer, Bioinformatics Developer.",
+    "metadata": {
+      "category": "majors",
+      "subcategory": "niche",
+      "jurusan": "RPL",
+      "tags": [
+        "niche",
+        "ai_ml",
+        "blockchain",
+        "game_dev",
+        "cybersecurity",
+        "sre"
+      ],
+      "priority": "medium",
+      "source": "ai_research",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "8d35e676-541d-4844-a15a-059e9c8c433f",
+    "content": "Concern nyata siswa PPLG: (1) AI bakal ganti programmer? (2) Coding susah dan pusing, error terus. (3) Laptop kentang (RAM 4GB, HDD lambat). (4) Harus jago matematika? (5) Bahasa pemrograman mana yang dipelajari? Python, Java, JavaScript, PHP, Flutter — pilih mana? (6) Stack Overflow terus, gak bisa problem solving sendiri. (7) Portofolio GitHub kosong. (8) Kerja remote lonely? (9) Update teknologi terlalu cepat. (10) Bisa kerja tanpa S1? (11) Coding interview scary. (12) Freelance coding cari client dari mana? (13) Backend vs Frontend vs Fullstack? (14) DevOps itu apa?",
+    "metadata": {
+      "category": "concerns",
+      "subcategory": "psychology",
+      "jurusan": "RPL",
+      "tags": [
+        "anxiety",
+        "ai",
+        "laptop_kentang",
+        "matematika",
+        "imposter",
+        "interview"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "16fc130c-d5b0-4f2b-960b-0c789a2f4515",
+    "content": "FAQ Krisis Validasi Teknologi: 'AI kan udah jago bikin codingan, buat apa aku belajar capek-capek teori syntax di RPL?' Respon: Industri memang tak butuh penghafal sintaks lagi, tapi sangat mencari spesialis 'Reviewer Kode' yang memastikan keamanan algoritma buatan mesin. Mendorong siswa memelajari logika, desain arsitektur data, dan infrastruktur komputasi. AI adalah leverage, bukan pengganti.",
+    "metadata": {
+      "category": "faq",
+      "subcategory": "technology_crisis",
+      "jurusan": "RPL",
+      "tags": [
+        "faq",
+        "ai",
+        "coding",
+        "syntax",
+        "reviewer_kode",
+        "keamanan"
+      ],
+      "priority": "high",
+      "source": "pdf",
+      "chunk_type": "emotional"
+    }
+  },
+  {
+    "id": "bb7243b9-457f-4179-a282-0a2a2268f62c",
+    "content": "Niche karier spesial RPL: AI/ML Engineer, Blockchain Developer, Game Developer (Unity, Unreal), Embedded Systems Developer (IoT), Cybersecurity Engineer, Site Reliability Engineer (SRE), Developer Advocate, Technical Product Manager, Data Engineer, AR/VR Developer, Quant Developer (trading/finance), Bioinformatics Developer. Freelance RPL: Remote Software Developer $20-100/jam (Upwork, Toptal), Digital Nomad Developer, SaaS Founder, Open Source Contributor (GitHub Sponsorship).",
+    "metadata": {
+      "category": "careers",
+      "subcategory": "niche",
+      "jurusan": "RPL",
+      "tags": [
+        "niche",
+        "rpl",
+        "ai_ml",
+        "blockchain",
+        "game_dev",
+        "cybersecurity",
+        "sre"
+      ],
+      "priority": "medium",
+      "source": "ai_research",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "8ba750c3-31fd-4094-b8d2-bfa85f2bc98e",
+    "content": "Roadmap belajar RPL/PPLG: Semester 1-2 — Algoritma, pemrograman dasar (Python/Java), logika, HTML/CSS. Semester 3 — OOP, database SQL, JavaScript dasar, Git. Semester 4 — Web development (frontend + backend), mobile dasar, API. Semester 5 — PKL, advanced project, sertifikasi cloud, portofolio GitHub. Semester 6 — Ujian kompetensi, persiapan kerja atau startup. Peluang usaha: Software House, SaaS startup, Mobile App Studio, Web Development Agency, Tech Consultant, Online Coding Bootcamp.",
+    "metadata": {
+      "category": "roadmap",
+      "subcategory": "learning",
+      "jurusan": "RPL",
+      "tags": [
+        "roadmap",
+        "semester",
+        "belajar",
+        "pplg",
+        "startup",
+        "usaha"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "165f3392-b26d-41cf-bb5d-73b18155bdcf",
+    "content": "SUGGESTED PROMPTS untuk siswa RPL/PPLG:\n\n🔹 Anxiety & Mental Support:\n1. \"Kak, aku takut AI kayak Copilot bakal ganti programmer. Buat apa aku belajar coding capek-capek?\"\n2. \"Aku sering error terus pas coding, stack overflow gak nemu jawaban. Aku beneran cocok jadi programmer gak sih?\"\n3. \"Laptopku RAM 4GB, install Android Studio aja ngelag. Harus gimana, Kak?\"\n4. \"Matematika aku pas-pasan, bisa jadi programmer gak?\"\n5. \"Coding interview itu kayak gimana sih? Aku takut blank pas ditanya.\"\n\n🔹 Career & Skill:\n6. \"Python, Java, JavaScript — pilih mana dulu, Kak?\"\n7. \"Gimana caranya bikin portofolio GitHub yang menarik employer?\"\n8. \"Backend vs Frontend vs Fullstack, bedanya apa dan mana yang lebih bagus?\"\n9. \"Freelance programmer cari client pertama dari mana?\"\n10. \"DevOps itu kerjaannya ngapain? Harus belajar dari mana?\"\n\n🔹 Learning & Tools:\n11. \"Update teknologi cepat banget, gimana caranya gak ketinggalan?\"\n12. \"AI coding assistant kayak Copilot itu curang gak sih dipake?\"\n13. \"Gimana caranya belajar system design?\"\n14. \"Cloud computing (AWS/Google Cloud) itu penting gak untuk junior?\"\n15. \"Open source contribution itu gimana caranya?",
+    "metadata": {
+      "category": "prompts",
+      "subcategory": "suggested_user",
+      "jurusan": "RPL",
+      "tags": [
+        "suggested_prompts",
+        "anxiety",
+        "coding",
+        "career",
+        "tools",
+        "learning"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "f22f0128-8d10-43a9-858c-5e849d7705f0",
+    "content": "SUGGESTED TOOLS untuk RPL/PPLG (Tiered by Budget):\n\n💻 LAPTOP KENTANG (RAM 4-8GB, No GPU):\n• VS Code (gratis, lightweight code editor)\n• Git & GitHub Desktop (gratis, version control)\n• Python IDLE / Thonny (gratis, untuk belajar Python)\n• Online IDEs: Replit, CodePen, JSFiddle (browser-based)\n• Google Colab (gratis, cloud Jupyter notebook)\n• SQLite Browser (gratis, database lokal)\n• Postman (gratis, API testing)\n• XAMPP / Laragon (gratis, local server)\n\n⚡ LAPTOP MENENGAH (RAM 8-16GB):\n• Android Studio (IDE Android development)\n• Docker Desktop (containerization)\n• Node.js + npm (backend JavaScript)\n• MongoDB Compass (database GUI)\n• Figma (gratis, UI/UX design untuk developer)\n• Notion (gratis, project documentation)\n\n🚀 LAPTOP HIGH-END (RAM 16GB+, SSD):\n• JetBrains Suite (IntelliJ, PyCharm, WebStorm)\n• Cursor AI (AI-powered IDE)\n• GitHub Copilot (AI coding assistant)\n• Docker + Kubernetes (orchestration)\n• AWS CLI / Google Cloud SDK (cloud deployment)\n• VMware / VirtualBox (virtualization)\n\n📱 MOBILE DEVELOPMENT:\n• Flutter SDK (cross-platform mobile)\n• React Native (JavaScript mobile)\n• Android Studio + Emulator\n• Xcode (Mac only, iOS development)\n\n🎓 LEARNING RESOURCES (Gratis):\n• freeCodeCamp (full curriculum gratis)\n• The Odin Project (full-stack web)\n• CS50 Harvard (fundamentals)\n• W3Schools (reference)\n• MDN Web Docs (official documentation)\n• Roadmap.sh (developer roadmap)",
+    "metadata": {
+      "category": "tools",
+      "subcategory": "suggested",
+      "jurusan": "RPL",
+      "tags": [
+        "tools",
+        "gratis",
+        "laptop_kentang",
+        "vscode",
+        "github",
+        "python",
+        "learning"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  },
+  {
+    "id": "e4fb9ae3-65b0-4651-bb58-986dcf92b0b4",
+    "content": "BACKEND LEARNING FLOW untuk RPL/PPLG:\n\n🎯 GOAL DETECTION (What user wants):\n- \"Mau jadi programmer\" → Full roadmap\n- \"Takut AI ganti programmer\" → Reassurance + pivot to architecture\n- \"Laptop kentang\" → Cloud-based solutions\n- \"Mau freelance\" → Portfolio-first approach\n- \"Mau kerja remote\" → English + GitHub + cloud skills\n\n📋 STAGE 1: FOUNDATION (Semester 1-2)\nAI Action: Validate interest, assess current skill\n→ Suggest: Python/Java basics, logic puzzles, HTML/CSS\n→ Tools: VS Code, Replit, freeCodeCamp\n→ Milestone: Build first \"Hello World\" to simple calculator\n→ Check-in: \"Sudah bisa bikin program kalkulator belum?\"\n\n📋 STAGE 2: CORE SKILLS (Semester 3-4)\nAI Action: Guide technology selection based on goal\n→ Web path: JavaScript → React → Node.js → Database\n→ Mobile path: Flutter OR React Native\n→ Goal: GitHub repo with 3+ projects\n→ Milestone: CRUD app with authentication\n→ Check-in: \"Portofolio GitHub sudah ada berapa project?\"\n\n📋 STAGE 3: SPECIALIZATION (Semester 5)\nAI Action: Identify niche based on interest + market demand\n→ Options: Full-stack, Mobile, DevOps, AI/ML, Cybersecurity\n→ PKL preparation: Mock interviews, resume review\n→ Milestone: Deployed app (Vercel/Netlify/Play Store)\n→ Check-in: \"Sudah deploy aplikasi ke internet belum?\"\n\n📋 STAGE 4: CAREER PREP (Semester 6)\nAI Action: Job-ready assessment\n→ Portfolio review: GitHub, deployed projects, documentation\n→ Interview prep: LeetCode easy-medium, system design basics\n→ Job search: LinkedIn, remote platforms, local companies\n→ Milestone: First job offer OR accepted to college\n→ Check-in: \"Sudah apply ke berapa perusahaan?\"\n\n🔄 CONTINUOUS:\n- Weekly coding challenge suggestion\n- Monthly portfolio review\n- Quarterly skill assessment\n- Trend alert: \"AI tool baru ini berguna untukmu...\"\n\n⚠️ INTERVENTION TRIGGERS:\n- No GitHub activity for 2 weeks → \"Ayo commit hari ini!\"\n- Expressing burnout → Rest suggestion + micro-learning\n- Comparing with others → \"Compare with yesterday's you\"\n- Financial constraint → Free alternatives + Tefa lab hours",
+    "metadata": {
+      "category": "learning_flow",
+      "subcategory": "backend",
+      "jurusan": "RPL",
+      "tags": [
+        "learning_flow",
+        "roadmap",
+        "stages",
+        "intervention",
+        "milestone"
+      ],
+      "priority": "high",
+      "source": "both",
+      "chunk_type": "actionable"
+    }
+  }
+]

@@ -30,6 +30,44 @@ export const getApiKey = (): string => {
   return keys[activeKeyIndex % keys.length] || 'dummy_key';
 };
 
+interface NvidiaMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
+
+function enforceAlternatingRoles(messages: NvidiaMessage[]): NvidiaMessage[] {
+  if (messages.length === 0) return [];
+  
+  const result: NvidiaMessage[] = [];
+  
+  const systemMessages = messages.filter(m => m.role === 'system');
+  const chatMessages = messages.filter(m => m.role !== 'system');
+  
+  if (chatMessages.length === 0) {
+    return systemMessages;
+  }
+  
+  let currentMessage: NvidiaMessage = { ...chatMessages[0] };
+  
+  for (let i = 1; i < chatMessages.length; i++) {
+    const msg = chatMessages[i];
+    if (msg.role === currentMessage.role) {
+      currentMessage.content = `${currentMessage.content}\n\n${msg.content}`;
+    } else {
+      result.push(currentMessage);
+      currentMessage = { ...msg };
+    }
+  }
+  result.push(currentMessage);
+  
+  const finalChat = result;
+  if (finalChat.length > 0 && finalChat[0].role === 'assistant') {
+    finalChat.shift();
+  }
+  
+  return [...systemMessages, ...finalChat];
+}
+
 interface RequestOptions {
   model: string;
   messages: any[];
@@ -38,6 +76,7 @@ interface RequestOptions {
   max_tokens?: number;
   stream?: boolean;
 }
+
 
 const callNvidiaWithRotation = async (
   options: RequestOptions,
@@ -90,6 +129,88 @@ const callNvidiaWithRotation = async (
   throw lastError || new Error('Semua API Key NVIDIA telah dicoba dan gagal.');
 };
 
+async function generateOptionsWithGemma(contextText: string, userMajor: string): Promise<QuickAction[]> {
+  try {
+    const systemPrompt = `Kamu adalah asisten generator pilihan karir interaktif Vokara.
+Tugasmu adalah membuat tepat 2 (dua) opsi pertanyaan/tindakan kelanjutan yang sangat singkat, ramah, dan interaktif untuk siswa SMK jurusan ${userMajor} berdasarkan kutipan tanggapan mentor karir di bawah ini.
+Setiap opsi harus bertindak sebagai pertanyaan lanjutan dari siswa (maksimal 4-6 kata saja).
+
+FORMAT OUTPUT (WAJIB KAKU, TANPA PENOMORAN, TANPA PENJELASAN LAIN):
+[OPSI: Pilihan pertama]
+[OPSI: Pilihan kedua]`;
+
+    const response = await callNvidiaWithRotation({
+      model: 'google/gemma-3n-e4b-it',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: `Kutipan respons mentor:\n"${contextText.slice(0, 1000)}"` }
+      ],
+      temperature: 0.3,
+      max_tokens: 128,
+      stream: true
+    });
+
+    if (response.ok && response.body) {
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let content = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || trimmed === 'data: [DONE]') continue;
+          if (trimmed.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(trimmed.slice(6));
+              const text = data.choices?.[0]?.delta?.content || '';
+              if (text) content += text;
+            } catch (e) {
+              // ignore
+            }
+          }
+        }
+      }
+
+      // Process any residual data in buffer
+      if (buffer.trim()) {
+        const trimmed = buffer.trim();
+        if (trimmed !== 'data: [DONE]' && trimmed.startsWith('data: ')) {
+          try {
+            const data = JSON.parse(trimmed.slice(6));
+            const text = data.choices?.[0]?.delta?.content || '';
+            if (text) content += text;
+          } catch (e) {}
+        }
+      }
+
+      const actions: QuickAction[] = [];
+      const opsiRegex = /\[OPS[I:]+\s*(.*?)\]/gi;
+      let match;
+      while ((match = opsiRegex.exec(content)) !== null) {
+        if (match[1].trim()) {
+          actions.push({
+            label: match[1].trim(),
+            actionId: 'dynamic_option',
+            payload: match[1].trim()
+          });
+        }
+      }
+      return actions;
+    }
+  } catch (error) {
+    console.error('[Gemma Options Generator] Error:', error);
+  }
+  return [];
+}
+
 interface NvidiaChunk {
   choices: {
     delta: {
@@ -107,6 +228,7 @@ export const sendMessageToNvidia = async (
   fileData?: FileData | FileData[],
   userName?: string,
   userKelas?: string,
+  selectedMode: 'fast' | 'adaptive' | 'deep' = 'adaptive',
 ): Promise<{
   text: string
   quickActions?: QuickAction[]
@@ -135,14 +257,14 @@ export const sendMessageToNvidia = async (
     }
   }
 
-  const decision = route(message, !!fileData)
+  const decision = route(message, !!fileData, selectedMode)
   const t_route = performance.now();
   console.log(`[VOKARA RAG] Routing took ${(t_route - t_start).toFixed(1)}ms (Model: ${decision.model})`);
 
   // RAG retrieval
   const emotionDetected = detectEmotionSignals(message);
   const normalizedJurusan = userMajor ? normalizeMajor(userMajor) : undefined;
-  const context = retrieveContext({
+  const context = await retrieveContext({
     jurusan: normalizedJurusan,
     intents: decision.intents,
     emotionDetected,
@@ -166,6 +288,7 @@ export const sendMessageToNvidia = async (
     context,
     hasTTS: true, // TTS is available in this deployment
     kelas: activeKelas,
+    isFast: selectedMode === 'fast',
   });
   const prunedHistory = pruneHistory(history, decision.historyLimit)
   const t_prompt = performance.now();
@@ -191,14 +314,20 @@ export const sendMessageToNvidia = async (
 - JANGAN gunakan basa-basi/filler pembuka di awal kalimat (seperti "Wah, bagus banget...", "Tentu saja...", dsb). Langsung jawab inti pertanyaan pengguna di kalimat pertama.`;
   }
 
-  const messages = [
+  if (selectedMode === 'fast') {
+    userContent += `\n\n[PENTING - WAJIB PATUH]: Tulis respons kamu super singkat (maksimal 2-3 kalimat), berikan judul ### ... di baris pertama, dan WAJIB sertakan 2 opsi interaktif dengan format [OPSI: Pilihan] di baris paling akhir pesanmu.`;
+  }
+
+  const rawMessages: NvidiaMessage[] = [
     { role: 'system', content: systemPrompt },
     ...prunedHistory.map(h => ({
-      role: h.role === 'model' ? 'assistant' : 'user',
+      role: (h.role === 'model' ? 'assistant' : 'user') as 'user' | 'assistant',
       content: h.parts[0].text,
     })),
     { role: 'user', content: userContent },
   ]
+
+  const messages = enforceAlternatingRoles(rawMessages);
 
   let fullText = ''
   let fullReasoning = ''
@@ -269,6 +398,34 @@ export const sendMessageToNvidia = async (
           }
         }
       }
+
+      // Process any remaining content in the buffer after stream ends
+      if (buffer.trim()) {
+        const line = buffer.trim();
+        if (line !== 'data: [DONE]' && line.startsWith('data: ')) {
+          try {
+            const jsonStr = line.slice(6)
+            const chunk = JSON.parse(jsonStr)
+            const delta = chunk.choices?.[0]?.delta
+            if (delta) {
+              const content = delta.content || ''
+              const reasoning = delta.reasoning_content || ''
+              if (content || reasoning) {
+                if (reasoning) {
+                  fullReasoning += reasoning
+                  onChunk({ content: '', reasoning })
+                }
+                if (content) {
+                  fullText += content
+                  onChunk({ content, reasoning: '' })
+                }
+              }
+            }
+          } catch (e) {
+            // ignore
+          }
+        }
+      }
     } else {
 
       const data = await response.json()
@@ -286,7 +443,7 @@ export const sendMessageToNvidia = async (
   let dynamicActions: any[] = [];
 
   // Parse dynamic multiple choice options (more robust regex for AI formatting mistakes)
-  const opsiRegex = /(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*(.*?)(?:\]|\n|$)/gi;
+  const opsiRegex = /(?:-|\*|\d+\.)*\s*\[?\*?OPS[I:]+\*?\]?\s*:?\s*(.*?)(?:\]|\n|$)/gi;
   let match;
   while ((match = opsiRegex.exec(fullText)) !== null) {
     if (match[1].trim()) {
@@ -325,9 +482,15 @@ export const sendMessageToNvidia = async (
 
   let quickActions = [...dynamicActions, ...hardcodedActions];
 
+  if (quickActions.length === 0) {
+    console.log('[VOKARA RAG] No options generated by primary model. Calling Gemma-3 to generate high-quality options...');
+    const gemmaActions = await generateOptionsWithGemma(fullText, userMajor);
+    quickActions = [...gemmaActions, ...hardcodedActions];
+  }
+
   // Remove the [OPSI: ...] tags from the final text, including surrounding newlines and any trailing cut-off tags
   fullText = fullText
-    .replace(/(?:-|\*)*\s*\[?\*?OPSI:\*?\]?\s*.*?(?:\]|$)/gmi, '\n')
+    .replace(/(?:-|\*|\d+\.)*\s*\[?\*?OPS[I:]+\*?\]?\s*:?\s*.*?(?:\]|$)/gmi, '\n')
     .replace(/(?:\n|\s)*\[OPS[I:]*.*?$/gi, '')
     .trim();
 
