@@ -3,8 +3,6 @@
 // Build the VEKORA system prompt with RAG context
 // ============================================================
 
-import { getHumanizerContext } from '@/services/RAG_SETUP';
-
 /**
  * Build the VEKORA system prompt with optional RAG context
  * Based on VEKORA persona from RAG_IMPLEMENTATION.md
