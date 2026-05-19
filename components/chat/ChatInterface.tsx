@@ -52,6 +52,7 @@ export default function ChatInterface(props: ChatInterfaceProps) {
   const latestMessage = props.messages[props.messages.length - 1];
   const isCurrentlyStreaming = latestMessage?.isStreaming;
   const shouldAutoScrollRef = useRef(true);
+  const lastScrollTimeRef = useRef(0);
 
   // Monitor user's scroll gestures to enable/disable auto-scroll intelligently
   const handleScroll = () => {
@@ -79,10 +80,18 @@ export default function ChatInterface(props: ChatInterfaceProps) {
       return;
     }
 
-    // During active text streaming, use high-performance instantaneous scrollTop update 
-    // to prevent mobile viewport jitter or keyboard-fighting artifacts.
+    // During active text streaming, use throttled high-performance requestAnimationFrame scrollTop update 
+    // to prevent browser forced-synchronous layout reflows and stuttering.
     if (shouldAutoScrollRef.current) {
-      container.scrollTop = container.scrollHeight;
+      const now = Date.now();
+      if (now - lastScrollTimeRef.current > 100) {
+        lastScrollTimeRef.current = now;
+        requestAnimationFrame(() => {
+          if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+          }
+        });
+      }
     }
   }, [props.messages]);
 

@@ -98,10 +98,23 @@ export default function ChatSessionPage() {
     const isNewSessionSwitch = prevSessionIdRef.current !== currentSessionId;
     prevSessionIdRef.current = currentSessionId;
 
+    // If we are actively streaming/loading a response, do NOT overwrite the local messages state
+    if (isLoading) {
+      loadedSessionIdRef.current = currentSessionId;
+      return;
+    }
+
     const activeSession = sessions.find(s => s.id === currentSessionId);
 
-    if (isNewSessionSwitch && activeSession) {
-      setMessages([]); // Clear previous messages while switching sessions to prevent visual overlap
+    if (isNewSessionSwitch) {
+      // Only clear if switching to an existing session, not when we just started a brand new one
+      if (activeSession) {
+        setMessages([]); // Clear previous messages while switching sessions to prevent visual overlap
+      } else {
+        // New session starting, keep whatever is in messages
+        loadedSessionIdRef.current = currentSessionId;
+        return;
+      }
     }
 
     // Guest sessions have messages loaded locally from localStorage, so no fetch needed
@@ -117,8 +130,6 @@ export default function ChatSessionPage() {
     const loadSessionMessages = async () => {
       // ONLY fetch if it's an existing saved session in the database
       if (!activeSession) {
-        // If it's not in the sessions list, but it's a new session we just created client-side,
-        // we shouldn't attempt to load it. Set loaded session ID ref immediately.
         loadedSessionIdRef.current = currentSessionId;
         return;
       }
@@ -131,8 +142,8 @@ export default function ChatSessionPage() {
         const res = await fetch(`/api/chat/sessions/${currentSessionId}`, { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
-          // Double check we are still on the same session when the fetch completes
-          if (prevSessionIdRef.current === currentSessionId) {
+          // Double check we are still on the same session and not loading
+          if (prevSessionIdRef.current === currentSessionId && !isLoading) {
             setMessages(data.messages || []);
             loadedSessionIdRef.current = currentSessionId;
           }
@@ -148,7 +159,7 @@ export default function ChatSessionPage() {
     };
 
     loadSessionMessages();
-  }, [currentSessionId, status, sessions]);
+  }, [currentSessionId, status, sessions, isLoading]);
 
   // Keep onSendMessageRef updated so early-return callbacks can call it
   useEffect(() => {
