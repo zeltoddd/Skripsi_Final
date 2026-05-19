@@ -167,6 +167,19 @@ export const sendMessageToNvidia = async (
     userContent = `Berikut adalah dokumen PDF yang diunggah oleh pengguna:\n\n${fileTexts}\n\nPertanyaan/Instruksi Pengguna:\n${message}`;
   }
 
+  // FORCE GRAMMAR RULES ON USER CONTENT (CRITICAL FOR STEPFUN INSTRUCTION FOLLOWING)
+  if (profileName) {
+    const titleCaseName = profileName.charAt(0).toUpperCase() + profileName.slice(1).toLowerCase();
+    userContent += `\n\n[ATURAN PENTING - WAJIB PATUH]: 
+- JANGAN gunakan basa-basi/filler pembuka di awal kalimat (seperti "Wah, bagus banget...", "Tentu saja...", dsb). Langsung jawab inti pertanyaan pengguna di kalimat pertama.
+- Gunakan koma sebelum nama panggilan sapaan (contoh: "Halo, ${titleCaseName}" atau "Semangat, ${titleCaseName}").
+- JANGAN meletakkan tanda seru (!) langsung setelah nama saat menyapa (contoh: tulis "Halo, ${titleCaseName}." BUKAN "Halo, ${titleCaseName}!").
+- Tulis nama panggilan dengan Title Case (contoh: "${titleCaseName}" BUKAN "${profileName.toUpperCase()}").`;
+  } else {
+    userContent += `\n\n[ATURAN PENTING - WAJIB PATUH]: 
+- JANGAN gunakan basa-basi/filler pembuka di awal kalimat (seperti "Wah, bagus banget...", "Tentu saja...", dsb). Langsung jawab inti pertanyaan pengguna di kalimat pertama.`;
+  }
+
   const messages = [
     { role: 'system', content: systemPrompt },
     ...prunedHistory.map(h => ({
