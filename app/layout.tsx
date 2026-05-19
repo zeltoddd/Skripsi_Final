@@ -26,8 +26,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'VOKARA — Bimbingan Karir SMK #1',
+  title: 'VOKARA | AI Career Assistant',
   description: 'Platform bimbingan karir berbasis AI khusus untuk siswa dan lulusan SMK di Indonesia.',
+  icons: {
+    icon: '/vokara-logo.svg',
+    shortcut: '/vokara-logo.svg',
+    apple: '/vokara-logo.svg',
+  },
 };
 
 export const viewport = {
@@ -46,6 +51,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${spaceGrotesk.variable} ${geistMono.variable} h-full`} suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/vokara-logo.svg" type="image/svg+xml" />
         <link rel="preconnect" href="https://va.vercel-scripts.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://vitals.vercel-insights.com" crossOrigin="anonymous" />
       </head>
