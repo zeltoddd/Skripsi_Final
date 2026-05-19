@@ -83,20 +83,20 @@ const HIGH_VALUE_WEIGHTS: Record<string, number> = {
 
 /**
  * Intent to category mapping
- * Maps user intents to RAG categories for retrieval
+ * Maps user intents (from smartRouter) to RAG categories for retrieval
  */
 export const INTENT_CATEGORY_MAP: Record<string, string[]> = {
-  career: ['careers', 'roadmap', 'majors'],
+  greeting: ['school', 'majors', 'behavior'],
+  career_advice: ['careers', 'roadmap', 'majors', 'learning_flow', 'alumni', 'behavior'],
+  job_search: ['dudi', 'majors', 'pkl', 'alumni'],
   scholarship: ['scholarships', 'school', 'financial'],
-  jobs: ['dudi', 'majors'],
-  courses: ['majors', 'courses'],
-  pkl: ['pkl', 'dudi'],
-  anxiety: ['concerns', 'faq'],
-  tools: ['majors', 'tools'],
-  trend: ['industry', 'majors'],
-  roadmap: ['roadmap', 'careers', 'majors'],
-  interview_tips: ['careers', 'faq'],
+  course_rec: ['majors', 'courses', 'tools', 'learning_flow'],
   cv_help: ['careers', 'majors'],
+  trend_data: ['industry', 'majors'],
+  roadmap: ['roadmap', 'careers', 'majors', 'learning_flow'],
+  college_info: ['school', 'scholarships', 'financial', 'faq', 'alumni', 'behavior'],
+  interview_tips: ['careers', 'faq'],
+  out_of_scope: ['faq'],
 };
 
 /**
@@ -147,7 +147,7 @@ async function getQueryEmbedding(query: string): Promise<number[] | null> {
         body: JSON.stringify({
           input: [query],
         }),
-        signal: AbortSignal.timeout(15000),
+        signal: AbortSignal.timeout(3000),
       });
     } else {
       // Server-Side Edge Context: Call API directly using key to avoid internal HTTP hops
@@ -168,7 +168,7 @@ async function getQueryEmbedding(query: string): Promise<number[] | null> {
           model: 'nvidia/llama-nemotron-embed-1b-v2',
           input_type: 'query',
         }),
-        signal: AbortSignal.timeout(15000),
+        signal: AbortSignal.timeout(3000),
       });
     }
 
@@ -207,13 +207,13 @@ export async function retrieveContext(opts: RetrievalOptions): Promise<string> {
     targetCategories.add('concerns');
   }
 
-  // 3. Always include school context (differentiates SMKN 6)
-  targetCategories.add('school');
-
-  // 4. For any intent, if no specific categories matched, include majors as fallback
+  // 3. For any intent, if no specific categories matched, include majors as fallback
   if (targetCategories.size === 0) {
     targetCategories.add('majors');
   }
+
+  // 4. Always include school context (differentiates SMKN 6)
+  targetCategories.add('school');
 
   // 5. Fetch context blocks for each category
   const contextBlocks: { category: string; content: string }[] = [];
@@ -405,8 +405,8 @@ export async function retrieveContext(opts: RetrievalOptions): Promise<string> {
  */
 function formatContextBlocks(blocks: { category: string; content: string }[], jurusan?: string): string {
   const header = jurusan
-    ? `DATA REFERENSI — Konteks VEKORA untuk jurusan ${jurusan.toUpperCase()} di SMKN 6 Surakarta\nGunakan sebagai acuan utama. Jangan tambahkan data di luar ini.\n\n`
-    : `DATA REFERENSI — Konteks VEKORA untuk SMKN 6 Surakarta\n\n`;
+    ? `DATA REFERENSI — Konteks VOKARA untuk jurusan ${jurusan.toUpperCase()} di SMKN 6 Surakarta\nGunakan sebagai acuan utama. Jangan tambahkan data di luar ini.\n\n`
+    : `DATA REFERENSI — Konteks VOKARA untuk SMKN 6 Surakarta\n\n`;
 
   const sections = blocks.map(block => {
     const label = CATEGORY_LABELS[block.category] || block.category.toUpperCase();
@@ -430,4 +430,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   dudi: 'Tempat PKL & Mitra Industri',
   courses: 'Rekomendasi Kursus & Sertifikasi',
   tools: 'Rekomendasi Tools & Software',
+  learning_flow: 'Alur Belajar & Kurikulum',
+  alumni: 'Kisah & Prospek Alumni',
+  behavior: 'Gaya Hidup & Psikologi Siswa',
+  system: 'Sistem Chatbot',
 };

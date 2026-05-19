@@ -155,7 +155,7 @@ export default function Onboarding() {
             {isSaving ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                Menyiapkan dashboard...
+                Menyiapkan Profile..
               </>
             ) : (
               'Mulai Eksplorasi Karir'

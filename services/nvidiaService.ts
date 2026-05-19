@@ -359,7 +359,8 @@ export const sendMessageToNvidia = async (
   if (nickname && nickname !== 'Siswa') {
     userContent += `\n\n[ATURAN PENTING - WAJIB PATUH]: 
 - JANGAN gunakan basa-basi/filler pembuka di awal kalimat (seperti "Wah, bagus banget...", "Tentu saja...", dsb). Langsung jawab inti pertanyaan pengguna di kalimat pertama.
-- JANGAN memaksakan diri untuk selalu memanggil/menyapa nama pengguna di awal setiap balasan. Panggil nama "${nickname}" secara alami di tengah kalimat jika dirasa perlu saja.
+- DILARANG KERAS menyapa atau memanggil nama pengguna di baris pertama atau awal kalimat respon (contoh: JANGAN PERNAH memulai respon dengan "${nickname}, ..." atau "Halo ${nickname}").
+- Panggil nama "${nickname}" secara alami di tengah-tengah penjelasan atau di akhir kalimat jika benar-benar dirasa perlu saja.
 - JANGAN PERNAH gunakan koma sebelum nama panggilan sapaan (contoh: tulis "Halo ${nickname}" atau "Semangat ${nickname}" BUKAN "Halo, ${nickname}").
 - JANGAN meletakkan tanda seru (!) langsung setelah nama saat menyapa (contoh: tulis "Halo ${nickname}." BUKAN "Halo ${nickname}!").
 - Tulis nama panggilan dengan Title Case (contoh: "${nickname}" BUKAN "${nickname.toUpperCase()}").`;

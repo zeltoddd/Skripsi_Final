@@ -5,8 +5,9 @@ export enum Sender {
 
 export interface QuickAction {
   label: string;
-  actionId: 'search_jobs' | 'search_courses' | 'view_trends' | 'create_cv' | 'search_scholarships';
+  actionId: 'search_jobs' | 'search_courses' | 'view_trends' | 'create_cv' | 'search_scholarships' | 'dynamic_option';
   data?: string;
+  payload?: string;
 }
 
 export interface FileData {
