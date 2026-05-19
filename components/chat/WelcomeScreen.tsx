@@ -50,7 +50,7 @@ const Welcome: React.FC<WelcomeProps> = ({ onSuggestionClick }) => {
       <div className="flex flex-col items-center justify-center min-h-[70vh] p-6 max-w-2xl mx-auto">
         <div className="w-full space-y-6">
           <div className="space-y-1">
-            <h1 className="text-2xl font-semibold tracking-tight">Selamat datang di VEKORA</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">Selamat datang di VOKARA</h1>
             <p className="text-sm text-muted-foreground">
               Pilih jurusanmu untuk mendapatkan panduan karir yang relevan.
             </p>
