@@ -212,10 +212,10 @@ export default function ChatSessionPage() {
       if (res.ok) {
         refreshSessions();
       } else if (res.status === 401) {
-        console.error("DB Save failed: Unauthorized. Logging out...");
+        console.warn("DB Save warning: Unauthorized. Logging out...");
         signOut({ callbackUrl: '/login' });
       } else if (res.status === 404) {
-        console.error("DB Save failed: Session not found. Redirecting to fresh chat...");
+        console.warn("DB Save warning: Session not found. Redirecting to fresh chat...");
         router.push('/chat');
       } else {
         console.error("DB Save failed:", await res.json().catch(() => ({})));
